@@ -1,2 +1,5 @@
 # ignore .idea directory
 .idea/
+
+# ignore some file
+.gitigno.swp

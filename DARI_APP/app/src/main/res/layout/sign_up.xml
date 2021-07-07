@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <ImageButton
+        android:id="@+id/sign_back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/arrow"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:textSize="25sp"
+            android:id="@+id/text_signup"
+            android:layout_marginBottom="30dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:textSize="15sp"
+            android:layout_below="@+id/text_signup"
+            android:id="@+id/text_name" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/text_name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_name"
+            android:id="@+id/text_id" />
+
+        <EditText
+            android:id="@+id/edit_id"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_id"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_id"
+            android:id="@+id/text_pw" />
+
+        <EditText
+            android:id="@+id/edit_pw"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_pw"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 확인"
+            android:textSize="15sp"
+            android:layout_below="@+id/edit_pw"
+            android:id="@+id/text_pw2" />
+
+        <EditText
+            android:id="@+id/edit_pw2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_pw2"/>
+        <Button
+            android:id="@+id/ok_sign"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="완료"
+            android:layout_below="@+id/edit_pw2"
+            android:background="@color/Button_color"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

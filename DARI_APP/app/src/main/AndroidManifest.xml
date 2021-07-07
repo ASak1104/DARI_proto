@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.APP_DARI">
         <activity android:name=".SignupActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".Slpash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

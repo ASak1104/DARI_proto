@@ -41,8 +41,9 @@
             android:id="@+id/edit_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_below="@+id/text_name"/>
+            android:layout_below="@+id/text_name"
+            android:inputType="textPersonName"
+            android:text="" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +56,8 @@
             android:id="@+id/edit_id"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_id"/>
+            android:layout_below="@+id/text_id"
+            android:inputType="textFilter|text" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +70,8 @@
             android:id="@+id/edit_pw"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_pw"/>
+            android:layout_below="@+id/text_pw"
+            android:inputType="textPassword" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +84,8 @@
             android:id="@+id/edit_pw2"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_pw2"/>
+            android:layout_below="@+id/text_pw2"
+            android:inputType="textPassword" />
         <Button
             android:id="@+id/ok_sign"
             android:layout_width="200dp"
@@ -92,8 +96,4 @@
 
 
     </RelativeLayout>
-
-
-
-
 </RelativeLayout>

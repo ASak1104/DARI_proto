@@ -1,12 +1,18 @@
 package com.example.app_dari;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +25,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.POST;
 
 public class LoginActivity extends AppCompatActivity {
-    Retrofit retrofit;
-    RetrofitAPI retrofitAPI;
-    HashMap<String, Object> input;
 
+    private RetrofitClient retrofitClient;
+    private initMyApi initMyApi;
+    EditText idtext;
+    EditText pwtext;
 
 
     @Override
@@ -30,56 +37,39 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://dari-app.kro.kr")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        retrofitAPI = retrofit.create(RetrofitAPI.class);
-
-        input = new HashMap<>();
-
-
-        retrofitAPI.getData("aaaa").enqueue(new Callback<List<Post>>() {
-            @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if(response.isSuccessful()){
-                    List<Post> data = response.body();
-                    Log.d("Test", "성공");
-                    Log.d("test" , data.get(0).getName());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                  t.printStackTrace();
-            }
-        });
+        idtext = (EditText)findViewById(R.id.edit_id);
+        pwtext = (EditText)findViewById(R.id.edit_pw);
 
 
         Button login = (Button)findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                input.put("id", "aaaa");
-                input.put("password", "1234");
-                input.put("name", "khw");
-                retrofitAPI.postData(input).enqueue(new Callback<POST>() {
-                    @Override
-                    public void onResponse(Call<POST> call, Response<POST> response) {
-                        if(response.isSuccessful()){
-                            Post data = (Post) response.body();
-                            Log.d("test","post성공");
-                            Log.d("test",data.getName());
-                        }
-                    }
+                String id = idtext.getText().toString();
+                String pw = pwtext.getText().toString();
+                hideKeyboard();
 
-                    @Override
-                    public void onFailure(Call<POST> call, Throwable t) {
-                        Log.d("test","post 실패");
+                if(id.isEmpty() ==true || pw.isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setTitle("알림")
+                            .setMessage("로그인 정보를 입력해주세요.")
+                            .setPositiveButton("확인",null)
+                            .create().show();
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();;
 
-                    }
-                });
+                }else {
+                    LoginResponse();
+                }
+            }
+        });
+
+
+        Button signup = (Button)findViewById(R.id.sign_up);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 Intent to_signup = new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(to_signup);
 
@@ -87,7 +77,103 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
     }
+    public void LoginResponse() {
+        String userID = idtext.getText().toString().trim();
+        String userPassword = pwtext.getText().toString().trim();
+
+        //loginRequest에 사용자가 입력한 id와 pw를 저장
+        LoginRequest loginRequest = new LoginRequest(userID, userPassword);
+
+        //retrofit 생성
+        retrofitClient = RetrofitClient.getInstance();
+        initMyApi = RetrofitClient.getRetrofitInterface();
+
+        //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
+        initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
+                Log.d("retrofit", "Data fetch success");
+
+                //통신 성공
+                if (response.isSuccessful()) {
+
+                    //response.body()를 result에 저장
+                    LoginResponse result = response.body();
+
+                    //받은 코드 저장
+                    boolean resultCode = result.getResultCode();
+
+                    //받은 토큰 저장
+                    String name = result.getName();
+
+                    String success = "200"; //로그인 성공
+                    String errorId = "300"; //아이디 일치x
+                    String errorPw = "400"; //비밀번호 일치x
+
+
+                    if (resultCode) {
+                        String userID = idtext.getText().toString();
+                        String userPassword = pwtext.getText().toString();
+
+                        //다른 통신을 하기 위해 token 저장
+
+
+                        Toast.makeText(LoginActivity.this, userID + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("name", name);
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+
+                    } else {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("알림")
+                                .setMessage("아이디 또는 비밀번호가 일치하지 않습니다.")
+                                .setPositiveButton("확인", null)
+                                .create()
+                                .show();
+
+                    }
+                }
+            }
+
+            //통신 실패
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("알림")
+                        .setMessage("예기치 못한 오류가 발생하였습니다.")
+                        .setPositiveButton("확인", null)
+                        .create()
+                        .show();
+            }
+        });
+    }
+    private void hideKeyboard()
+    {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(idtext.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(pwtext.getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+
 }

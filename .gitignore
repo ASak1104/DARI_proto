@@ -5,3 +5,4 @@
 # BACK-END IGNORE LIST
 Server/node_modules/
 Server/package-lock.json
+Server/.env

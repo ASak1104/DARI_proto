@@ -1,8 +1,10 @@
 const express = require('express');
+const logger = require('morgan');
+const dotenv = require('dotenv')
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 
+dotenv.config()
 const connect = require('./schemas');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

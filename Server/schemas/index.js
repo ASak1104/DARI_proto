@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-mongoose.set('useCreateIndex', true)
-const MDB_URL = `mongodb://${process.env.MDB_ID}:${process.env.MDB_PASSWORD}@localhost:27017/admin`;
+const DB_URL = process.env.DB_URL;
 
 const connect = () => {
     if (process.env.NODE_ENV !== 'production') {
         mongoose.set('debug', true);
     }
-    mongoose.connect("mongodb://localhost:27017/test", {
-        "user": process.env.MDB_ID,
-        "pass": process.env.MDB_PASSWORD,
-        "useMongoClient": true
+    mongoose.connect(DB_URL, {
+        dbName: 'test',
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
     });
 };
 mongoose.connection.on('error', (err) => {

@@ -1,4 +1,4 @@
-package com.example.app_dari;
+package com.example.app_dari.Login;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,20 +14,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.List;
+import com.example.app_dari.MainActivity;
+import com.example.app_dari.R;
+import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.Signup.SignupActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.POST;
 
 public class LoginActivity extends AppCompatActivity {
 
     private RetrofitClient retrofitClient;
-    private initMyApi initMyApi;
+    private com.example.app_dari.initMyApi initMyApi;
     EditText idtext;
     EditText pwtext;
 
@@ -70,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent to_signup = new Intent(LoginActivity.this,SignupActivity.class);
+                Intent to_signup = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(to_signup);
 
             }

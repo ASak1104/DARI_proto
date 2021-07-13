@@ -13,10 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.APP_DARI">
-        <activity android:name=".SignupActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".Slpash">
+        <activity android:name=".Signup.SignupActivity"/>
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,15 +1,13 @@
 package com.example.app_dari;
 
-import java.util.HashMap;
-import java.util.List;
+import com.example.app_dari.Login.LoginRequest;
+import com.example.app_dari.Login.LoginResponse;
+import com.example.app_dari.Signup.SignupRequest;
+import com.example.app_dari.Signup.SignupResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface initMyApi {
 

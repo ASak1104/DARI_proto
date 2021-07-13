@@ -1,4 +1,4 @@
-package com.example.app_dari;
+package com.example.app_dari.Signup;
 
 import com.google.gson.annotations.SerializedName;
 

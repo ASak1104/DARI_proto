@@ -1,4 +1,6 @@
-package com.example.app_dari;
+package com.example.app_dari.Signup;
+
+import android.app.DownloadManager;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -53,4 +55,5 @@ public class SignupRequest {
         this.inputPw2 = inputPw2;
         this.name = name;
     }
+
 }

@@ -1,14 +1,12 @@
-package com.example.app_dari;
+package com.example.app_dari.Signup;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,16 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.R;
+import com.example.app_dari.RetrofitClient;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -40,7 +32,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText edit_pw;
     EditText edit_pw2;
     private RetrofitClient retrofitClient;
-    private initMyApi initMyApi;
+    private com.example.app_dari.initMyApi initMyApi;
 
 
     @Override

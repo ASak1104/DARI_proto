@@ -102,17 +102,17 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse result = response.body();
 
                     //받은 코드 저장
-                    boolean resultCode = result.getResultCode();
+                    int resultCode = result.getResultCode();
 
                     //받은 토큰 저장
                     String name = result.getName();
 
-                    String success = "200"; //로그인 성공
-                    String errorId = "300"; //아이디 일치x
-                    String errorPw = "400"; //비밀번호 일치x
+                    int success = 200; //로그인 성공
+                    int errorId = 300; //아이디 일치x
+                    int errorPw = 400; //비밀번호 일치x
 
 
-                    if (resultCode) {
+                    if (resultCode ==success) {
                         String userID = idtext.getText().toString();
                         String userPassword = pwtext.getText().toString();
 
@@ -125,15 +125,23 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         LoginActivity.this.finish();
 
-                    } else {
+                    } else if(resultCode==errorId){
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                         builder.setTitle("알림")
-                                .setMessage("아이디 또는 비밀번호가 일치하지 않습니다.")
+                                .setMessage("등록되지 않은 아이디입니다.")
                                 .setPositiveButton("확인", null)
                                 .create()
                                 .show();
 
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("알림")
+                                .setMessage("비밀번호가 일치하지 않습니다.")
+                                .setPositiveButton("확인", null)
+                                .create()
+                                .show();
                     }
                 }
             }

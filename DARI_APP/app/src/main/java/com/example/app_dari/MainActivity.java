@@ -1,69 +1,68 @@
 package com.example.app_dari;
 
+
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.app_dari.Login.LoginActivity;
+import com.example.app_dari.Signup.SignupActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-        private FragmentManager fragmentManager;
-        private Main_Fragment main_fragment;
-        private Map_Fragment map_fragment;
-        private Profile_Fragment profile_fragment;
-        private Chat_Fragment chat_fragment;
-        private Notify_Fragment notify_fragment;
-        private FragmentTransaction transaction;
 
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.mainpage);
+            setContentView(R.layout.activity_main);
 
+            ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
+            ImageButton btn_chat = (ImageButton)findViewById(R.id.btn_chat);
+            ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
+            ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
 
-            main_fragment = new Main_Fragment();
-            map_fragment = new Map_Fragment();
-            profile_fragment = new Profile_Fragment();
-            chat_fragment = new Chat_Fragment();
-            notify_fragment = new Notify_Fragment();
+        btn_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Map_Activity.class);
 
-            fragmentManager = getSupportFragmentManager();
-            transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.frameLayout, main_fragment).commitAllowingStateLoss();
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+        });
+            btn_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, Profile_Activity.class);
 
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+            });
+            btn_chat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, Chat_Activity.class);
 
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+            });
+            btn_notify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, Notify_Activity.class);
+
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+            });
 
 
         }
-    public void clickHandler(View view)
-    {
-        transaction = fragmentManager.beginTransaction();
 
-        switch(view.getId())
-        {
-            case R.id.btn_main:
-                transaction.replace(R.id.frameLayout, main_fragment).commitAllowingStateLoss();
-                break;
-            case R.id.btn_map:
-                transaction.replace(R.id.frameLayout, map_fragment).commitAllowingStateLoss();
-                break;
-            case R.id.btn_profile:
-                transaction.replace(R.id.frameLayout, profile_fragment).commitAllowingStateLoss();
-                break;
-            case R.id.btn_chat:
-                transaction.replace(R.id.frameLayout, chat_fragment).commitAllowingStateLoss();
-                break;
-            case R.id.btn_notify:
-                transaction.replace(R.id.frameLayout, notify_fragment).commitAllowingStateLoss();
-                break;
-        }
-    }
-
-    }
+}

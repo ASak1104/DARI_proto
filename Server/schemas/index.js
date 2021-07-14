@@ -11,13 +11,19 @@ const connect = () => {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+    }, (err) => {
+        if (err) {
+            console.log('Fail to connect MongoDB', err);
+        } else {
+            console.log('Success to connect MongoDB');
+        }
     });
 };
 mongoose.connection.on('error', (err) => {
-    console.error('몽고디비 연결 에러', err);
+    console.error('Error on MongoDB connection', err);
 });
 mongoose.connection.on('disconnected', () => {
-    console.error('몽고디비 연결이 끊어졌습니다. 연결을 재시도합니다.');
+    console.error('Disconnect from MongoDB. Try to connect.');
     connect();
 });
 

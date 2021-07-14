@@ -40,7 +40,7 @@ router.post('/sign-in', async (req, res, next) => {
         const signInUser = await User.findOne({ id: req.body.id });
         if (!signInUser) {
             console.log(`#fail ${req.body.id}`);
-            res.status(300).json({ 'sign-in': false });
+            res.status(200).json({ 'sign-in': false });
         }
         else if (signInUser.password !== req.body.password) {
                 console.log(`#fail ${req.body.id}`);

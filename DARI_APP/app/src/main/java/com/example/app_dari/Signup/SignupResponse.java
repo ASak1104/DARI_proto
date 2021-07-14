@@ -12,6 +12,6 @@ public class SignupResponse {
         this.resultCode = resultCode;
     }
 
-    @SerializedName("sign-up")
+    @SerializedName("isSignedUp")
     public boolean resultCode;
 }

@@ -14,8 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.APP_DARI">
         <activity android:name=".Signup.SignupActivity"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".Map_Activity"/>
+        <activity android:name=".Profile_Activity"/>
+        <activity android:name=".Chat_Activity"/>
+        <activity android:name=".Notify_Activity"/>
         <activity android:name=".Login.LoginActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Interests_text_Activity"/>
+        <activity android:name=".Interests_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

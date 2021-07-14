@@ -4,17 +4,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-        @SerializedName("sign-in")
-        public boolean resultCode;
+        @SerializedName("status")
+        public int resultCode;
 
         @SerializedName("name")
         public String name;
 
-        public boolean getResultCode() {
+        public int getResultCode() {
             return resultCode;
         }
 
-        public void setResultCode(boolean resultCode) {
+        public void setResultCode(int resultCode) {
             this.resultCode = resultCode;
         }
 

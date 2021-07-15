@@ -20,7 +20,7 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    comment: String,
+    introduce: String,
     latitude: Number,
     longitude: Number,
     createdAt: {

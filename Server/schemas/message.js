@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { getDate } = require('./index');
 const { Types: { ObjectId } } = Schema;
 const messageSchema = new Schema({
     user:{
@@ -17,7 +18,7 @@ const messageSchema = new Schema({
     image: String,
     createdAt: {
         type: Date,
-        default: Date.now() + (60 * 60 * 1000 * 9),
+        default: getDate,
     },
 });
 

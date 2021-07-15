@@ -6,13 +6,13 @@ const User = require('../schemas/user');
 
 const router = express.Router();
 
-/* GET auth/ listing. */
+/* GET /auth listing. */
 router.get('/', (req, res, next) => {
     res.send('<h1>Test /users GET router</h1>');
 });
 
 
-/* POST auth/sign-up */
+/* POST /auth/sign-up */
 router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
     const { id, password, name } = req.body;
     try {
@@ -34,8 +34,8 @@ router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
 });
 
 
-/* POST auth/sign-in */
-router.post('/sign-in', isNotSignedIn, async (req, res, next) => {
+/* POST /auth/sign-in */
+router.post('/sign-in', isNotSignedIn, (req, res, next) => {
     console.log(`#sign-in ${req.body.id}`);
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
@@ -62,7 +62,7 @@ router.post('/sign-in', isNotSignedIn, async (req, res, next) => {
 });
 
 
-/* GET auth/sign-out */
+/* GET /auth/sign-out */
 router.get('/sign-out', isSignedIn, (req, res) => {
     req.logout();
     req.session.destroy();

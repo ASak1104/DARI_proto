@@ -1,15 +1,18 @@
 const express = require('express');
 const logger = require('morgan');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const session = require('express-session')
+const session = require('express-session');
 const passport = require('passport');
 
 dotenv.config()
-const connect = require('./schemas');
+const { connect } = require('./schemas');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/auth');
+const authRouter = require('./routes/auth');
+const interestRouter = require('./routes/interest');
+const mapRouter = require('./routes/map');
+const adminRouter = require('./routes/admin');
 const passportConfig = require('./passport');
 
 const app = express();
@@ -33,7 +36,10 @@ app.use(express.urlencoded({ extended: true }));
 connect()
 
 app.use('/', indexRouter);
-app.use('/auth', usersRouter);
+app.use('/auth', authRouter);
+app.use('/interest', interestRouter);
+app.use('/map', mapRouter);
+app.use(process.env.ADMIN_ROOT, adminRouter);
 
 app.use((req, res, next) => {
     const error =  new Error(`Not exist ${req.method} ${req.url} router`);
@@ -50,7 +56,8 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(app.get('port'), () => {
-    console.log(`Listening localhost::${app.get('port')}`);
+    console.log(`Listening localhost:${app.get('port')}`);
 });
+
 
 module.exports = app;

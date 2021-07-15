@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const { Types: { ObjectId } } = Schema;
+const { getDate } = require('./index');
 const userSchema = new Schema({
     id: {
         type: String,
@@ -25,7 +25,7 @@ const userSchema = new Schema({
     longitude: Number,
     createdAt: {
         type: Date,
-        default: Date.now() + (60 * 60 * 1000 * 9),
+        default: getDate,
     },
 });
 

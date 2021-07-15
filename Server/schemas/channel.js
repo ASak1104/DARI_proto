@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { getDate } = require('./index');
 const { Types: { ObjectId } } = Schema;
 const channelSchema = new Schema({
     title: {
@@ -22,7 +23,7 @@ const channelSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now() + (60 * 60 * 1000 * 9),
+        default: getDate,
     },
 });
 

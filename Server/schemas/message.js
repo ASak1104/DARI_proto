@@ -17,7 +17,7 @@ const messageSchema = new Schema({
     image: String,
     createdAt: {
         type: Date,
-        default: Date.now,
+        default: Date.now() + (60 * 60 * 1000 * 9),
     },
 });
 

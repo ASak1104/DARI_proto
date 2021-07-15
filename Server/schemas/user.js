@@ -16,18 +16,16 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    isOnline: {
+        type: Boolean,
+        default: false,
+    },
     comment: String,
     latitude: Number,
     longitude: Number,
-    interests: [
-        {
-            type: ObjectId,
-            ref: 'Interest',
-        }
-    ],
     createdAt: {
         type: Date,
-        default: Date.now,
+        default: Date.now() + (60 * 60 * 1000 * 9),
     },
 });
 

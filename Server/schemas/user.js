@@ -24,7 +24,7 @@ const userSchema = new Schema({
     latitude: Number,
     longitude: Number,
     createdAt: {
-        type: Date,
+        type: String,
         default: getDate,
     },
 });

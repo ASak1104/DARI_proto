@@ -17,7 +17,7 @@ const messageSchema = new Schema({
     content: String,
     image: String,
     createdAt: {
-        type: Date,
+        type: String,
         default: getDate,
     },
 });

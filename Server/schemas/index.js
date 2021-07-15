@@ -6,7 +6,7 @@ const DB_URL = process.env.DB_URL;
 moment.tz.setDefault('Asia/Seoul');
 
 const getDate = () => {
-    return new Date(moment().format('YYYY-MM-DD HH:mm:ss'));
+    return moment().format('YYYY-MM-DD HH:mm:ss:ms');
 };
 
 const connect = () => {

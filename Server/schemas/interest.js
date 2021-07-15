@@ -13,9 +13,9 @@ const interestSchema = new Schema({
         default: 0,
     },
     createdAt: {
-        type: Date,
+        type: String,
         default: getDate,
-    }
+    },
 });
 
 module.exports = mongoose.model('Interest', interestSchema);

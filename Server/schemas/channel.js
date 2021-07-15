@@ -22,7 +22,7 @@ const channelSchema = new Schema({
         ref: 'User',
     },
     createdAt: {
-        type: Date,
+        type: String,
         default: getDate,
     },
 });

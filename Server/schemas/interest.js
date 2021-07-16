@@ -7,6 +7,7 @@ const interestSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        index: true,
     },
     userCount: {
         type: Number,

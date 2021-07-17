@@ -31,6 +31,14 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.MyView
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
+    public void setting(ArrayList<Interests> interests){
+        items = interests;
+    }
+    public void equals(Interests interests2){
+
+    }
+
+
 
 
     //껍데기만 만듬. 1번 실행

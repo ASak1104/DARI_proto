@@ -15,21 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_dari.Login.LoginActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Interests_Activity extends AppCompatActivity {
 
     private RecyclerView my_interests;
-    private int position=0;
-    private int position_a;
-    private int position_b;
-    private int position_c;
-    private int position_d;
-    private int position_e;
-    private int position_f;
     InterestAdapter adapter;
-    private List<String> interests;
+    private ArrayList<Interests> interests;
+    private List<String> str_interests;
+    private int position=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +35,7 @@ public class Interests_Activity extends AppCompatActivity {
 
         my_interests =findViewById(R.id.iterests_view);
         interests = new ArrayList<>();
+        str_interests = new ArrayList<>();
 
         adapter = new InterestAdapter();
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
@@ -49,31 +47,54 @@ public class Interests_Activity extends AppCompatActivity {
         ToggleButton D = (ToggleButton) findViewById(R.id.D);
         ToggleButton E = (ToggleButton) findViewById(R.id.E);
         ToggleButton F = (ToggleButton) findViewById(R.id.F);
+        ToggleButton G = (ToggleButton) findViewById(R.id.G);
+        ToggleButton H = (ToggleButton) findViewById(R.id.H);
+        Interests a = new Interests("러닝",R.drawable.running);
+        Interests b = new Interests("게임",R.drawable.game);
+        Interests c = new Interests("자동차",R.drawable.car);
+        Interests d = new Interests("빵만들기",R.drawable.baking);
+        Interests e = new Interests("기차",R.drawable.train);
+        Interests f = new Interests("식당투어",R.drawable.eat);
+        Interests g = new Interests("영화",R.drawable.movie);
+        Interests h = new Interests("자전거",R.drawable.cycle);
+
+        Intent intent =getIntent();
+        interests =intent.getParcelableArrayListExtra("interests");
+        if(interests ==null){
+            interests = new ArrayList<>();
+        }
+        if(interests!=null) {
+            adapter.setting(interests);
+            my_interests.setAdapter(adapter);
+            if(interests.indexOf(a) != -1){A.setChecked(true);}
+            if(interests.contains(b)){B.setChecked(true);}
+            if(interests.contains(c)){C.setChecked(true);}
+            if(interests.contains(d)){D.setChecked(true);}
+            if(interests.contains(e)){E.setChecked(true);}
+            if(interests.contains(f)){F.setChecked(true);}
+            if(interests.contains(g)){G.setChecked(true);}
+            if(interests.contains(h)){H.setChecked(true);}
+        }
+
 
 
 
         A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   if(A.isChecked()==true){
-                    adapter.addItem(position, new Interests("A", R.drawable.notify));
+                if(A.isChecked()==true){
+
+                    position++;
+                    interests.add(a);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                   position_a = position;
-                   interests.add("A");
-                   position++;
-                   }
-                  else{
-                    adapter.removeItem(position_a);
-                       my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    if(position_a<position_b){position_b--;}
-                    if(position_a<position_c){position_c--;}
-                    if(position_a<position_d){position_d--;}
-                    if(position_a<position_e){position_e--;}
-                    if(position_a<position_f){position_f--;}
+
+                }
+                else{
                     position--;
+                    interests.remove(a);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    interests.remove(String.valueOf("A"));
                 }
 
             }
@@ -82,24 +103,16 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(B.isChecked()==true){
-                    adapter.addItem(position, new Interests("B", R.drawable.profile));
+                    interests.add(b);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position_b = position;
                     position++;
-                    interests.add("B");
                 }
                 else{
-                    adapter.removeItem(position_b);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    if(position_b<position_a){position_a--;}
-                    if(position_b<position_c){position_c--;}
-                    if(position_b<position_d){position_d--;}
-                    if(position_b<position_e){position_e--;}
-                    if(position_b<position_f){position_f--;}
-                    position--;
+                    interests.remove(b);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    interests.remove(String.valueOf("B"));
+                    position--;
                 }
             }
         });
@@ -107,24 +120,16 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(C.isChecked()==true){
-                    adapter.addItem(position, new Interests("C", R.drawable.map));
+                    interests.add(c);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position_c = position;
                     position++;
-                    interests.add("C");
                 }
                 else{
-                    adapter.removeItem(position_c);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    if(position_c<position_b){position_b--;}
-                    if(position_c<position_a){position_a--;}
-                    if(position_c<position_d){position_d--;}
-                    if(position_c<position_e){position_e--;}
-                    if(position_c<position_f){position_f--;}
-                    position--;
+                    interests.remove(c);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    interests.remove(String.valueOf("C"));
+                    position--;
                 }
             }
         });
@@ -132,24 +137,16 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(D.isChecked()==true){
-                    adapter.addItem(position, new Interests("D", R.drawable.message));
+                    interests.add(d);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position_d = position;
                     position++;
-                    interests.add("D");
                 }
                 else{
-                    adapter.removeItem(position_d);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    if(position_d<position_b){position_b--;}
-                    if(position_d<position_c){position_c--;}
-                    if(position_d<position_a){position_a--;}
-                    if(position_d<position_e){position_e--;}
-                    if(position_d<position_f){position_f--;}
-                    position--;
+                    interests.remove(d);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    interests.remove(String.valueOf("D"));
+                    position--;
                 }
             }
         });
@@ -157,24 +154,16 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(E.isChecked()==true){
-                    adapter.addItem(position, new Interests("E", R.drawable.arrow));
+                    interests.add(e);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position_e = position;
                     position++;
-                    interests.add("E");
                 }
                 else{
-                    adapter.removeItem(position_e);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    if(position_e<position_b){position_b--;}
-                    if(position_e<position_c){position_c--;}
-                    if(position_e<position_d){position_d--;}
-                    if(position_e<position_a){position_a--;}
-                    if(position_e<position_f){position_f--;}
-                    position--;
+                    interests.remove(e);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    interests.remove(String.valueOf("E"));
+                    position--;
                 }
             }
         });
@@ -182,35 +171,74 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(F.isChecked()==true){
-                    adapter.addItem(position, new Interests("F", R.drawable.main));
+                    interests.add(f);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position_f = position;
                     position++;
-                    interests.add("F");
                 }
                 else{
-                    adapter.removeItem(position_f);
-                    my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    if(position_f<position_b){position_b--;}
-                    if(position_f<position_c){position_c--;}
-                    if(position_f<position_d){position_d--;}
-                    if(position_f<position_e){position_e--;}
-                    if(position_f<position_a){position_a--;}
-                    position--;
+                    interests.remove(f);
+                    adapter.setting(interests);
                     my_interests.setAdapter(adapter);
-                    interests.remove(String.valueOf("F"));
+                    position--;
                 }
             }
         });
-        String[] result = interests.toArray(new String[0]);
+        G.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(G.isChecked()==true){
+                    interests.add(g);
+                    adapter.setting(interests);
+                    my_interests.setAdapter(adapter);
+                }
+                else{
+                    interests.remove(g);
+                    adapter.setting(interests);
+                    my_interests.setAdapter(adapter);
+                }
+            }
+        });
+        H.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(H.isChecked()==true){
+                    interests.add(h);
+                    adapter.setting(interests);
+                    my_interests.setAdapter(adapter);
+                }
+                else{
+                    interests.remove(h);
+                    adapter.setting(interests);
+                    my_interests.setAdapter(adapter);
+                }
+            }
+        });
+        String[] result = str_interests.toArray(new String[0]);
+        ImageButton change = (ImageButton)findViewById(R.id.change_text);
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Interests_Activity.this, Interests_text_Activity.class);
+                if(interests==null){intent.putExtra("interests",interests= new ArrayList<>());}
+                else{
+                    intent.putParcelableArrayListExtra("interests",interests);
+                    }
+                startActivity(intent);
+            }
+        });
         ImageButton next = (ImageButton)findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Interests_Activity.this, Interests_text_Activity.class);
-                intent.putExtra("interests",result);
-                startActivity(intent);
+                if(position>=3 && position<6) {
+                    Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
+                    intent.putExtra("interests", result);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(Interests_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

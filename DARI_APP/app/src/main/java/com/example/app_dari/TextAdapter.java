@@ -18,9 +18,9 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
     private int position;
 
     //리스트는 무조건 데이터를 필요로함
-    private List<Text_Interests> items=new ArrayList<>();
+    private List<Interests> items=new ArrayList<>();
 
-    public void addItem(int position ,Text_Interests interests){
+    public void addItem(int position ,Interests interests){
         items.add(position,interests);
         notifyDataSetChanged();
 
@@ -46,7 +46,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: "+position);
-        Text_Interests interests=items.get(position);
+        Interests interests=items.get(position);
         holder.setItem(interests);
     }
 
@@ -54,6 +54,9 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
     public int getItemCount() {
         Log.d(TAG, "getItemCount: ");
         return items.size();
+    }
+    public void setting(ArrayList<Interests> interests){
+        items = interests;
     }
 
     //ViewHolder : 뷰들의 책꽂이
@@ -70,7 +73,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
         }
 
         //규칙3
-        public void setItem(Text_Interests interests){
+        public void setItem(Interests interests){
             Log.d(TAG, "MyViewHolder: ");
             interests_name.setText(interests.getInterests_name());
 

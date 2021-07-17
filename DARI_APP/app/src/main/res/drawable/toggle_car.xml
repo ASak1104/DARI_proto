@@ -3,11 +3,11 @@
 
     <item
         android:state_checked="true"
-        android:drawable="@drawable/map"/>
+        android:drawable="@drawable/car"/>
 
     <item
         android:state_checked="false"
-        android:drawable="@drawable/map"/>
+        android:drawable="@drawable/car"/>
 
 
 </selector>

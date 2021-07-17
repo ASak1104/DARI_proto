@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "nmon": "nodemon start ./bin/www",
-    "pm2": "pm2 start npm -- start --watch"
+    "pm2": "pm2 start npm -- start --watch -i max"
   },
   "dependencies": {
     "@admin-bro/express": "^3.1.0",

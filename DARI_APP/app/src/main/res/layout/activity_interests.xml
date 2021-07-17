@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context=".Interests_Activity"
+    tools:context=".Interest.Interests_Activity"
     android:orientation="vertical"
     android:layout_height="match_parent">
 

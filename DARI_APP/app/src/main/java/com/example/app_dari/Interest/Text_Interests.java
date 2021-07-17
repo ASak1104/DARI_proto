@@ -1,4 +1,4 @@
-package com.example.app_dari;
+package com.example.app_dari.Interest;
 
 public class Text_Interests {
     public String getInterests_name() {

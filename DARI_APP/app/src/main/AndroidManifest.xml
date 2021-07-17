@@ -20,8 +20,8 @@
         <activity android:name=".Chat_Activity"/>
         <activity android:name=".Notify_Activity"/>
         <activity android:name=".Login.LoginActivity"/>
-        <activity android:name=".Interests_text_Activity"/>
-        <activity android:name=".Interests_Activity">
+        <activity android:name=".Interest.Interests_text_Activity"/>
+        <activity android:name=".Interest.Interests_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

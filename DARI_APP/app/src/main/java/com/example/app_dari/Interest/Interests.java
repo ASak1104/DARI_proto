@@ -1,9 +1,7 @@
-package com.example.app_dari;
+package com.example.app_dari.Interest;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 
 public class Interests implements Parcelable {
 

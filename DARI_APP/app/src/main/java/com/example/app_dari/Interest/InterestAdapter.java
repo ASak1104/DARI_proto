@@ -1,4 +1,4 @@
-package com.example.app_dari;
+package com.example.app_dari.Interest;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_dari.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
+public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.MyViewHolder>{
     private static final String TAG = "InterestsAdapter";
     private int position;
 
@@ -30,6 +32,14 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
+    public void setting(ArrayList<Interests> interests){
+        items = interests;
+    }
+    public void equals(Interests interests2){
+
+    }
+
+
 
 
     //껍데기만 만듬. 1번 실행
@@ -38,7 +48,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: ");
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        View view=inflater.inflate(R.layout.text_items,parent,false);
+        View view=inflater.inflate(R.layout.items,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -55,28 +65,27 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.MyViewHolder>{
         Log.d(TAG, "getItemCount: ");
         return items.size();
     }
-    public void setting(ArrayList<Interests> interests){
-        items = interests;
-    }
 
     //ViewHolder : 뷰들의 책꽂이
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         //규칙1
         private TextView interests_name;
+        private ImageView imgResource;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             //규칙2
             interests_name=itemView.findViewById(R.id.its_name);
+            imgResource=itemView.findViewById(R.id.its_img);
         }
 
         //규칙3
         public void setItem(Interests interests){
             Log.d(TAG, "MyViewHolder: ");
             interests_name.setText(interests.getInterests_name());
-
+            imgResource.setImageResource(interests.getImgResource());
         }
     }
 }

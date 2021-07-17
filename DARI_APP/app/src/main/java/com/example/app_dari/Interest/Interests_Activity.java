@@ -1,23 +1,28 @@
-package com.example.app_dari;
+package com.example.app_dari.Interest;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_dari.Login.LoginActivity;
+import com.example.app_dari.MainActivity;
+import com.example.app_dari.R;
+import com.example.app_dari.RetrofitClient;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Interests_Activity extends AppCompatActivity {
 
@@ -26,6 +31,8 @@ public class Interests_Activity extends AppCompatActivity {
     private ArrayList<Interests> interests;
     private List<String> str_interests;
     private int position=0;
+    private RetrofitClient retrofitClient;
+    private com.example.app_dari.initMyApi initMyApi;
 
 
     @Override
@@ -58,23 +65,6 @@ public class Interests_Activity extends AppCompatActivity {
         Interests g = new Interests("영화",R.drawable.movie);
         Interests h = new Interests("자전거",R.drawable.cycle);
 
-        Intent intent =getIntent();
-        interests =intent.getParcelableArrayListExtra("interests");
-        if(interests ==null){
-            interests = new ArrayList<>();
-        }
-        if(interests!=null) {
-            adapter.setting(interests);
-            my_interests.setAdapter(adapter);
-            if(interests.indexOf(a) != -1){A.setChecked(true);}
-            if(interests.contains(b)){B.setChecked(true);}
-            if(interests.contains(c)){C.setChecked(true);}
-            if(interests.contains(d)){D.setChecked(true);}
-            if(interests.contains(e)){E.setChecked(true);}
-            if(interests.contains(f)){F.setChecked(true);}
-            if(interests.contains(g)){G.setChecked(true);}
-            if(interests.contains(h)){H.setChecked(true);}
-        }
 
 
 
@@ -88,6 +78,8 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(a);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("러닝");
 
                 }
                 else{
@@ -95,6 +87,8 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.remove(a);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("러닝"));
                 }
 
             }
@@ -106,13 +100,17 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(b);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
                     position++;
+                    str_interests.add("게임");
                 }
                 else{
                     interests.remove(b);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
                     position--;
+                    str_interests.remove(String.valueOf("게임"));
                 }
             }
         });
@@ -123,12 +121,16 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(c);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
                     position++;
+                    str_interests.add("자동차");
                 }
                 else{
                     interests.remove(c);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("자동차"));
                     position--;
                 }
             }
@@ -140,12 +142,16 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(d);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("빵만들기");
                     position++;
                 }
                 else{
                     interests.remove(d);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("빵만들기"));
                     position--;
                 }
             }
@@ -157,12 +163,16 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(e);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("기차");
                     position++;
                 }
                 else{
                     interests.remove(e);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("기차"));
                     position--;
                 }
             }
@@ -174,12 +184,16 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(f);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("식당투어");
                     position++;
                 }
                 else{
                     interests.remove(f);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("식당투어"));
                     position--;
                 }
             }
@@ -191,11 +205,17 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(g);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("영화");
+                    position++;
                 }
                 else{
                     interests.remove(g);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("영화"));
+                    position--;
                 }
             }
         });
@@ -206,24 +226,28 @@ public class Interests_Activity extends AppCompatActivity {
                     interests.add(h);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("자전거");
+                    position++;
                 }
                 else{
                     interests.remove(h);
                     adapter.setting(interests);
                     my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.remove(String.valueOf("자전거"));
+                    position--;
                 }
             }
         });
-        String[] result = str_interests.toArray(new String[0]);
+        String[] result_interests = str_interests.toArray(new String[0]);
+
         ImageButton change = (ImageButton)findViewById(R.id.change_text);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("array", str_interests.get(0));
                 Intent intent = new Intent(Interests_Activity.this, Interests_text_Activity.class);
-                if(interests==null){intent.putExtra("interests",interests= new ArrayList<>());}
-                else{
-                    intent.putParcelableArrayListExtra("interests",interests);
-                    }
                 startActivity(intent);
             }
         });
@@ -232,15 +256,54 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(position>=3 && position<6) {
-                    Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
-                    intent.putExtra("interests", result);
-                    startActivity(intent);
+                    Response();
+
                 }
                 else {
                     Toast.makeText(Interests_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
                 }
             }
-        });
+            public void Response(){
+                Its_Request its_request = new Its_Request(str_interests);
 
+                //retrofit 생성
+                retrofitClient = RetrofitClient.getInstance();
+                initMyApi = RetrofitClient.getRetrofitInterface();
+                initMyApi.getIts_Response(its_request).enqueue(new Callback<Its_Response>() {
+                    @Override
+                    public void onResponse(Call<Its_Response> call, Response<Its_Response> response) {
+                        if(response.isSuccessful()) {
+                            Its_Response result = response.body();
+                            boolean updated = result.isResultCode();
+
+                            if(updated ==true){
+                                Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
+                                intent.putExtra("interests", result_interests);
+                                startActivity(intent);
+                            }
+                            else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity.this);
+                                builder.setTitle("알림")
+                                        .setMessage("예기치 못한 오류가 발생하였습니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create()
+                                        .show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Its_Response> call, Throwable t) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity.this);
+                        builder.setTitle("알림")
+                                .setMessage("예기치 못한 오류가 발생하였습니다.")
+                                .setPositiveButton("확인", null)
+                                .create()
+                                .show();
+                    }
+                });
+            }
+        });
     }
+
 }

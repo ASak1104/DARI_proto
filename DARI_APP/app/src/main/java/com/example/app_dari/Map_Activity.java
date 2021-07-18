@@ -17,6 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import net.daum.mf.map.api.MapCircle;
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Map_Activity extends AppCompatActivity {
 
-    /*MapView mapView;
+    MapView mapView;
     MarkerEventListener eventListener = new MarkerEventListener();
     static UserData userData;
 
@@ -37,7 +42,6 @@ public class Map_Activity extends AppCompatActivity {
     ArrayList<ArrayList<MapPOIItem>> Markers = new ArrayList<ArrayList<MapPOIItem>>();
 
     Button[] buttons = new Button[5];
-    Button myprofile;*/
 
 
     @Override
@@ -45,12 +49,10 @@ public class Map_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        /*int permissionChecked = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int permissionChecked = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionChecked != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
-
-        myprofile=findViewById(R.id.myprofile);
 
         buttons[0] = findViewById(R.id.interest1);
         buttons[1] = findViewById(R.id.interest2);
@@ -61,16 +63,9 @@ public class Map_Activity extends AppCompatActivity {
 
         mapView = new MapView(this);
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);*/
+        mapViewContainer.addView(mapView);
 
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                request("http://dari-app.kro.kr/map/chan11");
-            }
-        }).start();*/
-
-        //request("http://dari-app.kro.kr/map/chan11");
+        request("http://dari-app.kro.kr/map/chan11");
 
         //하단 매뉴바
         ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);
@@ -112,19 +107,6 @@ public class Map_Activity extends AppCompatActivity {
         });
 
 
-    }
-
-    /*public void myprofile(View view){
-        Intent intent = new Intent(getApplicationContext(), Profile.class);
-        intent.putExtra("name", userData.name);
-        intent.putExtra("introduce", userData.introduce);
-        String interests = "";
-        for(String interest: userData.interests){
-            interests += "# "+ interest + "  ";
-        }
-        intent.putExtra("interests", interests);
-        intent.putExtra("id", userData.id);
-        startActivity(intent);
     }
 
     public void interest1(View view){
@@ -232,7 +214,7 @@ public class Map_Activity extends AppCompatActivity {
         @Override
         public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
         }
-    }*/
+    }
 
     public void request(String urlStr){//일단 파일로 해보고..retrofit으로 바꿔보고..
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
@@ -241,7 +223,7 @@ public class Map_Activity extends AppCompatActivity {
         RetrofitService service1 = retrofit.create(RetrofitService.class);
         Call<UserData> call = service1.getPosts("chan11");
 
-        /*call.enqueue(new Callback<UserData>() {
+        call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
 
@@ -287,72 +269,7 @@ public class Map_Activity extends AppCompatActivity {
             public void onFailure(Call<UserData> call, Throwable t) {
 
             }
-        });*/
-        /*try {
-            URL url = new URL(urlStr);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            //String json = "";
-            //JSONObject jsonObject = new JSONObject();
-            //jsonObject.accumulate("id","me-long"); //이부분에 아이디!!
-            //json = jsonObject.toString();
-
-            conn.setConnectTimeout(10000);
-            conn.setUseCaches(false);
-            //conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("Content-type", "application/json");
-            conn.setRequestMethod("GET");
-
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-            String lines = reader.readLine();
-            Log.d("TAG", lines + "\n");
-            Gson gson = new Gson();
-            userData = gson.fromJson(lines, UserData.class);
-
-            conn.disconnect();
-
-            //
-            for (int i = 0; i < userData.interests.length; i++) {
-                buttons[i].setVisibility(View.VISIBLE);
-                buttons[i].setText("# " + userData.interests[i]);
-            }
-
-            mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(userData.latitude, userData.longitude), 4, true);
-            mapView.setPOIItemEventListener(eventListener);
-
-            Circle3km();
-
-            for (int tagi = 0; tagi < userData.otherUsers.size(); tagi++) {
-                userData.otherUsers.get(tagi).tag = tagi;
-                Marker(tagi, userData.otherUsers.get(tagi).latitude, userData.otherUsers.get(tagi).longitude);
-            }
-
-            String[] myinterests = userData.interests;
-            for (int k = 0; k < userData.interests.length; k++) {
-                ArrayList<Integer> array = new ArrayList<Integer>();
-                ArrayList<MapPOIItem> marker = new ArrayList<MapPOIItem>();
-                for (int i = 0; i < userData.otherUsers.size(); i++) {
-                    String[] interests = userData.otherUsers.get(i).interests;
-                    if (Arrays.asList(interests).contains(myinterests[k])) {
-                        array.add(userData.otherUsers.get(i).tag);
-                        MapPOIItem m = new MapPOIItem();
-                        m.setTag(userData.otherUsers.get(i).tag);
-                        m.setMapPoint(MapPoint.mapPointWithGeoCoord(userData.otherUsers.get(i).latitude,
-                                userData.otherUsers.get(i).longitude));
-                        marker.add(m);
-                    }
-                }
-                Categry.add(array);
-                Markers.add(marker);
-            }
-
-
-        } catch (Exception ex) {
-            Log.d("TAG", ex + "\n");
-        }*/
+        });
 
     }
 

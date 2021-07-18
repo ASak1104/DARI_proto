@@ -16,13 +16,13 @@ router.get('/', (req, res, next) => {
 router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
     const { id, password, name } = req.body;
     try {
-        const exUser = await User.findById(id).lean();
+        const exUser = await User.findOne({ userId: id }).lean();
         if (exUser) {
             return res.status(200).json({ 'isSignedUp': false });
         }
         const hash = await bcrypt.hash(password, 12);
         await User.create({
-            id,
+            userId: id,
             password: hash,
             name,
         });

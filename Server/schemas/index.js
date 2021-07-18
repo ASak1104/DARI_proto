@@ -10,9 +10,9 @@ const getDate = () => {
 };
 
 const connect = () => {
-    if (process.env.NODE_ENV !== 'production') {
-        mongoose.set('debug', true);
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //     mongoose.set('debug', true);
+    // }
     mongoose.connect(DB_URL, {
         dbName: 'test',
         useCreateIndex: true,

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { getDate } = require('./index');
 const userSchema = new Schema({
-    id: {
+    userId: {
         type: String,
         required: true,
         unique: true,

@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/:id', async (req, res, next) => {
     const { interests } = req.body;
     try {
-        const user = await User.findOne( { id: req.params.id }, '_id').lean();
+        const user = await User.findOne( { userId: req.params.id }, '_id').lean();
         await Promise.all(interests.map(async (item) => {
             const interest = await Interest.findOne({ name: item }, '_id').lean();
             await UserToInterest.create({

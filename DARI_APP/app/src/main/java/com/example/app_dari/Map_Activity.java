@@ -2,7 +2,6 @@ package com.example.app_dari;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,10 +36,7 @@ public class Map_Activity extends AppCompatActivity {
 
     MapView mapView;
     MarkerEventListener eventListener = new MarkerEventListener();
-    static UserData userData;
-
-    ArrayList<ArrayList<Integer>> Categry = new ArrayList<ArrayList<Integer>>();
-    ArrayList<ArrayList<MapPOIItem>> Markers = new ArrayList<ArrayList<MapPOIItem>>();
+    MapData mapData;
 
     Button[] buttons = new Button[5];
 
@@ -109,60 +106,15 @@ public class Map_Activity extends AppCompatActivity {
 
     }
 
-    public void interest1(View view){
-        mapView.removeAllPOIItems();
-        Categry.get(0);
-        MapPOIItem[] mapPo = new MapPOIItem[Markers.get(0).size()];
-        for(int i=0; i<Markers.get(0).size(); i++){
-            mapPo[i]=Markers.get(0).get(i);
-            mapPo[i].setItemName("프로필 보기");
-            mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        }
-        mapView.addPOIItems(mapPo);
-    }
-    public void interest2(View view){
-        mapView.removeAllPOIItems();
-        Categry.get(1);
-        MapPOIItem[] mapPo = new MapPOIItem[Markers.get(1).size()];
-        for(int i=0; i<Markers.get(1).size(); i++){
-            mapPo[i]=Markers.get(1).get(i);
-            mapPo[i].setItemName("프로필 보기");
-            mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        }
-        mapView.addPOIItems(mapPo);
-    }
-    public void interest3(View view){
-        mapView.removeAllPOIItems();
-        Categry.get(2);
-        MapPOIItem[] mapPo = new MapPOIItem[Markers.get(2).size()];
-        for(int i=0; i<Markers.get(2).size(); i++){
-            mapPo[i]=Markers.get(2).get(i);
-            mapPo[i].setItemName("프로필 보기");
-            mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        }
-        mapView.addPOIItems(mapPo);
-    }
-    public void interest4(View view){
-        mapView.removeAllPOIItems();
-        Categry.get(3);
-        MapPOIItem[] mapPo = new MapPOIItem[Markers.get(3).size()];
-        for(int i=0; i<Markers.get(3).size(); i++){
-            mapPo[i]=Markers.get(3).get(i);
-            mapPo[i].setItemName("프로필 보기");
-            mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        }
-        mapView.addPOIItems(mapPo);
-    }
-    public void interest5(View view){
-        mapView.removeAllPOIItems();
-        Categry.get(4);
-        MapPOIItem[] mapPo = new MapPOIItem[Markers.get(4).size()];
-        for(int i=0; i<Markers.get(4).size(); i++){
-            mapPo[i]=Markers.get(4).get(i);
+    public void InterestMarker(int k){
+        MapPOIItem[] mapPo = new MapPOIItem[mapData.interests.get(k).otherUsers.size()];
+        int i=0;
+        for(OtherUserData otherUserData : mapData.interests.get(k).otherUsers){
+            mapPo[i].setTag(i+k*100);
+            otherUserData.tag=i+k*100;
+            mapPo[i].setMapPoint(MapPoint.mapPointWithGeoCoord(
+                    otherUserData.latitude,
+                    otherUserData.longitude));
             mapPo[i].setItemName("프로필 보기");
             mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
             mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
@@ -170,7 +122,43 @@ public class Map_Activity extends AppCompatActivity {
         mapView.addPOIItems(mapPo);
     }
 
-    private void Marker(int tag, double latitude, double longitude) {
+    public void interestbtclr(int k){
+        for (int i = 0; i < mapData.interests.size(); i++) {
+            buttons[i].setBackground(this.getResources().getDrawable(R.drawable.button2));
+            buttons[i].setTextColor(Color.BLACK);
+        }
+        buttons[k].setBackground(this.getResources().getDrawable(R.drawable.button2_001194));
+        buttons[k].setTextColor(Color.WHITE);
+    }
+
+    public void interest1(View view){
+        mapView.removeAllPOIItems();
+        InterestMarker(0);
+        interestbtclr(0);
+
+    }
+    public void interest2(View view){
+        mapView.removeAllPOIItems();
+        InterestMarker(1);
+        interestbtclr(1);
+    }
+    public void interest3(View view){
+        mapView.removeAllPOIItems();
+        InterestMarker(2);
+        interestbtclr(2);
+    }
+    public void interest4(View view){
+        mapView.removeAllPOIItems();
+        InterestMarker(3);
+        interestbtclr(3);
+    }
+    public void interest5(View view){
+        mapView.removeAllPOIItems();
+        InterestMarker(4);
+        interestbtclr(4);
+    }
+
+    /*private void Marker(int tag, double latitude, double longitude) {
         MapPOIItem marker = new MapPOIItem();
         marker.setItemName("프로필 보기");
         marker.setTag(tag);
@@ -178,11 +166,11 @@ public class Map_Activity extends AppCompatActivity {
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
         mapView.addPOIItem(marker);
-    }
+    }*/
 
     private void Circle3km() {
         MapCircle circle3km = new MapCircle(
-                MapPoint.mapPointWithGeoCoord(userData.latitude,userData.longitude), // center, 내위치
+                MapPoint.mapPointWithGeoCoord(UserStatic.latitude, UserStatic.longitude), // center, 내위치
                 3000, // radius
                 Color.argb(64,0, 0, 255), // strokeColor
                 Color.argb(24, 0, 0, 255) // fillColor
@@ -198,14 +186,19 @@ public class Map_Activity extends AppCompatActivity {
         @Override
         public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
             Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
-            intent.putExtra("name", userData.otherUsers.get(mapPOIItem.getTag()).name);
-            intent.putExtra("introduce", userData.otherUsers.get(mapPOIItem.getTag()).introduce);
-            String interests = "";
-            for(String interest: userData.otherUsers.get(mapPOIItem.getTag()).interests){
-                interests += "# "+ interest + "  ";
+            for(OtherUserData otherUser : mapData.interests.get(mapPOIItem.getTag()/100).otherUsers){
+                if(otherUser.tag==mapPOIItem.getTag()){
+                    intent.putExtra("name", otherUser.name);
+                    String interests = "";
+                    for(String interest: otherUser.interests){
+                        interests += "# "+ interest + "  ";
+                    }
+                    intent.putExtra("interests", interests);
+                    intent.putExtra("id", otherUser.id);
+                    break;
+                }
             }
-            intent.putExtra("interests", interests);
-            intent.putExtra("id", userData.otherUsers.get(mapPOIItem.getTag()).id);
+
             startActivity(intent);
         }
         @Override
@@ -221,52 +214,31 @@ public class Map_Activity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         RetrofitService service1 = retrofit.create(RetrofitService.class);
-        Call<UserData> call = service1.getPosts("chan11");
+        Call<MapData> call = service1.getPosts(UserStatic.id);
 
-        call.enqueue(new Callback<UserData>() {
+        call.enqueue(new Callback<MapData>() {
             @Override
-            public void onResponse(Call<UserData> call, Response<UserData> response) {
+            public void onResponse(Call<MapData> call, Response<MapData> response) {
 
-                userData=response.body();
-                Log.d("관심사",userData.name);
-                for (int i = 0; i < userData.interests.length; i++) {
+                mapData =response.body();
+
+                for (int i = 0; i < mapData.interests.size(); i++) {
                     buttons[i].setVisibility(View.VISIBLE);
-                    buttons[i].setText("# " + userData.interests[i]);
+                    buttons[i].setText("# " + mapData.interests.get(i).name);
                 }
 
-                mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(userData.latitude, userData.longitude), 4, true);
+                mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(UserStatic.latitude, UserStatic.longitude), 4, true);
                 mapView.setPOIItemEventListener(eventListener);
 
                 Circle3km();
 
-                for (int tagi = 0; tagi < userData.otherUsers.size(); tagi++) {
-                    userData.otherUsers.get(tagi).tag = tagi;
-                    Marker(tagi, userData.otherUsers.get(tagi).latitude, userData.otherUsers.get(tagi).longitude);
-                }
-
-                String[] myinterests = userData.interests;
-                for (int k = 0; k < userData.interests.length; k++) {
-                    ArrayList<Integer> array = new ArrayList<Integer>();
-                    ArrayList<MapPOIItem> marker = new ArrayList<MapPOIItem>();
-                    for (int i = 0; i < userData.otherUsers.size(); i++) {
-                        String[] interests = userData.otherUsers.get(i).interests;
-                        if (Arrays.asList(interests).contains(myinterests[k])) {
-                            array.add(userData.otherUsers.get(i).tag);
-                            MapPOIItem m = new MapPOIItem();
-                            m.setTag(userData.otherUsers.get(i).tag);
-                            m.setMapPoint(MapPoint.mapPointWithGeoCoord(userData.otherUsers.get(i).latitude,
-                                    userData.otherUsers.get(i).longitude));
-                            marker.add(m);
-                        }
-                    }
-                    Categry.add(array);
-                    Markers.add(marker);
-                }
+                InterestMarker(0);
+                interestbtclr(0);
 
             }
 
             @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
+            public void onFailure(Call<MapData> call, Throwable t) {
 
             }
         });

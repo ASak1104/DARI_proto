@@ -10,7 +10,7 @@ dotenv.config()
 const { connect } = require('./schemas');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-const interestRouter = require('./routes/interest');
+const profileRouter = require('./routes/profile');
 const mapRouter = require('./routes/map');
 const adminRouter = require('./routes/admin');
 const passportConfig = require('./passport');
@@ -37,7 +37,7 @@ connect()
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/interest', interestRouter);
+app.use('/profile', profileRouter);
 app.use('/map', mapRouter);
 app.use(process.env.ADMIN_ROOT, adminRouter);
 
@@ -51,8 +51,7 @@ app.use((err, req, res, next) => {
     console.log(err);
     res.locals.message = err.message;
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
-    res.status(err.status || 500);
-    res.end()
+    res.status(err.status || 500).send();
 });
 
 app.listen(app.get('port'), () => {

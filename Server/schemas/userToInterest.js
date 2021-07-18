@@ -14,5 +14,6 @@ const userToInterestSchema = new Schema({
         ref: 'Interest',
     },
 });
+userToInterestSchema.index({ user: 1, interest: 1 }, { unique: true });
 
 module.exports = mongoose.model('UserToInterest', userToInterestSchema);

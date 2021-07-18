@@ -14,5 +14,7 @@ const userToChannelSchema = new Schema({
         ref: 'Channel',
     },
 });
+userToChannelSchema.index({ user: 1, channel: 1 }, { unique: true });
+
 
 module.exports = mongoose.model('UserToChannel', userToChannelSchema);

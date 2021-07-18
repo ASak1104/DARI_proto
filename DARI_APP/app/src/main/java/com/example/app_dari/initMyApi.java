@@ -12,7 +12,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface initMyApi {
 
@@ -23,7 +25,7 @@ public interface initMyApi {
     @POST("/auth/sign-up")
     Call<SignupResponse> getSignupResponse(@Body SignupRequest signupRequest);
 
-    @POST("/profile/asdfasdfasdf")
-    Call<Its_Response> getIts_Response(@Body Its_Request its_resquest);
+    @PUT("/user/{id}/profile/interest")
+    Call<Its_Response> getIts_Response(@Path("id") String id , @Body Its_Request its_resquest);
 
 }

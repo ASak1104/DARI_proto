@@ -21,7 +21,8 @@
         <activity android:name=".Notify_Activity"/>
         <activity android:name=".Login.LoginActivity"/>
         <activity android:name=".Interest.Interests_text_Activity"/>
-        <activity android:name=".Interest.Interests_Activity">
+        <activity android:name=".Interest.Interests_Activity"/>
+        <activity android:name=".Slpash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

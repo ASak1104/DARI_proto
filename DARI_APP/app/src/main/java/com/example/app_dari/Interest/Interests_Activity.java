@@ -17,6 +17,7 @@ import com.example.app_dari.MainActivity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,7 @@ public class Interests_Activity extends AppCompatActivity {
     private ArrayList<Interests> interests;
     private List<String> str_interests;
     private int position=0;
-    private RetrofitClient retrofitClient;
-    private com.example.app_dari.initMyApi initMyApi;
+    private String id ="qwerqwer";
 
 
     @Override
@@ -246,8 +246,8 @@ public class Interests_Activity extends AppCompatActivity {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("array", str_interests.get(0));
                 Intent intent = new Intent(Interests_Activity.this, Interests_text_Activity.class);
+                intent.putExtra("interests", (Serializable) str_interests);
                 startActivity(intent);
             }
         });
@@ -256,53 +256,16 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(position>=3 && position<6) {
-                    Response();
+                    Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
+                    intent.putExtra("interests", (Serializable) str_interests);
+                    startActivity(intent);
 
                 }
                 else {
                     Toast.makeText(Interests_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
                 }
             }
-            public void Response(){
-                Its_Request its_request = new Its_Request(str_interests);
 
-                //retrofit 생성
-                retrofitClient = RetrofitClient.getInstance();
-                initMyApi = RetrofitClient.getRetrofitInterface();
-                initMyApi.getIts_Response(its_request).enqueue(new Callback<Its_Response>() {
-                    @Override
-                    public void onResponse(Call<Its_Response> call, Response<Its_Response> response) {
-                        if(response.isSuccessful()) {
-                            Its_Response result = response.body();
-                            boolean updated = result.isResultCode();
-
-                            if(updated ==true){
-                                Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
-                                intent.putExtra("interests", result_interests);
-                                startActivity(intent);
-                            }
-                            else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity.this);
-                                builder.setTitle("알림")
-                                        .setMessage("예기치 못한 오류가 발생하였습니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create()
-                                        .show();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Its_Response> call, Throwable t) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity.this);
-                        builder.setTitle("알림")
-                                .setMessage("예기치 못한 오류가 발생하였습니다.")
-                                .setPositiveButton("확인", null)
-                                .create()
-                                .show();
-                    }
-                });
-            }
         });
     }
 

@@ -2,7 +2,6 @@ package com.example.app_dari.Interest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -17,9 +16,7 @@ import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.MainActivity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
-import com.example.app_dari.initMyApi;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +24,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Interests_text_Activity extends AppCompatActivity {
+public class Interests_text_Activity_later extends AppCompatActivity {
 
     private RecyclerView my_interests;
     private int position=0;
     TextAdapter adapter;
     private ArrayList<Interests> interests;
     private List<String> str_interests;
+    private RetrofitClient retrofitClient;
+    private com.example.app_dari.initMyApi initMyApi;
     private String id ="qwerqwer";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,6 @@ public class Interests_text_Activity extends AppCompatActivity {
         Interests f = new Interests("식당투어",R.drawable.eat);
         Interests g = new Interests("영화",R.drawable.movie);
         Interests h = new Interests("자전거",R.drawable.cycle);
-
 
 
         A.setOnClickListener(new View.OnClickListener() {
@@ -220,12 +218,14 @@ public class Interests_text_Activity extends AppCompatActivity {
                 }
             }
         });
+        int size = str_interests.size();
+        String[] result_interests = str_interests.toArray(new String[size]);
 
         ImageButton change = (ImageButton)findViewById(R.id.change_img);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Interests_text_Activity.this, Interests_Activity.class);
+                Intent intent = new Intent(Interests_text_Activity_later.this, Interests_Activity_later.class);
                 startActivity(intent);
             }
         });
@@ -234,14 +234,52 @@ public class Interests_text_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(position>=3 && position<6) {
-                    Intent intent = new Intent(Interests_text_Activity.this, MainActivity.class);
-                    intent.putExtra("interests", (Serializable) str_interests);
-                    startActivity(intent);
+                    Response();
 
                 }
                 else {
-                    Toast.makeText(Interests_text_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Interests_text_Activity_later.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
                 }
+            }
+            public void Response(){
+                Its_Request its_request = new Its_Request(str_interests);
+
+                //retrofit 생성
+                retrofitClient = RetrofitClient.getInstance();
+                initMyApi = RetrofitClient.getRetrofitInterface();
+                initMyApi.getIts_Response(id,its_request).enqueue(new Callback<Its_Response>() {
+                    @Override
+                    public void onResponse(Call<Its_Response> call, Response<Its_Response> response) {
+                        if(response.isSuccessful()) {
+                            Its_Response result = response.body();
+                            boolean updated = result.isResultCode();
+
+                            if(updated ==true){
+                                Intent intent = new Intent(Interests_text_Activity_later.this, MainActivity.class);
+                                intent.putExtra("interests", result_interests);
+                                startActivity(intent);
+                            }
+                            else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Interests_text_Activity_later.this);
+                                builder.setTitle("알림")
+                                        .setMessage("예기치 못한 오류가 발생하였습니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create()
+                                        .show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Its_Response> call, Throwable t) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Interests_text_Activity_later.this);
+                        builder.setTitle("알림")
+                                .setMessage("예기치 못한 오류가 발생하였습니다.")
+                                .setPositiveButton("확인", null)
+                                .create()
+                                .show();
+                    }
+                });
             }
         });
     }

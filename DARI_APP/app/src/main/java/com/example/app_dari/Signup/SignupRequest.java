@@ -19,19 +19,11 @@ public class SignupRequest {
         this.name = name;
     }
 
-    public String getInputPw2() {
-        return inputPw2;
-    }
-
-    public void setInputPw2(String inputPw2) {
-        this.inputPw2 = inputPw2;
-    }
 
     @SerializedName("name")
     public String name;
 
-    @SerializedName("password2")
-    public String inputPw2;
+
 
     public String getInputId() {
         return inputId;
@@ -49,10 +41,9 @@ public class SignupRequest {
         this.inputPw = inputPw;
     }
 
-    public SignupRequest(String inputId, String inputPw, String name, String inputPw2) {
+    public SignupRequest(String inputId, String inputPw, String name) {
         this.inputId = inputId;
         this.inputPw = inputPw;
-        this.inputPw2 = inputPw2;
         this.name = name;
     }
 

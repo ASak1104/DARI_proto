@@ -3,6 +3,8 @@ package com.example.app_dari;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
 
 public class Profile_Activity extends AppCompatActivity {
 
@@ -40,8 +44,7 @@ public class Profile_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ProfileUpdate.class);
                 startActivity(intent);
-                //데이터 보네기..
-                //String name = MainActivity.userData.name;
+
             }
         });
 
@@ -51,6 +54,16 @@ public class Profile_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 TextView location = findViewById(R.id.location);
                 //gps좌표찍기
+
+                //post로 서버에 보내기
+
+                //좌표->주소 변환
+                Geocoder g = new Geocoder(getApplicationContext());
+                List<Address> address=null;
+                try {
+                    address = g.getFromLocation(37.611727784292306, 126.99397368752474, 10);
+                    location.setText(address.get(3).getAddressLine(0));
+                } catch (Exception e){}
             }
         });
 

@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
             ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
             ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
 
-
-
-
             btn_map.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.finish();
                 }
             });
-                btn_profile.setOnClickListener(new View.OnClickListener() {
+            btn_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, Profile_Activity.class);
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.finish();
                     }
                 });
-                btn_chat.setOnClickListener(new View.OnClickListener() {
+            btn_chat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, Chat_Activity.class);
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.finish();
                     }
                 });
-                btn_notify.setOnClickListener(new View.OnClickListener() {
+            btn_notify.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, Notify_Activity.class);
@@ -72,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.finish();
                     }
                 });
+
+
+
 
 
         }

@@ -1,5 +1,7 @@
 package com.example.app_dari;
 
+import android.text.Editable;
+
 public class UserStatic {
     static String name;
     static String id;

@@ -32,7 +32,7 @@ public class Interests_Activity extends AppCompatActivity {
     private ArrayList<Interests> interests;
     private List<String> str_interests;
     private int position=0;
-    private String id ="qwerqwer";
+    private String myId;
 
 
     @Override
@@ -64,6 +64,9 @@ public class Interests_Activity extends AppCompatActivity {
         Interests f = new Interests("식당투어",R.drawable.eat);
         Interests g = new Interests("영화",R.drawable.movie);
         Interests h = new Interests("자전거",R.drawable.cycle);
+
+        Intent intent = getIntent();
+        myId = intent.getExtras().getString("myId");
 
 
 
@@ -258,6 +261,7 @@ public class Interests_Activity extends AppCompatActivity {
                 if(position>=3 && position<6) {
                     Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
                     intent.putExtra("interests", (Serializable) str_interests);
+                    intent.putExtra("myId",myId);
                     startActivity(intent);
 
                 }
@@ -266,6 +270,15 @@ public class Interests_Activity extends AppCompatActivity {
                 }
             }
 
+        });
+
+        ImageButton back = (ImageButton)findViewById(R.id.interests_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

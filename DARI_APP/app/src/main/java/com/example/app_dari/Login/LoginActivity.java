@@ -119,9 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                         //다른 통신을 하기 위해 token 저장
 
 
-                        Toast.makeText(LoginActivity.this, userID + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, name + "님 환영합니다.", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("name", name);
+                        intent.putExtra("myId", userID);
                         startActivity(intent);
                         LoginActivity.this.finish();
 

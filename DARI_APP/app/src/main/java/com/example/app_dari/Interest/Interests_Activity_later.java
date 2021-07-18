@@ -241,7 +241,6 @@ public class Interests_Activity_later extends AppCompatActivity {
                 }
             }
         });
-        String[] result_interests = str_interests.toArray(new String[0]);
 
         ImageButton change = (ImageButton)findViewById(R.id.change_text);
         change.setOnClickListener(new View.OnClickListener() {
@@ -263,37 +262,35 @@ public class Interests_Activity_later extends AppCompatActivity {
                     Toast.makeText(Interests_Activity_later.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
                 }
             }
-            public void Response(){
-                Its_Request its_request = new Its_Request(str_interests);
+        });
 
-                //retrofit 생성
-                retrofitClient = RetrofitClient.getInstance();
-                initMyApi = RetrofitClient.getRetrofitInterface();
-                initMyApi.getIts_Response(id,its_request).enqueue(new Callback<Its_Response>() {
-                    @Override
-                    public void onResponse(Call<Its_Response> call, Response<Its_Response> response) {
-                        if(response.isSuccessful()) {
-                            Its_Response result = response.body();
-                            boolean updated = result.isResultCode();
+        ImageButton back = (ImageButton)findViewById(R.id.interests_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Interests_Activity_later.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+    public void Response(){
+        Its_Request its_request = new Its_Request(str_interests);
 
-                            if(updated ==true){
-                                Intent intent = new Intent(Interests_Activity_later.this, MainActivity.class);
-                                intent.putExtra("interests", result_interests);
-                                startActivity(intent);
-                            }
-                            else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity_later.this);
-                                builder.setTitle("알림")
-                                        .setMessage("예기치 못한 오류가 발생하였습니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create()
-                                        .show();
-                            }
-                        }
+        //retrofit 생성
+        retrofitClient = RetrofitClient.getInstance();
+        initMyApi = RetrofitClient.getRetrofitInterface();
+        initMyApi.getIts_Response(id,its_request).enqueue(new Callback<Its_Response>() {
+            @Override
+            public void onResponse(Call<Its_Response> call, Response<Its_Response> response) {
+                if(response.isSuccessful()) {
+                    Its_Response result = response.body();
+                    boolean updated = result.isResultCode();
+
+                    if(updated ==true){
+                        Intent intent = new Intent(Interests_Activity_later.this, MainActivity.class);
+                        startActivity(intent);
                     }
-
-                    @Override
-                    public void onFailure(Call<Its_Response> call, Throwable t) {
+                    else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity_later.this);
                         builder.setTitle("알림")
                                 .setMessage("예기치 못한 오류가 발생하였습니다.")
@@ -301,7 +298,17 @@ public class Interests_Activity_later extends AppCompatActivity {
                                 .create()
                                 .show();
                     }
-                });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Its_Response> call, Throwable t) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Interests_Activity_later.this);
+                builder.setTitle("알림")
+                        .setMessage("예기치 못한 오류가 발생하였습니다.")
+                        .setPositiveButton("확인", null)
+                        .create()
+                        .show();
             }
         });
     }

@@ -34,7 +34,7 @@ public class Interests_text_Activity extends AppCompatActivity {
     TextAdapter adapter;
     private ArrayList<Interests> interests;
     private List<String> str_interests;
-    private String id ="qwerqwer";
+    private String myId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +62,9 @@ public class Interests_text_Activity extends AppCompatActivity {
         Interests f = new Interests("식당투어",R.drawable.eat);
         Interests g = new Interests("영화",R.drawable.movie);
         Interests h = new Interests("자전거",R.drawable.cycle);
+
+        Intent intent = getIntent();
+        myId = intent.getExtras().getString("myId");
 
 
 
@@ -236,12 +239,20 @@ public class Interests_text_Activity extends AppCompatActivity {
                 if(position>=3 && position<6) {
                     Intent intent = new Intent(Interests_text_Activity.this, MainActivity.class);
                     intent.putExtra("interests", (Serializable) str_interests);
+                    intent.putExtra("myId",myId);
                     startActivity(intent);
-
                 }
                 else {
                     Toast.makeText(Interests_text_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        ImageButton back = (ImageButton)findViewById(R.id.interests_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Interests_text_Activity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

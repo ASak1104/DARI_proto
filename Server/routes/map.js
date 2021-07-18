@@ -14,10 +14,9 @@ const router = express.Router();
 router.get('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne( { userId: req.params.id }, '_id').lean();
-
         const userWithInterest = async (user) => {
             const interestIds = await UserToInterest.find({ user: user._id }, 'interest -_id').lean();
-            user.interest = await Promise.all(interestIds.map(async (item) => {
+            user.interests = await Promise.all(interestIds.map(async (item) => {
                 return Interest.findById(item.interest, 'name -_id').lean().then((obj) => obj.name);
             }));
             delete user._id;
@@ -31,7 +30,7 @@ router.get('/:id', async (req, res, next) => {
                     .then((objs) => objs.map((obj) => obj.user));
                 delete interest._id;
                 interest.otherUsers = await Promise.all(otherUserIds.map(async (o_id) => {
-                    const otherUser = await User.findById(o_id, 'name latitude longitude').lean();
+                    const otherUser = await User.findById(o_id, 'userId name latitude longitude').lean();
                     await userWithInterest(otherUser);
                     return otherUser;
                 }));

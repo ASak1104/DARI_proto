@@ -44,8 +44,8 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
         }
         if (!user) {
             return res.json({
-                'isSignedIn': false,
-                'status': info.status,
+                isSignedIn: false,
+                status: info.status,
             });
         }
         return req.login(user, (loginError) => {
@@ -54,8 +54,8 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
                 return next(loginError);
             }
             return res.json({
-                'isSignedIn': true,
-                'status': info.status,
+                isSignedIn: true,
+                status: info.status,
             });
         });
     })(req, res, next);

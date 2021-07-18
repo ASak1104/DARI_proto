@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileUpdate">
+
+    <ImageView
+        android:id="@+id/imageViewup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/profile_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/mynameup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="김국민"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewup" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:text="서울특별시 성북구 정릉동"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/viewup"
+        app:layout_constraintTop_toBottomOf="@+id/mynameup" />
+
+    <TextView
+        android:id="@+id/introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="소개"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintTop_toBottomOf="@+id/location" />
+
+    <EditText
+        android:id="@+id/myintroduce2up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="안녕하세요. 김국민입니다."
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintTop_toBottomOf="@+id/introduce" />
+
+    <TextView
+        android:id="@+id/myinterest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="관심사"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintTop_toBottomOf="@+id/myintroduce2up" />
+
+    <View
+        android:id="@+id/viewup"
+        android:layout_width="14dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/textSelectHandle"
+        android:rotation="180"
+        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintTop_toBottomOf="@+id/mynameup" />
+
+    <Button
+        android:id="@+id/modprofileup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/button"
+        android:text="프로필 저장"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/myinterest2up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="#축구  #자전거  #게임  #음악"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintTop_toBottomOf="@+id/myinterest" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="프로필 변경"
+        android:textColor="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/imageupbt"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/arrow"
+        android:foreground="@android:drawable/ic_menu_edit"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewup"
+        app:layout_constraintTop_toTopOf="@+id/imageViewup" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

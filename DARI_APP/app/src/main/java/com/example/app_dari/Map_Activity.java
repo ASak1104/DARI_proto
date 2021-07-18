@@ -62,7 +62,7 @@ public class Map_Activity extends AppCompatActivity {
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-        request("http://dari-app.kro.kr/map/chan11");
+        request();
 
         //하단 매뉴바
         ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);
@@ -209,7 +209,7 @@ public class Map_Activity extends AppCompatActivity {
         }
     }
 
-    public void request(String urlStr){//일단 파일로 해보고..retrofit으로 바꿔보고..
+    public void request(){//일단 파일로 해보고..retrofit으로 바꿔보고..
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
 

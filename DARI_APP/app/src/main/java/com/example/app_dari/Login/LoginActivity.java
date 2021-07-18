@@ -18,7 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.app_dari.Interest.Interests;
+import com.example.app_dari.Interest.Interests_Activity;
 import com.example.app_dari.MainActivity;
+import com.example.app_dari.Map_Activity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
 import com.example.app_dari.Signup.SignupActivity;
@@ -127,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         Toast.makeText(LoginActivity.this, name + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, Map_Activity.class);
                         intent.putExtra("myId", userID);
                         startActivity(intent);
                         LoginActivity.this.finish();

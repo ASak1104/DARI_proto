@@ -31,7 +31,7 @@ public class Interests_Activity_later extends AppCompatActivity {
     private ArrayList<Interests> interests;
     private List<String> str_interests;
     private int position=0;
-    private String id ="qwerqwer";
+    private String myId;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
 
@@ -65,6 +65,10 @@ public class Interests_Activity_later extends AppCompatActivity {
         Interests f = new Interests("식당투어",R.drawable.eat);
         Interests g = new Interests("영화",R.drawable.movie);
         Interests h = new Interests("자전거",R.drawable.cycle);
+
+        Intent intent = getIntent();
+        myId = intent.getExtras().getString("myId");
+
 
 
 
@@ -279,7 +283,7 @@ public class Interests_Activity_later extends AppCompatActivity {
         //retrofit 생성
         retrofitClient = RetrofitClient.getInstance();
         initMyApi = RetrofitClient.getRetrofitInterface();
-        initMyApi.getIts_Response(id,its_request).enqueue(new Callback<Its_Response>() {
+        initMyApi.getIts_Response(myId,its_request).enqueue(new Callback<Its_Response>() {
             @Override
             public void onResponse(Call<Its_Response> call, Response<Its_Response> response) {
                 if(response.isSuccessful()) {

@@ -1,7 +1,6 @@
 package com.example.app_dari;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +8,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.app_dari.Login.LoginActivity;
-import com.example.app_dari.Signup.SignupActivity;
+import com.example.app_dari.Chat.Chat_List_Activity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             btn_chat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, Chat_Activity.class);
+                    Intent intent = new Intent(MainActivity.this, Chat_List_Activity.class);
 
                     startActivity(intent);
                     MainActivity.this.finish();

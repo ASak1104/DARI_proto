@@ -243,14 +243,15 @@ public class Interests_Activity extends AppCompatActivity {
                 }
             }
         });
-        String[] result_interests = str_interests.toArray(new String[0]);
+
 
         ImageButton change = (ImageButton)findViewById(R.id.change_text);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String[] result_interests = str_interests.toArray(new String[str_interests.size()]);
+                Log.d("interests",result_interests[0]);
                 Intent intent = new Intent(Interests_Activity.this, Interests_text_Activity.class);
-                intent.putExtra("interests", (Serializable) str_interests);
                 startActivity(intent);
             }
         });

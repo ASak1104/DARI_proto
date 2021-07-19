@@ -10,7 +10,6 @@ public class LoginResponse {
         @SerializedName("name")
         public String name;
 
-
         public int getResultCode() {
             return resultCode;
         }
@@ -27,15 +26,14 @@ public class LoginResponse {
             this.name = name;
         }
 
-    public boolean isResultCode() {
+        public boolean isResultCode() {
         return resultCode2;
     }
 
-    public void setResultCode(boolean resultCode) {
+        public void setResultCode(boolean resultCode) {
         this.resultCode2 = resultCode;
     }
 
-    @SerializedName("isSignedUp")
-    public boolean resultCode2;
-
+        @SerializedName("isSignedUp")
+        public boolean resultCode2;
 }

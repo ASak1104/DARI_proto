@@ -16,16 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
 
-
-
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value=" 7467912878209f5d6dc03d6185363f23" />
 
         <activity android:name=".ProfileUpdate"></activity>
-        <activity android:name=".OtherProfile" />
+        <activity android:name=".OtherProfile"
+            android:label="프로필"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Login.LoginActivity" />
@@ -36,9 +33,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="01f9b837e8cfa1dac102523ce53de7f2" />
     </application>
 
 </manifest>

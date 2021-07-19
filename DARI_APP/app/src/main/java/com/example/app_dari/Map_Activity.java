@@ -62,7 +62,7 @@ public class Map_Activity extends AppCompatActivity {
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-        request("http://dari-app.kro.kr/map/chan11");
+        //request("http://dari-app.kro.kr/map/chan11");
 
         //하단 매뉴바
         ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);

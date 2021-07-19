@@ -16,6 +16,7 @@ public interface RetrofitService {
     @GET("api/map/{post}")
     Call<MapData> getPosts(@Path("post") String post);
 
+    @FormUrlEncoded
     @POST("user/{post}/profile/")
     Call<ProfileUpRq> postData(@Path("post") String post, @Field("introduce") String introduce,
                                @Field("interests") String[] interests,

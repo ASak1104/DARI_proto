@@ -16,28 +16,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
-        android:usesCleartextTraffic="true" >
-
-
+        android:usesCleartextTraffic="true">
+        <activity android:name=".SetProfile"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="01f9b837e8cfa1dac102523ce53de7f2" />
 
-        <activity android:name=".Signup.SignupActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".Map_Activity"/>
-        <activity android:name=".Profile_Activity"/>
-        <activity android:name=".Chat_Activity"/>
-        <activity android:name=".Notify_Activity"/>
-        <activity android:name=".Interest.Interests_text_Activity"/>
-        <activity android:name=".Interest.Interests_Activity"/>
-        <activity android:name=".Slpash"/>
-        <activity android:name=".ProfileUpdate"/>
-        <activity android:name=".OtherProfile"
+        <activity android:name=".Signup.SignupActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Map_Activity" />
+        <activity android:name=".Profile_Activity" />
+        <activity android:name=".Chat_Activity" />
+        <activity android:name=".Notify_Activity" />
+        <activity android:name=".Interest.Interests_text_Activity" />
+        <activity android:name=".Interest.Interests_Activity" />
+        <activity android:name=".Slpash" />
+        <activity android:name=".ProfileUpdate" />
+        <activity
+            android:name=".OtherProfile"
             android:label="프로필"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
-
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

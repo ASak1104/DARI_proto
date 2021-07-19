@@ -28,8 +28,8 @@ public class ProfileUpdate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_update);
 
-        myname = findViewById(R.id.mynameup);
-        myname.setText(UserStatic.name);
+        myintroduce = findViewById(R.id.myintroduce2up);
+        myintroduce.setText(UserStatic.introduce);
         myintroduce = findViewById(R.id.myintroduce2up);
         myintroduce.setText(UserStatic.introduce);
         myinterests = findViewById(R.id.myinterest2up);

@@ -14,7 +14,7 @@ public interface RetrofitService {
     @GET("map/{post}")
     Call<MapData> getPosts(@Path("post") String post);
 
-    @POST("{post}")
+    @POST("{post}/profile/")
     Call<ProfileUpRq> postData(@Path("post") String post, @FieldMap HashMap<String, Object> param);
 
     @PUT("{post}")

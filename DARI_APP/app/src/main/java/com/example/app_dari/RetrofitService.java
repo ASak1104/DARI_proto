@@ -17,7 +17,10 @@ public interface RetrofitService {
     Call<MapData> getPosts(@Path("post") String post);
 
     @POST("user/{post}/profile/")
-    Call<ProfileUpRq> postData(@Path("post") String post, @FieldMap HashMap<String, Object> param);
+    Call<ProfileUpRq> postData(@Path("post") String post, @Field("introduce") String introduce,
+                               @Field("interests") String[] interests,
+                               @Field("latitude") double latitude,
+                               @Field("longitude") double longitude);
 
     @FormUrlEncoded
     @PUT("user/{post}/location/") //위치 업데이트
@@ -28,9 +31,6 @@ public interface RetrofitService {
     @PUT("user/{post}/profile/") //정보 업데이트
     Call<ProfileUpRq> putData(@Path("post") String post, @Field("name") String name,
                               @Field("introduce") String introduce, @Field("interests") String[] interests);
-
-    @PUT("{post}")
-    Call<ProfileUpRq> putData(@Path("post") String post, @FieldMap HashMap<String, Object> param);
 
 
 }

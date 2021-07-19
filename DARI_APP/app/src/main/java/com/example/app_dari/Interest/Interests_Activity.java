@@ -257,12 +257,17 @@ public class Interests_Activity extends AppCompatActivity {
             }
         });
         ImageButton next = (ImageButton)findViewById(R.id.next);
+        String[] interests = new String[str_interests.size()];
+        int size=0;
+        for(String temp : str_interests){
+            interests[size++] = temp;
+        }
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(position>=3 && position<6) {
                     Intent intent = new Intent(Interests_Activity.this, SetProfile.class);
-                    intent.putExtra("interests", (Serializable) str_interests);
+                    intent.putExtra("interests", interests);
                     intent.putExtra("myId",myId);
                     startActivity(intent);
 

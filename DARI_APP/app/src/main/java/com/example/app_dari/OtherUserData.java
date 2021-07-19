@@ -3,7 +3,7 @@ package com.example.app_dari;
 public class OtherUserData {
     int tag;
     String name;
-    String id;
+    String userId;
     double latitude;
     double longitude;
     String introduce;

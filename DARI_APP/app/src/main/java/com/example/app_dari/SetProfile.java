@@ -38,7 +38,7 @@ public class SetProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_profile);
         Intent intent = getIntent();
-        UserStatic.id=intent.getExtras().getString("myId");
+        UserStatic.userId=intent.getExtras().getString("myId");
         UserStatic.interests=intent.getExtras().getStringArray("interests");
 
         setlocation = findViewById(R.id.setlocation);
@@ -68,7 +68,7 @@ public class SetProfile extends AppCompatActivity {
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("introduce",UserStatic.introduce);
                 input.put("interests",UserStatic.interests);
-                retrofitService.postData(UserStatic.id,input).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.postData(UserStatic.userId,input).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
@@ -107,7 +107,7 @@ public class SetProfile extends AppCompatActivity {
         HashMap<String, Object> input = new HashMap<>();
         input.put("latitude",UserStatic.latitude);
         input.put("longitude",UserStatic.longitude);
-        retrofitService.postData(UserStatic.id,input).enqueue(new Callback<ProfileUpRq>() {
+        retrofitService.postData(UserStatic.userId,input).enqueue(new Callback<ProfileUpRq>() {
             @Override
             public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                 if(response.isSuccessful()) {

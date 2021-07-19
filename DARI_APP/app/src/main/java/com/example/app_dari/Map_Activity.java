@@ -110,7 +110,9 @@ public class Map_Activity extends AppCompatActivity {
         MapPOIItem[] mapPo = new MapPOIItem[mapData.interests.get(k).otherUsers.size()];
         int i=0;
         for(OtherUserData otherUserData : mapData.interests.get(k).otherUsers){
-            mapPo[i].setTag(i+k*100);
+            MapPOIItem marker = new MapPOIItem();
+            marker.setTag(i+k*100);
+            mapPo[i]=marker;
             otherUserData.tag=i+k*100;
             mapPo[i].setMapPoint(MapPoint.mapPointWithGeoCoord(
                     otherUserData.latitude,
@@ -118,6 +120,7 @@ public class Map_Activity extends AppCompatActivity {
             mapPo[i].setItemName("프로필 보기");
             mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
             mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+            i++;
         }
         mapView.addPOIItems(mapPo);
     }
@@ -194,7 +197,7 @@ public class Map_Activity extends AppCompatActivity {
                         interests += "# "+ interest + "  ";
                     }
                     intent.putExtra("interests", interests);
-                    intent.putExtra("id", otherUser.id);
+                    intent.putExtra("userId", otherUser.userId);
                     break;
                 }
             }
@@ -214,7 +217,7 @@ public class Map_Activity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         RetrofitService service1 = retrofit.create(RetrofitService.class);
-        Call<MapData> call = service1.getPosts(UserStatic.id);
+        Call<MapData> call = service1.getPosts(UserStatic.userId);
 
         call.enqueue(new Callback<MapData>() {
             @Override

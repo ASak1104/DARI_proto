@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,19 +24,20 @@ public class OtherProfile extends AppCompatActivity {
         interests.setText(intent.getExtras().getString("interests"));
 
 
-        String id =intent.getExtras().getString("id");
+        String id =intent.getExtras().getString("userId");
+        Log.d("id",id);
         //introduce랑 이미지 뷰 받기
 
         TextView introduce = findViewById(R.id.introduce2);
 
         ImageView img = (ImageView)findViewById(R.id.view);
-        if(id.equals("kang12"))
+        if(id.equals("kang11"))
             img.setImageResource(R.drawable.p1);
-        else if(id.equals("ASak1104"))
+        else if(id.equals("asak1104"))
             img.setImageResource(R.drawable.p2);
-        else if(id.equals("lim123"))
+        else if(id.equals("chan11"))
             img.setImageResource(R.drawable.p3);
-        else if(id.equals("kim123"))
+        else if(id.equals("kim11"))
             img.setImageResource(R.drawable.p4);
 
         //채팅시작

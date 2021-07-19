@@ -2,6 +2,7 @@ package com.example.app_dari;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +23,17 @@ public class ProfileUpdate extends AppCompatActivity {
     EditText myname;
     EditText myintroduce;
     TextView myinterests;
+    TextView mylocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_update);
 
+        myname = findViewById(R.id.mynameup);
+        myname.setText(UserStatic.name);
+        mylocation = findViewById(R.id.location);
+        mylocation.setText(UserStatic.location);
         myintroduce = findViewById(R.id.myintroduce2up);
         myintroduce.setText(UserStatic.introduce);
         myintroduce = findViewById(R.id.myintroduce2up);
@@ -60,11 +66,7 @@ public class ProfileUpdate extends AppCompatActivity {
 
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-                HashMap<String, Object> input = new HashMap<>();
-                input.put("name",UserStatic.name);
-                input.put("introduce",UserStatic.introduce);
-                input.put("interests",UserStatic.interests);
-                retrofitService.putData(UserStatic.id,input).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.userId,UserStatic.name,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
@@ -79,7 +81,7 @@ public class ProfileUpdate extends AppCompatActivity {
                     }
                 });
 
-                finish();
+                ProfileUpdate.this.finish();
             }
         });
 

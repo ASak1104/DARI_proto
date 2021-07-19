@@ -29,24 +29,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Profile_Activity extends AppCompatActivity {
 
+    TextView myname;
+    TextView myinterests;
+    TextView myintroduce;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        TextView myname = findViewById(R.id.myname);
+        myname = findViewById(R.id.myname);
         myname.setText(UserStatic.name);
-        TextView myinterests = findViewById(R.id.myinterest2);
+        myinterests = findViewById(R.id.myinterest2);
         String interests="";
         for(String interest: UserStatic.interests) {
             interests += "# " + interest + "  ";
         }
         myinterests.setText(interests);
-        TextView myintroduce = findViewById(R.id.myintroduce2);
+        myintroduce = findViewById(R.id.myintroduce2);
         myintroduce.setText(UserStatic.introduce);
 
-        String id =UserStatic.id;
+        String id =UserStatic.userId;
 
         ImageView img = (ImageView)findViewById(R.id.imageView);
         //img.setImageResource(R.drawable.me);
@@ -74,10 +78,7 @@ public class Profile_Activity extends AppCompatActivity {
 
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-                HashMap<String, Object> input = new HashMap<>();
-                input.put("latitude",UserStatic.latitude);
-                input.put("longitude",UserStatic.longitude);
-                retrofitService.putData(UserStatic.id,input).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.userId,UserStatic.latitude,UserStatic.longitude).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
@@ -98,6 +99,7 @@ public class Profile_Activity extends AppCompatActivity {
                 try {
                     address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
                     location.setText(address.get(3).getAddressLine(0));
+                    UserStatic.location=address.get(3).getAddressLine(0);
                 } catch (Exception e){}
             }
         });
@@ -157,4 +159,18 @@ public class Profile_Activity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myname = findViewById(R.id.myname);
+        myname.setText(UserStatic.name);
+        myinterests = findViewById(R.id.myinterest2);
+        String interests="";
+        for(String interest: UserStatic.interests) {
+            interests += "# " + interest + "  ";
+        }
+        myinterests.setText(interests);
+        myintroduce = findViewById(R.id.myintroduce2);
+        myintroduce.setText(UserStatic.introduce);
+    }
 }

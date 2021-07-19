@@ -14,10 +14,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Profile_Activity extends AppCompatActivity {
 
@@ -59,6 +67,28 @@ public class Profile_Activity extends AppCompatActivity {
                 //gps좌표찍기
                 startLocalService();
                 //post로 서버에 보내기
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
+                        addConverterFactory(GsonConverterFactory.create()).build();
+
+                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+
+                HashMap<String, Object> input = new HashMap<>();
+                input.put("latitude",UserStatic.latitude);
+                input.put("longitude",UserStatic.longitude);
+                retrofitService.postData(input).enqueue(new Callback<ProfileUpRq>() {
+                    @Override
+                    public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
+                        if(response.isSuccessful()) {
+                            ProfileUpRq profileUpRq = response.body();
+                            Toast.makeText(getApplicationContext(),"동네인증 완료!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfileUpRq> call, Throwable t) {
+
+                    }
+                });
 
                 //좌표->주소 변환
                 Geocoder g = new Geocoder(getApplicationContext());

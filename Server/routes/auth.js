@@ -18,7 +18,7 @@ router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
     try {
         const exUser = await User.findOne({ userId: id }).lean();
         if (exUser) {
-            return res.status(200).json({ 'isSignedUp': false });
+            return res.status(204).json({ 'isSignedUp': false });
         }
         const hash = await bcrypt.hash(password, 12);
         await User.create({

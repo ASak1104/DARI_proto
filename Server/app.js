@@ -8,10 +8,10 @@ const passport = require('passport');
 
 dotenv.config()
 const { connect } = require('./schemas');
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
-const mapRouter = require('./routes/map');
+const apiRouter = require('./routes/api');
 const adminRouter = require('./routes/admin');
 const passportConfig = require('./passport');
 
@@ -38,7 +38,7 @@ connect()
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-app.use('/map', mapRouter);
+app.use('/api', apiRouter);
 app.use(process.env.ADMIN_ROOT, adminRouter);
 
 app.use((req, res, next) => {

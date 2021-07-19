@@ -63,7 +63,7 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
 
 
 /* GET /auth/sign-out */
-router.get('/sign-out', isSignedIn, (req, res) => {
+router.get('ㅎ', isSignedIn, (req, res) => {
     req.logout();
     req.session.destroy();
     res.json({ 'isSignedOut': true });

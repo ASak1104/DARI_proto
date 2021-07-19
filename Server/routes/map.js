@@ -9,7 +9,6 @@ const router = express.Router();
 
 
 /* GET /map/id page */
-// need to make MW finding interest DB using _id
 // apply isSignedIn MW later
 router.get('/:id', async (req, res, next) => {
     try {

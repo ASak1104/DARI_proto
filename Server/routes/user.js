@@ -1,6 +1,6 @@
 const express = require('express');
-const profileRouter = require('./profile');
-const locationRouter = require('./location');
+const profileRouter = require('./user/profile');
+const locationRouter = require('./user/location');
 
 const router = express.Router();
 

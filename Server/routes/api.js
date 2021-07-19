@@ -1,5 +1,5 @@
 const express = require('express');
-const mapRouter = require('./map');
+const mapRouter = require('./api/map');
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 const express = require('express');
-const { isSignedIn, isNotSignedIn } = require('./middlewares');
-const User = require('../schemas/user');
+const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const User = require('../../schemas/user');
 
 const router = express.Router();
 

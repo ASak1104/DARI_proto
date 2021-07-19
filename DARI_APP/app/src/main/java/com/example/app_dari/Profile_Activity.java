@@ -1,12 +1,15 @@
 package com.example.app_dari;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,24 +46,24 @@ public class Profile_Activity extends AppCompatActivity {
         myname = findViewById(R.id.myname);
         myname.setText(UserStatic.name);
         myinterests = findViewById(R.id.myinterest2);
-        String interests="";
-        for(String interest: UserStatic.interests) {
+        String interests = "";
+        for (String interest : UserStatic.interests) {
             interests += "# " + interest + "  ";
         }
         myinterests.setText(interests);
         myintroduce = findViewById(R.id.myintroduce2);
         myintroduce.setText(UserStatic.introduce);
 
-        String id =UserStatic.userId;
+        String id = UserStatic.userId;
 
-        ImageView img = (ImageView)findViewById(R.id.imageView);
+        ImageView img = (ImageView) findViewById(R.id.imageView);
         //img.setImageResource(R.drawable.me);
 
         Button modprofile = findViewById(R.id.modprofile);
         modprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ProfileUpdate.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileUpdate.class);
                 startActivity(intent);
 
             }
@@ -78,12 +82,12 @@ public class Profile_Activity extends AppCompatActivity {
 
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-                retrofitService.putData(UserStatic.userId,UserStatic.latitude,UserStatic.longitude).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.userId, UserStatic.latitude, UserStatic.longitude).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             ProfileUpRq profileUpRq = response.body();
-                            Toast.makeText(getApplicationContext(),"동네인증 완료!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "동네인증 완료!", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -95,21 +99,21 @@ public class Profile_Activity extends AppCompatActivity {
 
                 //좌표->주소 변환
                 Geocoder g = new Geocoder(getApplicationContext());
-                List<Address> address=null;
+                List<Address> address = null;
                 try {
                     address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
                     location.setText(address.get(3).getAddressLine(0));
-                    UserStatic.location=address.get(3).getAddressLine(0);
-                } catch (Exception e){}
+                    UserStatic.location = address.get(3).getAddressLine(0);
+                } catch (Exception e) {
+                }
             }
         });
 
 
-
-        ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);
-        ImageButton btn_chat = (ImageButton)findViewById(R.id.btn_chat);
-        ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
-        ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
+        ImageButton btn_main = (ImageButton) findViewById(R.id.btn_main);
+        ImageButton btn_chat = (ImageButton) findViewById(R.id.btn_chat);
+        ImageButton btn_notify = (ImageButton) findViewById(R.id.btn_notify);
+        ImageButton btn_map = (ImageButton) findViewById(R.id.btn_map);
 
         btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,15 +153,17 @@ public class Profile_Activity extends AppCompatActivity {
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         try {
-            Location location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if(location != null) {
+            Location location = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
                 UserStatic.latitude = location.getLatitude();
                 UserStatic.longitude = location.getLongitude();
             }
-        } catch (SecurityException e){
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
+
     }
+
 
     @Override
     protected void onResume() {

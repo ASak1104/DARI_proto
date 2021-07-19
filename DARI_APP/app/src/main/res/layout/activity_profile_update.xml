@@ -85,7 +85,7 @@
         android:id="@+id/modprofileup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/button"
         android:text="프로필 저장"
         android:textColor="@color/white"

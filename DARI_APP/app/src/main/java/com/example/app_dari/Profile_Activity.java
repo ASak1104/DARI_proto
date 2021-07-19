@@ -77,7 +77,7 @@ public class Profile_Activity extends AppCompatActivity {
                 HashMap<String, Object> input = new HashMap<>();
                 input.put("latitude",UserStatic.latitude);
                 input.put("longitude",UserStatic.longitude);
-                retrofitService.postData(input).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.id,input).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {

@@ -64,7 +64,7 @@ public class ProfileUpdate extends AppCompatActivity {
                 input.put("name",UserStatic.name);
                 input.put("introduce",UserStatic.introduce);
                 input.put("interests",UserStatic.interests);
-                retrofitService.postData(input).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.id,input).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {

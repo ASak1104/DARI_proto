@@ -28,11 +28,11 @@
         <activity android:name=".OtherProfile" />
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Map_Activity" />
+        <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Profile_Activity" />
         <activity android:name=".Chat_Activity" />
         <activity android:name=".Notify_Activity" />
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".Map_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

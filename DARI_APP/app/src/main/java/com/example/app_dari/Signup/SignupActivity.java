@@ -87,7 +87,7 @@ public class SignupActivity extends AppCompatActivity {
 
         //retrofit 생성
         retrofitClient = RetrofitClient.getInstance();
-        initMyApi = RetrofitClient.getRetrofitInterface();
+        /*initMyApi = RetrofitClient.getRetrofitInterface();
         initMyApi.getSignupResponse(signupRequest).enqueue(new Callback<SignupResponse>() {
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
@@ -129,7 +129,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onFailure(Call<SignupResponse> call, Throwable t) {
 
             }
-        });
+        });*/
     }
 
         protected InputFilter filterAlphaNum = new InputFilter() {
@@ -144,7 +144,7 @@ public class SignupActivity extends AppCompatActivity {
     };
 
 
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
         if (focusView != null) {
@@ -159,5 +159,5 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
+    }*/
 }

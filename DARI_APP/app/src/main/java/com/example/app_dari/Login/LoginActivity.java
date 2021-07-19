@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         initMyApi = RetrofitClient.getRetrofitInterface();
 
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
-        initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
+        /*initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                         .create()
                         .show();
             }
-        });
+        });*/
     }
     private void hideKeyboard()
     {

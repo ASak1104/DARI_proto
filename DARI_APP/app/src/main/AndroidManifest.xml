@@ -19,13 +19,12 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".SetProfile"></activity>
 
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="5bc517cace880af11fb5148e0f96c9df" />
-
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Map_Activity" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="5bc517cace880af11fb5148e0f96c9df" />
         <activity android:name=".Profile_Activity" />
         <activity android:name=".Chat_Activity" />
         <activity android:name=".Notify_Activity" />

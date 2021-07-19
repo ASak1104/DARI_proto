@@ -34,7 +34,9 @@
         <activity android:name=".Interest.Interests_Activity"/>
         <activity android:name=".Slpash"/>
         <activity android:name=".ProfileUpdate"/>
-        <activity android:name=".OtherProfile" />
+        <activity android:name=".OtherProfile"
+            android:label="프로필"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
 
         <activity android:name=".Login.LoginActivity">
             <intent-filter>

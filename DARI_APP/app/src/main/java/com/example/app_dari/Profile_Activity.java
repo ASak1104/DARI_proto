@@ -35,16 +35,18 @@ public class Profile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
-        Intent intent = getIntent();
         TextView myname = findViewById(R.id.myname);
-        myname.setText(intent.getExtras().getString("name"));
+        myname.setText(UserStatic.name);
         TextView myinterests = findViewById(R.id.myinterest2);
-        myinterests.setText(intent.getExtras().getString("interests"));
+        String interests="";
+        for(String interest: UserStatic.interests) {
+            interests += "# " + interest + "  ";
+        }
+        myinterests.setText(interests);
         TextView myintroduce = findViewById(R.id.myintroduce2);
-        myintroduce.setText(intent.getExtras().getString("introduce"));
+        myintroduce.setText(UserStatic.introduce);
 
-        String id =intent.getExtras().getString("id");
+        String id =UserStatic.id;
 
         ImageView img = (ImageView)findViewById(R.id.imageView);
         //img.setImageResource(R.drawable.me);

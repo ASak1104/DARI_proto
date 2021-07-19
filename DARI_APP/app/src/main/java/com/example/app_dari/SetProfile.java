@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -36,6 +37,9 @@ public class SetProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_profile);
+        Intent intent = getIntent();
+        UserStatic.id=intent.getExtras().getString("myId");
+        UserStatic.interests=intent.getExtras().getStringArray("interests");
 
         setlocation = findViewById(R.id.setlocation);
         locationCheck();
@@ -45,7 +49,7 @@ public class SetProfile extends AppCompatActivity {
         TextView setmyinterests = findViewById(R.id.setmyinterest2);
         String interests="";
         for(String interest: UserStatic.interests) {
-            interests += "# " + interests + "  ";
+            interests += "# " + interest + "  ";
         }
         setmyinterests.setText(interests);
         setmyintroduce = findViewById(R.id.setmyintroduce2);
@@ -55,7 +59,6 @@ public class SetProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserStatic.introduce = setmyintroduce.getText().toString();
-                //관심사 추가..
                 //서버로 보내버리기 post
                 Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
                         addConverterFactory(GsonConverterFactory.create()).build();
@@ -80,7 +83,9 @@ public class SetProfile extends AppCompatActivity {
                     }
                 });
 
-                finish();
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                SetProfile.this.finish();
             }
         });
     }

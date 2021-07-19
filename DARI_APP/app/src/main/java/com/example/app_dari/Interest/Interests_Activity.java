@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.MainActivity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.SetProfile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -259,7 +261,7 @@ public class Interests_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(position>=3 && position<6) {
-                    Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
+                    Intent intent = new Intent(Interests_Activity.this, SetProfile.class);
                     intent.putExtra("interests", (Serializable) str_interests);
                     intent.putExtra("myId",myId);
                     startActivity(intent);
@@ -276,8 +278,9 @@ public class Interests_Activity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Interests_Activity.this, MainActivity.class);
+                Intent intent = new Intent(Interests_Activity.this, LoginActivity.class);
                 startActivity(intent);
+                Interests_Activity.this.finish();
             }
         });
     }

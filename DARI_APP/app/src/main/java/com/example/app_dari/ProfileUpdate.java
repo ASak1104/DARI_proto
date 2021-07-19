@@ -35,7 +35,7 @@ public class ProfileUpdate extends AppCompatActivity {
         myinterests = findViewById(R.id.myinterest2up);
         String interests="";
         for(String interest: UserStatic.interests) {
-            interests += "# " + interests + "  ";
+            interests += "# " + interest + "  ";
         }
         myinterests.setText(interests);
         myinterests.setOnClickListener(new View.OnClickListener() {

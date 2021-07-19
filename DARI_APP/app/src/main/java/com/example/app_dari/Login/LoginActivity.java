@@ -24,7 +24,9 @@ import com.example.app_dari.MainActivity;
 import com.example.app_dari.Map_Activity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.SetProfile;
 import com.example.app_dari.Signup.SignupActivity;
+import com.example.app_dari.UserStatic;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -121,7 +123,6 @@ public class LoginActivity extends AppCompatActivity {
                     int errorId = 300; //아이디 일치x
                     int errorPw = 400; //비밀번호 일치x
 
-
                     if (resultCode ==success) {
                         String userID = idtext.getText().toString();
                         String userPassword = pwtext.getText().toString();
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         Toast.makeText(LoginActivity.this, name + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, Map_Activity.class);
+                        Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
                         intent.putExtra("myId", userID);
                         startActivity(intent);
                         LoginActivity.this.finish();

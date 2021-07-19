@@ -42,7 +42,7 @@ public class Profile_Activity extends AppCompatActivity {
 
 
         TextView myname = findViewById(R.id.myname);
-        myname.setText(UserStatic.name));
+        myname.setText(UserStatic.name);
         TextView myinterests = findViewById(R.id.myinterest2);
         String interests="";
         for(String interest: UserStatic.interests) {

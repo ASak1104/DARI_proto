@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.app_dari.Interest.Interests_Activity;
+//import com.example.app_dari.Interest.Interests_Activity;
 
 import java.util.HashMap;
 
@@ -45,8 +45,8 @@ public class ProfileUpdate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //관심사 누르면 화면 전환..
-                Intent intent = new Intent(getApplicationContext(), Interests_Activity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), Interests_Activity.class);
+                //startActivity(intent);
             }
         });
 

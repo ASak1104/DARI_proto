@@ -8,7 +8,7 @@ const UserToInterest = require('../schemas/userToInterest');
 const router = express.Router();
 
 
-/* GET /map/id page */
+/* GET api/map/id page */
 // apply isSignedIn MW later
 router.get('/:id', async (req, res, next) => {
     try {

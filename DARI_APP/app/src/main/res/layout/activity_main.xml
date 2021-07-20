@@ -53,15 +53,17 @@
         app:layout_constraintTop_toBottomOf="@+id/mylocation" />
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="130dp"
         android:layout_marginEnd="10dp"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbars="none">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -72,56 +74,55 @@
                 android:id="@+id/interest1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="10dp"
-                android:textStyle="bold"
-                android:visibility="visible"
                 android:background="@drawable/button2"
-                android:onClick="interest1"/>
+                android:onClick="interest1"
+                android:text=""
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/interest2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button2"
+                android:onClick="interest2"
                 android:text=""
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:visibility="visible"
-                android:background="@drawable/button2"
-                android:onClick="interest2"/>
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/interest3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button2"
+                android:onClick="interest3"
                 android:text=""
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:visibility="visible"
-                android:background="@drawable/button2"
-                android:onClick="interest3"/>
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/interest4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button2"
+                android:onClick="interest4"
                 android:text=""
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:background="@drawable/button2"
-                android:onClick="interest4"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/interest5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button2"
+                android:onClick="interest5"
                 android:text=""
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:background="@drawable/button2"
-                android:onClick="interest5"/>
+                android:visibility="gone" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -194,6 +195,33 @@
             android:background="@drawable/notify" />
     </RelativeLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="당신을 위한 추천"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

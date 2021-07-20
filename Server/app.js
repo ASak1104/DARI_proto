@@ -14,8 +14,10 @@ const userRouter = require('./routes/user');
 const apiRouter = require('./routes/api');
 const adminRouter = require('./routes/admin');
 const passportConfig = require('./passport');
+const webSocket = require('./socket');
 
 const app = express();
+app.set('port', process.env.PORT || 3000);
 passportConfig();
 app.use(session({
     resave: false,
@@ -54,9 +56,9 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).send();
 });
 
-app.listen(app.get('port'), () => {
+
+const server = app.listen(app.get('port'), () => {
     console.log(`Listening localhost:${app.get('port')}`);
 });
 
-
-module.exports = app;
+webSocket(server, app);

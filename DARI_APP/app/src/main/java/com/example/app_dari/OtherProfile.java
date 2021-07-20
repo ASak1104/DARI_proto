@@ -31,8 +31,10 @@ public class OtherProfile extends AppCompatActivity {
         TextView introduce = findViewById(R.id.introduce2);
 
         ImageView img = (ImageView)findViewById(R.id.view);
-        if(id.equals("kang11"))
-            img.setImageResource(R.drawable.p1);
+        if(id.equals("kang11")){
+            img.setImageResource(R.drawable.p0);
+            introduce.setText("안녕하세요. 다리 CEO 강호산입니다. 친구를 찾고있습니다. 편하게 연락주세요.");
+        }
         else if(id.equals("asak1104"))
             img.setImageResource(R.drawable.p2);
         else if(id.equals("chan11"))

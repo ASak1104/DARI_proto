@@ -36,6 +36,7 @@ public class Profile_Activity extends AppCompatActivity {
     TextView myname;
     TextView myinterests;
     TextView myintroduce;
+    TextView mylocation;
 
 
     @Override
@@ -43,6 +44,8 @@ public class Profile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        mylocation = findViewById(R.id.location);
+        mylocation.setText(UserStatic.location);
         myname = findViewById(R.id.myname);
         myname.setText(UserStatic.name);
         myinterests = findViewById(R.id.myinterest2);

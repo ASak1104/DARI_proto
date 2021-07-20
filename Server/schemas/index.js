@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 require('moment-timezone')
 
-const DB_URL = process.env.DB_URL;
+const { DB_URL, DB_NAME } = process.env;
 moment.tz.setDefault('Asia/Seoul');
 
 const getDate = () => {
@@ -14,7 +14,7 @@ const connect = () => {
         mongoose.set('debug', true);
     }
     mongoose.connect(DB_URL, {
-        dbName: 'test',
+        dbName: DB_NAME,
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,

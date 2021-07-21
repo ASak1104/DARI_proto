@@ -33,11 +33,16 @@ public class Interests_Activity extends AppCompatActivity {
     static List<String> str_interests = new ArrayList<>();
     static int position=0;
 
+    String userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests);
+
+        Intent intent = getIntent();
+        userID=intent.getExtras().getString("myId");
 
         my_interests =findViewById(R.id.iterests_view);
 
@@ -260,6 +265,7 @@ public class Interests_Activity extends AppCompatActivity {
                 if(position>=3 && position<6) {
                     String[] result_interests = str_interests.toArray(new String[str_interests.size()]);
                     Intent intent = new Intent(Interests_Activity.this, SetProfile.class);
+                    intent.putExtra("myId", userID);
                     intent.putExtra("interests", result_interests);
                     startActivity(intent);
 

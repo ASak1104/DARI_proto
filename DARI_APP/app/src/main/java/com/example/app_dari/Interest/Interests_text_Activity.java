@@ -30,12 +30,17 @@ import retrofit2.Response;
 
 public class Interests_text_Activity extends AppCompatActivity {
 
+    String userID;
+
     private RecyclerView my_interests;
     TextAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests_text);
+
+        Intent intent = getIntent();
+        userID=intent.getExtras().getString("myId");
 
         my_interests =findViewById(R.id.iterests_view);
         adapter = new TextAdapter();
@@ -254,6 +259,7 @@ public class Interests_text_Activity extends AppCompatActivity {
                     String[] result_interests = Interests_Activity.str_interests.toArray(new String[Interests_Activity.str_interests.size()]);
                     Intent intent = new Intent(Interests_text_Activity.this, SetProfile.class);
                     intent.putExtra("interests", result_interests);
+                    intent.putExtra("myId", userID);
                     startActivity(intent);
                 }
                 else {

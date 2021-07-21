@@ -48,7 +48,7 @@ public class ProfileUpdate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //관심사 누르면 화면 전환..
-                //Intent intent = new Intent(getApplicationContext(), Interests_Activity.class);
+                //Intent intent = new Intent(getApplicationContext(), Interests_Activity_later.class);
                 //startActivity(intent);
             }
         });

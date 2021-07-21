@@ -13,6 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,19 +74,20 @@ public class SetProfile extends AppCompatActivity {
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
                             ProfileUpRq profileUpRq = response.body();
-                            Toast.makeText(getApplicationContext(),"프로필 업데이트 성공!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"프로필 설정 성공!",Toast.LENGTH_SHORT).show();
                         }
+
                     }
 
                     @Override
                     public void onFailure(Call<ProfileUpRq> call, Throwable t) {
-
+                        Log.d("error", t.toString());
                     }
                 });
 
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-                SetProfile.this.finish();
+
             }
         });
     }

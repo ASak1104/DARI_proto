@@ -15,13 +15,11 @@ const channelSchema = new Schema({
         min: 2,
         default: 2,
     },
-    owner: {
-        type: ObjectId,
-        required: true,
-        default: null,
-        ref: 'User',
-    },
     createdAt: {
+        type: String,
+        default: getDate,
+    },
+    updatedAt: {
         type: String,
         default: getDate,
     },

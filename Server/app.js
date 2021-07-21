@@ -41,7 +41,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
-app.use(process.env.ADMIN_ROOT, adminRouter);
+app.use(process.env.ADMIN_PAGE, adminRouter);
 
 app.use((req, res, next) => {
     const error =  new Error(`Not exist ${req.method} ${req.url} router`);

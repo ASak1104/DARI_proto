@@ -28,9 +28,6 @@ public class Interests_Activity_later extends AppCompatActivity {
 
     private RecyclerView my_interests;
     InterestAdapter adapter;
-    private ArrayList<Interests> interests;
-    private List<String> str_interests;
-    private int position=0;
     private String myId;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
@@ -42,8 +39,7 @@ public class Interests_Activity_later extends AppCompatActivity {
         setContentView(R.layout.activity_interests);
 
         my_interests =findViewById(R.id.iterests_view);
-        interests = new ArrayList<>();
-        str_interests = new ArrayList<>();
+
 
         adapter = new InterestAdapter();
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
@@ -57,17 +53,21 @@ public class Interests_Activity_later extends AppCompatActivity {
         ToggleButton F = (ToggleButton) findViewById(R.id.F);
         ToggleButton G = (ToggleButton) findViewById(R.id.G);
         ToggleButton H = (ToggleButton) findViewById(R.id.H);
-        Interests a = new Interests("러닝",R.drawable.running);
-        Interests b = new Interests("게임",R.drawable.game);
-        Interests c = new Interests("자동차",R.drawable.car);
-        Interests d = new Interests("빵만들기",R.drawable.baking);
-        Interests e = new Interests("기차",R.drawable.train);
-        Interests f = new Interests("식당투어",R.drawable.eat);
-        Interests g = new Interests("영화",R.drawable.movie);
-        Interests h = new Interests("자전거",R.drawable.cycle);
 
         Intent intent = getIntent();
         myId = intent.getExtras().getString("myId");
+
+
+        adapter.setting(Interests.interests);
+        my_interests.setAdapter(adapter);
+        if(Interests.interests.contains(Interests.a)){ A.setChecked(true);}
+        if(Interests.interests.contains(Interests.b)){ B.setChecked(true);}
+        if(Interests.interests.contains(Interests.c)){ C.setChecked(true);}
+        if(Interests.interests.contains(Interests.d)){ D.setChecked(true);}
+        if(Interests.interests.contains(Interests.e)){ E.setChecked(true);}
+        if(Interests.interests.contains(Interests.f)){ F.setChecked(true);}
+        if(Interests.interests.contains(Interests.g)){ G.setChecked(true);}
+        if(Interests.interests.contains(Interests.h)){ H.setChecked(true);}
 
 
 
@@ -79,21 +79,21 @@ public class Interests_Activity_later extends AppCompatActivity {
             public void onClick(View v) {
                 if(A.isChecked()==true){
 
-                    position++;
-                    interests.add(a);
-                    adapter.setting(interests);
+                    Interests_Activity.position++;
+                    Interests.interests.add(Interests.a);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.add("러닝");
+                    Interests_Activity.str_interests.add("러닝");
 
                 }
                 else{
-                    position--;
-                    interests.remove(a);
-                    adapter.setting(interests);
+                    Interests_Activity.position--;
+                    Interests.interests.remove(Interests.a);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("러닝"));
+                    Interests_Activity.str_interests.remove(String.valueOf("러닝"));
                 }
 
             }
@@ -102,20 +102,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(B.isChecked()==true){
-                    interests.add(b);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.b);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position++;
-                    str_interests.add("게임");
+                    Interests_Activity.position++;
+                    Interests_Activity.str_interests.add("게임");
                 }
                 else{
-                    interests.remove(b);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.b);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position--;
-                    str_interests.remove(String.valueOf("게임"));
+                    Interests_Activity.position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("게임"));
                 }
             }
         });
@@ -123,20 +123,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(C.isChecked()==true){
-                    interests.add(c);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.c);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    position++;
-                    str_interests.add("자동차");
+                    Interests_Activity.position++;
+                    Interests_Activity.str_interests.add("자동차");
                 }
                 else{
-                    interests.remove(c);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.c);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("자동차"));
-                    position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("자동차"));
+                    Interests_Activity.position--;
                 }
             }
         });
@@ -144,20 +144,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(D.isChecked()==true){
-                    interests.add(d);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.d);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.add("빵만들기");
-                    position++;
+                    Interests_Activity.str_interests.add("빵만들기");
+                    Interests_Activity.position++;
                 }
                 else{
-                    interests.remove(d);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.d);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("빵만들기"));
-                    position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("빵만들기"));
+                    Interests_Activity.position--;
                 }
             }
         });
@@ -165,20 +165,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(E.isChecked()==true){
-                    interests.add(e);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.e);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.add("기차");
-                    position++;
+                    Interests_Activity.str_interests.add("기차");
+                    Interests_Activity.position++;
                 }
                 else{
-                    interests.remove(e);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.e);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("기차"));
-                    position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("기차"));
+                    Interests_Activity.position--;
                 }
             }
         });
@@ -186,20 +186,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(F.isChecked()==true){
-                    interests.add(f);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.f);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.add("식당투어");
-                    position++;
+                    Interests_Activity.str_interests.add("식당투어");
+                    Interests_Activity.position++;
                 }
                 else{
-                    interests.remove(f);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.f);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("식당투어"));
-                    position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("식당투어"));
+                    Interests_Activity.position--;
                 }
             }
         });
@@ -207,20 +207,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(G.isChecked()==true){
-                    interests.add(g);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.g);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.add("영화");
-                    position++;
+                    Interests_Activity.str_interests.add("영화");
+                    Interests_Activity.position++;
                 }
                 else{
-                    interests.remove(g);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.g);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("영화"));
-                    position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("영화"));
+                    Interests_Activity.position--;
                 }
             }
         });
@@ -228,20 +228,20 @@ public class Interests_Activity_later extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(H.isChecked()==true){
-                    interests.add(h);
-                    adapter.setting(interests);
+                    Interests.interests.add(Interests.h);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.add("자전거");
-                    position++;
+                    Interests_Activity.str_interests.add("자전거");
+                    Interests_Activity.position++;
                 }
                 else{
-                    interests.remove(h);
-                    adapter.setting(interests);
+                    Interests.interests.remove(Interests.h);
+                    adapter.setting(Interests.interests);
                     my_interests.setAdapter(adapter);
                     my_interests.scrollToPosition(adapter.getItemCount()-1);
-                    str_interests.remove(String.valueOf("자전거"));
-                    position--;
+                    Interests_Activity.str_interests.remove(String.valueOf("자전거"));
+                    Interests_Activity.position--;
                 }
             }
         });
@@ -258,7 +258,7 @@ public class Interests_Activity_later extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position>=3 && position<6) {
+                if(Interests_Activity.position>=3 && Interests_Activity.position<6) {
                     Response();
 
                 }
@@ -278,7 +278,7 @@ public class Interests_Activity_later extends AppCompatActivity {
         });
     }
     public void Response(){
-        Its_Request its_request = new Its_Request(str_interests);
+        Its_Request its_request = new Its_Request(Interests_Activity.str_interests);
 
         //retrofit 생성
         retrofitClient = RetrofitClient.getInstance();

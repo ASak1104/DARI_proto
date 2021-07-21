@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         request();
 
 
-
         btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

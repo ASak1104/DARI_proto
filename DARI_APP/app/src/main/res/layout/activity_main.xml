@@ -59,7 +59,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="130dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,55 +71,55 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/interest1"
+                android:id="@+id/minterest1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button2"
-                android:onClick="interest1"
+                android:onClick="minterest1"
                 android:text=""
                 android:textStyle="bold"
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/interest2"
+                android:id="@+id/minterest2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/button2"
-                android:onClick="interest2"
+                android:onClick="minterest2"
                 android:text=""
                 android:textStyle="bold"
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/interest3"
+                android:id="@+id/minterest3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/button2"
-                android:onClick="interest3"
+                android:onClick="minterest3"
                 android:text=""
                 android:textStyle="bold"
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/interest4"
+                android:id="@+id/minterest4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/button2"
-                android:onClick="interest4"
+                android:onClick="minterest4"
                 android:text=""
                 android:textStyle="bold"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/interest5"
+                android:id="@+id/minterest5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/button2"
-                android:onClick="interest5"
+                android:onClick="minterest5"
                 android:text=""
                 android:textStyle="bold"
                 android:visibility="gone" />

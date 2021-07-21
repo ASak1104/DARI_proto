@@ -28,6 +28,8 @@ import com.example.app_dari.SetProfile;
 import com.example.app_dari.Signup.SignupActivity;
 import com.example.app_dari.UserStatic;
 
+import net.daum.android.map.MapActivity;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

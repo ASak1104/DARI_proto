@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
     Button[] buttons = new Button[5];
 
     int interest_index=0;
-
+    RecyclerView recyclerView;
+    Adapter adapter;
     ArrayList<RecyclerItem> items = new ArrayList<RecyclerItem>();
 
     @Override
@@ -51,15 +53,17 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
         ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
 
-        buttons[0] = findViewById(R.id.interest1);
-        buttons[1] = findViewById(R.id.interest2);
-        buttons[2] = findViewById(R.id.interest3);
-        buttons[3] = findViewById(R.id.interest4);
-        buttons[4] = findViewById(R.id.interest5);
+        buttons[0] = findViewById(R.id.minterest1);
+        buttons[1] = findViewById(R.id.minterest2);
+        buttons[2] = findViewById(R.id.minterest3);
+        buttons[3] = findViewById(R.id.minterest4);
+        buttons[4] = findViewById(R.id.minterest5);
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         request();
-        interestbtclr(0);
-        makeRecyclerView(0);
 
 
 
@@ -116,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
             }
             recyclerItem.interests = interests;
             items.add(recyclerItem);
+
         }
 
-        Adapter adapter = new Adapter(items);
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter(items);
         recyclerView.setAdapter(adapter);
+
     }
 
     public String getlocation(double latitude, double longitude){
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         List<Address> address = null;
         try {
             address = g.getFromLocation(latitude, longitude, 10);
-            return address.get(3).getAddressLine(0);
+            return address.get(3).getAddressLine(0).substring(5);
         } catch (Exception e) {}
         return "error";
     }
@@ -143,27 +147,27 @@ public class MainActivity extends AppCompatActivity {
         buttons[k].setTextColor(Color.WHITE);
     }
 
-    public void interest1(View view){
+    public void minterest1(View view){
         interestbtclr(0);
         makeRecyclerView(0);
         interest_index=0;
     }
-    public void interest2(View view){
+    public void minterest2(View view){
         interestbtclr(1);
         makeRecyclerView(1);
         interest_index=1;
     }
-    public void interest3(View view){
+    public void minterest3(View view){
         interestbtclr(2);
         makeRecyclerView(2);
         interest_index=2;
     }
-    public void interest4(View view){
+    public void minterest4(View view){
         interestbtclr(3);
         makeRecyclerView(3);
         interest_index=3;
     }
-    public void interest5(View view){
+    public void minterest5(View view){
         interestbtclr(4);
         makeRecyclerView(4);
         interest_index=4;
@@ -187,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
                     buttons[i].setText("# " + mapData.interests.get(i).name);
                 }
 
+                interestbtclr(0);
+                makeRecyclerView(0);
             }
 
             @Override
@@ -197,10 +203,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public class Adapter extends RecyclerView.Adapter<Holder> {
+    public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         ArrayList<RecyclerItem> list;
         Adapter(ArrayList<RecyclerItem> list) {
             this.list = list;
+            Log.d("rr",list.get(0).name);
         }
         @NonNull
         @Override
@@ -219,38 +226,39 @@ public class MainActivity extends AppCompatActivity {
             return list.size();
         }
 
-    }
-    class Holder extends RecyclerView.ViewHolder {
-        TextView textView;
-        TextView textView2;
-        TextView textView3;
+        class Holder extends RecyclerView.ViewHolder {
+            TextView textView;
+            TextView textView2;
+            TextView textView3;
 
-        public Holder(@NonNull View itemView) {
-            super(itemView);
-            textView= itemView.findViewById(R.id.textView);
-            textView2= itemView.findViewById(R.id.textView2);
-            textView3= itemView.findViewById(R.id.textView3);
+            public Holder(@NonNull View itemView) {
+                super(itemView);
+                textView= itemView.findViewById(R.id.nameit);
+                textView2= itemView.findViewById(R.id.locationit);
+                textView3= itemView.findViewById(R.id.interestit);
 
-            itemView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
+                itemView.setOnClickListener(new View.OnClickListener()
                 {
-                    int pos = getAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION)
+                    @Override
+                    public void onClick(View v)
                     {
-                        // click event
-                        Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
-                        intent.putExtra("id", items.get(pos).userId);
-                        intent.putExtra("name", items.get(pos).name);
-                        //intent.putExtra("location", items.get(pos).location);
-                        intent.putExtra("interests", items.get(pos).interests);
-                        startActivity(intent);
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION)
+                        {
+                            // click event
+                            Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
+                            intent.putExtra("id", items.get(pos).userId);
+                            intent.putExtra("name", items.get(pos).name);
+                            //intent.putExtra("location", items.get(pos).location);
+                            intent.putExtra("interests", items.get(pos).interests);
+                            startActivity(intent);
 
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
+        }
     }
+
 }

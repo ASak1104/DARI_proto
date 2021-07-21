@@ -20,7 +20,7 @@
         <activity android:name=".SetProfile"></activity>
 
         <activity android:name=".Signup.SignupActivity" />
-        <activity android:name=".MainActivity" />
+
         <activity android:name=".Map_Activity" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -36,7 +36,8 @@
             android:name=".OtherProfile"
             android:label="프로필"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

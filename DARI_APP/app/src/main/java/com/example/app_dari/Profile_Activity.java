@@ -105,8 +105,8 @@ public class Profile_Activity extends AppCompatActivity {
                 List<Address> address = null;
                 try {
                     address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
-                    location.setText(address.get(3).getAddressLine(0));
-                    UserStatic.location = address.get(3).getAddressLine(0);
+                    location.setText(address.get(3).getAddressLine(0).substring(5));
+                    UserStatic.location = address.get(3).getAddressLine(0).substring(5);
                 } catch (Exception e) {
                 }
             }

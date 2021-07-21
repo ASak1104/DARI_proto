@@ -267,7 +267,7 @@ public class Interests_Activity extends AppCompatActivity {
                     intent.putExtra("interests", interests);
                     intent.putExtra("myId",myId);
                     startActivity(intent);
-
+                    Interests_Activity.this.finish();
                 }
                 else {
                     Toast.makeText(Interests_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();

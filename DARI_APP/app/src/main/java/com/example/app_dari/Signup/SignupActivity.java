@@ -46,13 +46,13 @@ public class SignupActivity extends AppCompatActivity {
         edit_pw2 = findViewById(R.id.edit_pw2);
         edit_id.setFilters(new InputFilter[] {filterAlphaNum});
 
-        ImageButton sign_back = (ImageButton)findViewById(R.id.sign_back);
+        /*ImageButton sign_back = (ImageButton)findViewById(R.id.sign_back);
         sign_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
         Button ok = (Button)findViewById(R.id.ok_sign);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override

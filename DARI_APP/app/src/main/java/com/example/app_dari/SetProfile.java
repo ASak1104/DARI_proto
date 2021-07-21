@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_dari.Interest.Interests_Activity;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -102,8 +104,8 @@ public class SetProfile extends AppCompatActivity {
         List<Address> address=null;
         try {
             address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
-            setlocation.setText(address.get(3).getAddressLine(0));
-            UserStatic.location=address.get(3).getAddressLine(0);
+            setlocation.setText(address.get(3).getAddressLine(0).substring(5));
+            UserStatic.location=address.get(3).getAddressLine(0).substring(5);
         } catch (Exception e){}
     }
 

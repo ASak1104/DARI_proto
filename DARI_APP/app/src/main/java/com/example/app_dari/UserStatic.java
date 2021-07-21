@@ -4,7 +4,7 @@ import android.text.Editable;
 
 public class UserStatic {
     static String name="김국민";
-    static String userId="koomin2";
+    static public String userId="koomin2";
     static double latitude=37.6102830590644;
     static double longitude=127.00663062142932;
     static String location="서울특별시 성북구 정릉동";

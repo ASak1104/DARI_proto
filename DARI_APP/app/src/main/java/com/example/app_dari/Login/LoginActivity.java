@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (resultCode ==success) {
                         String userID = idtext.getText().toString();
+                        UserStatic.userId=userID;
                         String userPassword = pwtext.getText().toString();
 
                         //다른 통신을 하기 위해 token 저장

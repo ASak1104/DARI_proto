@@ -41,7 +41,6 @@ public class SetProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_profile);
         Intent intent = getIntent();
-        UserStatic.userId=intent.getExtras().getString("myId");
         UserStatic.interests= intent.getStringArrayExtra("interests");
 
         setlocation = findViewById(R.id.setlocation);

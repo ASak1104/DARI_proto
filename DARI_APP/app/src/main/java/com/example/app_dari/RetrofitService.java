@@ -13,6 +13,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RetrofitService {
+
+    @GET("user/{post}/profile")
+    Call<GetProfile> getProfile(@Path("post") String post);
+
     @GET("api/map/{post}")
     Call<MapData> getPosts(@Path("post") String post);
 

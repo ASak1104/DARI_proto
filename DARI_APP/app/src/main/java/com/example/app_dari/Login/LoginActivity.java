@@ -18,17 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.app_dari.GetProfile;
 import com.example.app_dari.Interest.Interests;
 import com.example.app_dari.Interest.Interests_Activity;
 import com.example.app_dari.MainActivity;
+import com.example.app_dari.MapData;
 import com.example.app_dari.Map_Activity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.RetrofitService;
 import com.example.app_dari.SetProfile;
 import com.example.app_dari.Signup.SignupActivity;
 import com.example.app_dari.UserStatic;
 
 import net.daum.android.map.MapActivity;
+import net.daum.mf.map.api.MapPoint;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +40,8 @@ import java.security.NoSuchAlgorithmException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText idtext;
     EditText pwtext;
 
+    GetProfile getProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,13 +138,42 @@ public class LoginActivity extends AppCompatActivity {
                         String userPassword = pwtext.getText().toString();
 
                         //다른 통신을 하기 위해 token 저장
+                        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
+                                .addConverterFactory(GsonConverterFactory.create()).build();
 
+                        RetrofitService service1 = retrofit.create(RetrofitService.class);
+                        Call<GetProfile> call2 = service1.getProfile(UserStatic.userId);
 
-                        Toast.makeText(LoginActivity.this, name + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
-                        intent.putExtra("myId", userID);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
+                        call2.enqueue(new Callback<GetProfile>() {
+                            @Override
+                            public void onResponse(Call<GetProfile> call2, Response<GetProfile> response) {
+                                getProfile=response.body();
+                                if(getProfile.introduce!=null) {
+                                    UserStatic.name = getProfile.name;
+                                    UserStatic.userId = getProfile.userId;
+                                    UserStatic.latitude = getProfile.latitude;
+                                    UserStatic.longitude = getProfile.longitude;
+                                    UserStatic.introduce = getProfile.introduce;
+                                    UserStatic.interests = getProfile.interests;
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    LoginActivity.this.finish();
+                                }
+                                else{
+                                    Toast.makeText(LoginActivity.this, UserStatic.name + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
+                                    intent.putExtra("myId", userID);
+                                    startActivity(intent);
+                                    LoginActivity.this.finish();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<GetProfile> call2, Throwable t) {
+
+                            }
+                        });
+
 
                     } else if(resultCode==errorId){
 

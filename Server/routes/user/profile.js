@@ -1,10 +1,23 @@
 const express = require('express');
-const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const { isSignedIn, isNotSignedIn, userWithInterests } = require('../middlewares');
 const User = require('../../schemas/user');
 const Interest = require('../../schemas/interest');
 const UserToInterest = require('../../schemas/userToInterest');
 
 const router = express.Router();
+
+
+/* GET user/:id/profile page */
+router.get('/:id/profile', async (req, res, next) => {
+    try {
+        const user = await User.findOne({ userId: req.params.id }, 'userId name introduce latitude longitude').lean();
+        await userWithInterests(user);
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+});
 
 
 /* POST user/:id/profile page */
@@ -38,7 +51,7 @@ router.post('/:id/profile', async (req, res, next) => {
 
 
 /* PUT user/:id/profile page */
-router.put('/:id/profile', async (req, res, next) => {
+router.put('/profile', async (req, res, next) => {
     const { name, introduce, interests } = req.body;
     try {
         const _id = await User.findOne( { userId: req.params.id }, '_id').lean()

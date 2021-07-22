@@ -20,7 +20,7 @@ router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
         if (exUser) {
             return res.status(204).json({ 'isSignedUp': false });
         }
-        const hash = await bcrypt.hash(password, 12);
+        const hash = await bcrypt.hash(password, 14);
         await User.create({
             userId: id,
             password: hash,
@@ -53,6 +53,7 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
                 console.log(loginError);
                 return next(loginError);
             }
+            req.session.userId = req.body.id;
             return res.json({
                 isSignedIn: true,
                 status: info.status,
@@ -63,7 +64,7 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
 
 
 /* GET /auth/sign-out */
-router.get('ㅎ', isSignedIn, (req, res) => {
+router.get('/sign-out', isSignedIn, (req, res) => {
     req.logout();
     req.session.destroy();
     res.json({ 'isSignedOut': true });

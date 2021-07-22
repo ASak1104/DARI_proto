@@ -18,14 +18,15 @@
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".SetProfile"></activity>
-
-        <activity android:name=".Signup.SignupActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Map_Activity" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="5bc517cace880af11fb5148e0f96c9df" />
+
+
+        <activity android:name=".SetProfile" />
+        <activity android:name=".Signup.SignupActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Map_Activity" />
         <activity android:name=".Profile_Activity" />
         <activity android:name=".Chat_Activity" />
         <activity android:name=".Notify_Activity" />
@@ -37,7 +38,8 @@
             android:name=".OtherProfile"
             android:label="프로필"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".SupporterList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

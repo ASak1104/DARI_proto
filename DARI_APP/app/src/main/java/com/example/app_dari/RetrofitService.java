@@ -14,6 +14,9 @@ import retrofit2.http.Path;
 
 public interface RetrofitService {
 
+    @GET("user/{post}/supporter")
+    Call<Supporters> getSupporter(@Path("post") String post);
+
     @GET("user/{post}/profile")
     Call<GetProfile> getProfile(@Path("post") String post);
 

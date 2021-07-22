@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     MapData mapData;
 
-    Button[] buttons = new Button[5];
+    Button[] buttons = new Button[7];
 
     int interest_index=0;
     RecyclerView recyclerView;
@@ -248,7 +248,8 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
                             intent.putExtra("id", items.get(pos).userId);
                             intent.putExtra("name", items.get(pos).name);
-                            //intent.putExtra("location", items.get(pos).location);
+                            //intent.putExtra("location", items.get(pos).introduce);
+                            //사진도 보내?
                             intent.putExtra("interests", items.get(pos).interests);
                             startActivity(intent);
 

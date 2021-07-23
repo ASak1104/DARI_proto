@@ -20,6 +20,7 @@ public interface RetrofitService {
     @Multipart
     @POST("user/{post}/image")
     Call<ProfileUpRq> setloadImage(@Path("post") String post, @Part MultipartBody.Part image);
+
     @Multipart
     @PUT("user/{post}/image")
     Call<ProfileUpRq> uploadImage(@Path("post") String post, @Part MultipartBody.Part image);

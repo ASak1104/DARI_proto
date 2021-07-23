@@ -5,6 +5,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,6 +23,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,18 +43,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Profile_Activity extends AppCompatActivity {
 
+
+
     TextView myname;
     TextView myinterests;
     TextView myintroduce;
     TextView mylocation;
-
+    ImageView myimage;
+    List<Address> address = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
         mylocation = findViewById(R.id.location);
+        Geocoder g = new Geocoder(getApplicationContext());
+        try {
+            address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
+            mylocation.setText(address.get(3).getAddressLine(0).substring(5));
+            UserStatic.location = address.get(3).getAddressLine(0).substring(5);
+        } catch (Exception e) {
+        }
         mylocation.setText(UserStatic.location);
         myname = findViewById(R.id.myname);
         myname.setText(UserStatic.name);
@@ -57,10 +78,13 @@ public class Profile_Activity extends AppCompatActivity {
         myintroduce = findViewById(R.id.myintroduce2);
         myintroduce.setText(UserStatic.introduce);
 
-        String id = UserStatic.userId;
 
-        ImageView img = (ImageView) findViewById(R.id.imageView);
-        //img.setImageResource(R.drawable.me);
+        myimage = (ImageView) findViewById(R.id.imageView);
+        /*Glide.with(this)
+                .asBitmap()
+                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .centerCrop()
+                .into(myimage);*/
 
         Button modprofile = findViewById(R.id.modprofile);
         modprofile.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +92,6 @@ public class Profile_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ProfileUpdate.class);
                 startActivity(intent);
-
             }
         });
 
@@ -102,7 +125,6 @@ public class Profile_Activity extends AppCompatActivity {
 
                 //좌표->주소 변환
                 Geocoder g = new Geocoder(getApplicationContext());
-                List<Address> address = null;
                 try {
                     address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
                     location.setText(address.get(3).getAddressLine(0).substring(5));
@@ -167,7 +189,6 @@ public class Profile_Activity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -181,5 +202,49 @@ public class Profile_Activity extends AppCompatActivity {
         myinterests.setText(interests);
         myintroduce = findViewById(R.id.myintroduce2);
         myintroduce.setText(UserStatic.introduce);
+
+
+        Glide.with(this)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .centerCrop()
+                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .into(myimage);
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        UserStatic.userId=getPreferenceString("userId");
+
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        setPreference("userId", UserStatic.userId);
+
+    }
+    public void setPreference(String key, String value){
+        try{
+            FileOutputStream fos = openFileOutput("myFile.dat", MODE_PRIVATE);
+            DataOutputStream dos = new DataOutputStream(fos);
+            dos.writeUTF(value);
+            dos.flush();
+            dos.close();
+        }catch (Exception e){}
+
+
+    }
+    public String getPreferenceString(String key) {
+        String data2 = new String();
+        try{
+            FileInputStream fis = openFileInput("myFile.dat");
+            DataInputStream dis = new DataInputStream(fis);
+            data2= dis.readUTF();
+            dis.close();
+        }catch (Exception e){}
+        return data2;
     }
 }

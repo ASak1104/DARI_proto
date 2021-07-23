@@ -8,6 +8,7 @@ import androidx.loader.content.CursorLoader;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,9 +24,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.io.File;
 import java.util.HashMap;
@@ -50,6 +53,11 @@ public class ProfileUpdate extends AppCompatActivity {
 
     Uri selectedImageUri;
 
+    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
+            .addConverterFactory(GsonConverterFactory.create()).build();
+
+    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +75,12 @@ public class ProfileUpdate extends AppCompatActivity {
         myimage = findViewById(R.id.imageViewup);
         Glide.with(this)
                 .asBitmap()
-                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+".jpg")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .centerCrop()
+                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
                 .into(myimage);
+
         myimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,16 +117,21 @@ public class ProfileUpdate extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage(selectedImageUri, getApplicationContext());
+                if(selectedImageUri!=null){
+                    upload(selectedImageUri, getApplicationContext());
+                }
 
                 UserStatic.name = myname.getText().toString();
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
                 //서버로 보내버리기 post
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
+
+
+
+                /*Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
                         addConverterFactory(GsonConverterFactory.create()).build();
 
-                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+                RetrofitService retrofitService = retrofit.create(RetrofitService.class);*/
 
                 retrofitService.putData(UserStatic.userId,UserStatic.name,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
                     @Override
@@ -166,17 +182,14 @@ public class ProfileUpdate extends AppCompatActivity {
 
 
     // Node.js 서버에 이미지를 업로드
-    public void uploadImage(Uri imageUri, Context context) {
+    public void upload(Uri imageUri, Context context) {
         File image = new File(getRealPathFromURI(imageUri, context));
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), image);
 
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", image.getName(), requestBody);
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
-                .addConverterFactory(GsonConverterFactory.create()).build();
 
-        RetrofitService retrofitClient = retrofit.create(RetrofitService.class);
-        retrofitClient.uploadImage(UserStatic.userId,body).enqueue(new Callback<ProfileUpRq>() {
+        retrofitService.uploadImage(UserStatic.userId,body).enqueue(new Callback<ProfileUpRq>() {
             @Override
             public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
 
@@ -187,5 +200,32 @@ public class ProfileUpdate extends AppCompatActivity {
                 Log.d("PHOTO", "Upload failed : " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        UserStatic.userId=getPreference("userId");
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        setPreference("userId", UserStatic.userId);
+
+    }
+
+
+    public void setPreference(String key, String value){
+        SharedPreferences pref = getSharedPreferences("UserStatic", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.apply();
+
+    }
+    public String getPreference(String key) {
+        SharedPreferences pref = getSharedPreferences("UserStatic", MODE_PRIVATE);
+        return pref.getString(key, "");
     }
 }

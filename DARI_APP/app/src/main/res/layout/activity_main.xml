@@ -45,10 +45,10 @@
         android:id="@+id/mylocation2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="서울특별시 성북구 정릉3동"
+        android:layout_marginTop="5dp"
+        android:text="주소"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@+id/mylocation"
         app:layout_constraintTop_toBottomOf="@+id/mylocation" />
 

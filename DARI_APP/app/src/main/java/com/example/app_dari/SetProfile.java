@@ -8,6 +8,7 @@ import androidx.loader.content.CursorLoader;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Address;
@@ -213,5 +214,32 @@ public class SetProfile extends AppCompatActivity {
                 Log.d("PHOTO", "Upload failed : " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        UserStatic.userId=getPreference("userId");
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        setPreference("userId", UserStatic.userId);
+
+    }
+
+
+    public void setPreference(String key, String value){
+        SharedPreferences pref = getSharedPreferences("UserStatic", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.apply();
+
+    }
+    public String getPreference(String key) {
+        SharedPreferences pref = getSharedPreferences("UserStatic", MODE_PRIVATE);
+        return pref.getString(key, "");
     }
 }

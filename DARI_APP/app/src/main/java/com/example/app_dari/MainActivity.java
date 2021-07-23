@@ -22,6 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.data.geojson.GeoJsonPoint;
 
 import net.daum.mf.map.api.MapPoint;
 
@@ -50,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView textView = findViewById(R.id.mylocation2);
+        textView.setText(getlocation(UserStatic.latitude,UserStatic.longitude));
+
+        ImageView myimage = findViewById(R.id.imageView2);
+
+        Glide.with(this)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .centerCrop()
+                .into(myimage);
 
         ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
         ImageButton btn_chat = (ImageButton)findViewById(R.id.btn_chat);
@@ -224,9 +241,11 @@ public class MainActivity extends AppCompatActivity {
             holder.textView.setText(list.get(position).name);
             holder.textView2.setText(list.get(position).location);
             holder.textView3.setText(list.get(position).interests);
+
             Glide.with(getApplicationContext())
                     .asBitmap()
-                    .load("http://dari-app.kro.kr/user/"+items.get(position).userId+".jpg")
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .load("http://dari-app.kro.kr/user/"+items.get(position).userId+"/image")
                     .centerCrop()
                     .into(holder.imageView);
         }
@@ -257,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             // click event
                             Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
-                            intent.putExtra("id", items.get(pos).userId);
+                            intent.putExtra("userId", items.get(pos).userId);
                             intent.putExtra("name", items.get(pos).name);
                             intent.putExtra("location", items.get(pos).introduce);
                             intent.putExtra("interests", items.get(pos).interests);

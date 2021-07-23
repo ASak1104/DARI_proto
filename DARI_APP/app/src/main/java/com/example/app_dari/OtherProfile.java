@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class OtherProfile extends AppCompatActivity {
 
@@ -31,7 +32,9 @@ public class OtherProfile extends AppCompatActivity {
         ImageView otherimage = findViewById(R.id.view);
         Glide.with(this)
                 .asBitmap()
-                .load("http://dari-app.kro.kr/user/"+id+".jpg")
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .load("http://dari-app.kro.kr/user/"+id+"/image")
                 .centerCrop()
                 .into(otherimage);
 

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class OtherProfile extends AppCompatActivity {
 
     @Override
@@ -26,19 +28,12 @@ public class OtherProfile extends AppCompatActivity {
         introduce.setText(intent.getExtras().getString("introduce"));
 
         String id =intent.getExtras().getString("userId");
-        Log.d("id",id);
-        //이미지 뷰 받기
-
-        ImageView img = (ImageView)findViewById(R.id.view);
-        if(id.equals("kang11")){
-            img.setImageResource(R.drawable.p0);
-        }
-        else if(id.equals("asak1104"))
-            img.setImageResource(R.drawable.p2);
-        else if(id.equals("chan11"))
-            img.setImageResource(R.drawable.p3);
-        else if(id.equals("kim11"))
-            img.setImageResource(R.drawable.p4);
+        ImageView otherimage = findViewById(R.id.view);
+        Glide.with(this)
+                .asBitmap()
+                .load("http://dari-app.kro.kr/user/"+id+".jpg")
+                .centerCrop()
+                .into(otherimage);
 
         //채팅시작
         Button startchat = findViewById(R.id.startchat);

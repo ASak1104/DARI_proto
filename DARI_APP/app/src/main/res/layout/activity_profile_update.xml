@@ -119,16 +119,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/imageupbt"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/arrow"
-        android:foreground="@android:drawable/ic_menu_edit"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewup"
-        app:layout_constraintTop_toTopOf="@+id/imageViewup" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

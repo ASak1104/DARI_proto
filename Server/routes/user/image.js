@@ -32,23 +32,23 @@ const upload = multer({
 });
 
 
-/* GET user/:image page */
+/* GET user/:id/image page */
 router.get('/:id/image', (req, res) => {
     const ext = path.extname(path.join(__dirname, `../../${imageRepo}/${req.params.image}`));
     res.sendFile(path.join(__dirname, `../../${imageRepo}/${req.params.id}.jpg`));
 });
 
 
-/* POST user/image page */
+/* POST user/:id/image page */
 router.post('/:id/image', upload.single('image'), (req, res) => {
-    console.log(req.file);
+    // console.log(req.file);
     res.json({ url: `user/${req.params.id}/image` });
 });
 
 
-/* PUT user/image page */
+/* PUT user/:id/image page */
 router.put('/:id/image', upload.single('image'), (req, res) => {
-    console.log(req.file);
+    // console.log(req.file);
     res.json({ url: `user/${req.params.id}/image` });
 });
 

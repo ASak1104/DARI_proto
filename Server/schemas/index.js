@@ -1,13 +1,5 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
-require('moment-timezone')
-
 const { DB_URL, DB_NAME } = process.env;
-moment.tz.setDefault('Asia/Seoul');
-
-const getDate = () => {
-    return moment().format('YYYY-MM-DD HH:mm:ss:ms');
-};
 
 const connect = () => {
     if (process.env.NODE_ENV !== 'production') {
@@ -36,4 +28,4 @@ mongoose.connection.on('disconnected', () => {
 });
 
 
-module.exports = { getDate, connect };
+module.exports = connect;

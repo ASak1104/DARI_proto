@@ -51,7 +51,7 @@ router.post('/:id/profile', async (req, res, next) => {
 
 
 /* PUT user/:id/profile page */
-router.put('/profile', async (req, res, next) => {
+router.put('/:id/profile', async (req, res, next) => {
     const { name, introduce, interests } = req.body;
     try {
         const _id = await User.findOne( { userId: req.params.id }, '_id').lean()

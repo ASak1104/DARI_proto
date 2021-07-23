@@ -1,7 +1,14 @@
 const User = require('../schemas/user');
 const Interest = require('../schemas/interest');
 const UserToInterest = require('../schemas/userToInterest');
+const moment = require('moment');
+require('moment-timezone');
 
+moment.tz.setDefault('Asia/Seoul');
+
+exports.getDate = () => {
+    return moment().format('YYYY-MM-DD HH:mm:ss:ms');
+};
 
 exports.isSignedIn = (req, res, next) => {
     if (req.isAuthenticated()) {

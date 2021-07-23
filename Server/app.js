@@ -7,7 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 dotenv.config()
-const { connect } = require('./schemas');
+const connect = require('./schemas');
 const indexRouter = require('./routes');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');

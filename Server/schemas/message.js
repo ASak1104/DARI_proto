@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const { getDate } = require('./index');
+const { getDate } = require('../routes/middlewares');
 const { Types: { ObjectId } } = Schema;
 const messageSchema = new Schema({
     user:{

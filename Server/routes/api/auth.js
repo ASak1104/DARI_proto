@@ -1,8 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const { isSignedIn, isNotSignedIn } = require('./middlewares');
-const User = require('../schemas/user');
+const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const User = require('../../schemas/user');
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 });
 
 
-/* POST /auth/sign-up */
+/* POST api/auth/sign-up */
 router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
     const { id, password, name } = req.body;
     try {
@@ -34,7 +34,7 @@ router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
 });
 
 
-/* POST /auth/sign-in */
+/* POST api/auth/sign-in */
 router.post('/sign-in', isNotSignedIn, (req, res, next) => {
     console.log(`#sign-in ${req.body.id}`);
     passport.authenticate('local', (authError, user, info) => {
@@ -63,7 +63,7 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
 });
 
 
-/* GET /auth/sign-out */
+/* GET api/auth/sign-out */
 router.get('/sign-out', isSignedIn, (req, res) => {
     req.logout();
     req.session.destroy();

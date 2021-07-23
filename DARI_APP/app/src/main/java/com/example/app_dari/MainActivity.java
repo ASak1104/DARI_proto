@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import net.daum.mf.map.api.MapPoint;
 
@@ -221,6 +224,11 @@ public class MainActivity extends AppCompatActivity {
             holder.textView.setText(list.get(position).name);
             holder.textView2.setText(list.get(position).location);
             holder.textView3.setText(list.get(position).interests);
+            Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load("http://dari-app.kro.kr/user/"+items.get(position).userId+".jpg")
+                    .centerCrop()
+                    .into(holder.imageView);
         }
         @Override public int getItemCount() {
             return list.size();
@@ -230,12 +238,14 @@ public class MainActivity extends AppCompatActivity {
             TextView textView;
             TextView textView2;
             TextView textView3;
+            ImageView imageView;
 
             public Holder(@NonNull View itemView) {
                 super(itemView);
                 textView= itemView.findViewById(R.id.nameit);
                 textView2= itemView.findViewById(R.id.locationit);
                 textView3= itemView.findViewById(R.id.interestit);
+                imageView= itemView.findViewById(R.id.imageView3);
 
                 itemView.setOnClickListener(new View.OnClickListener()
                 {

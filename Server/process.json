@@ -1,0 +1,9 @@
+{
+    "script": "app.js",
+    "watch": true,
+    "ignore_watch" : ["uploads"],
+    "watch_options": {
+        "followSymlinks": false
+    },
+    "name": "process"
+}

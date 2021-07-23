@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private com.example.app_dari.initMyApi initMyApi;
     EditText idtext;
     EditText pwtext;
+    CheckBox checkBox;
 
 
     @Override
@@ -39,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         idtext = (EditText)findViewById(R.id.edit_id);
         pwtext = (EditText)findViewById(R.id.edit_pw);
 
+
+        checkBox = (CheckBox)findViewById(R.id.auto_Login);
 
         Button login = (Button)findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                     //받은 코드 저장
                     int resultCode = result.getResultCode();
 
+                    String token = result.getToken();
+
                     //받은 토큰 저장
                     String name = result.getName();
 
@@ -117,6 +124,9 @@ public class LoginActivity extends AppCompatActivity {
                         String userPassword = pwtext.getText().toString();
 
                         //다른 통신을 하기 위해 token 저장
+                        setPreference(token,token);
+
+
 
 
                         Toast.makeText(LoginActivity.this, name + "님 환영합니다.", Toast.LENGTH_LONG).show();
@@ -158,6 +168,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    public void setPreference(String key, String value){
+        SharedPreferences pref = getSharedPreferences( "Tfile", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    //내부 저장소에 저장된 데이터 가져오기
+    public String getPreferenceString(String key) {
+        SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
+        return pref.getString(key, "");
+    }
+
     private void hideKeyboard()
     {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -180,6 +203,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void checkAutoLogin(String id){
+
+        Toast.makeText(this, id + "님 환영합니다.", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 
 

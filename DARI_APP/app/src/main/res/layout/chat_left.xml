@@ -42,6 +42,6 @@
         android:textColor="#b9bcce"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/msg_text"
-        app:layout_constraintTop_toBottomOf="@+id/name_text" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

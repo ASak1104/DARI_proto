@@ -9,6 +9,7 @@ public class LoginRequest {
         @SerializedName("password")
         public String inputPw;
 
+
         public String getInputId() {
             return inputId;
         }

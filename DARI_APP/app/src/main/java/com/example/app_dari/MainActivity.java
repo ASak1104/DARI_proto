@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
                             intent.putExtra("userId", items.get(pos).userId);
                             intent.putExtra("name", items.get(pos).name);
-                            intent.putExtra("location", items.get(pos).introduce);
+                            intent.putExtra("introduce", items.get(pos).introduce);
                             intent.putExtra("interests", items.get(pos).interests);
                             startActivity(intent);
 

@@ -160,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                                     LoginActivity.this.finish();
                                 }
                                 else{
+                                    UserStatic.name = getProfile.name;
                                     Toast.makeText(LoginActivity.this, UserStatic.name + "님 환영합니다.", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
                                     intent.putExtra("myId", userID);

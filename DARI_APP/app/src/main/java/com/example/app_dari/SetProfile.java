@@ -72,7 +72,7 @@ public class SetProfile extends AppCompatActivity {
         Intent intent = getIntent();
         UserStatic.interests= intent.getStringArrayExtra("interests");
 
-        setimage.findViewById(R.id.setimageView);
+        setimage=findViewById(R.id.setimageView);
         setimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

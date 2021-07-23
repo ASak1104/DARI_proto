@@ -17,6 +17,7 @@ import com.example.app_dari.MainActivity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
 import com.example.app_dari.SetProfile;
+import com.example.app_dari.UserStatic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ public class Interests_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests);
-
 
         my_interests =findViewById(R.id.iterests_view);
 
@@ -264,7 +264,7 @@ public class Interests_Activity extends AppCompatActivity {
                     Intent intent = new Intent(Interests_Activity.this, SetProfile.class);
                     intent.putExtra("interests", result_interests);
                     startActivity(intent);
-
+                    Interests_Activity.this.finish();
                 }
                 else {
                     Toast.makeText(Interests_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();

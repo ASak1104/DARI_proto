@@ -20,10 +20,10 @@ import retrofit2.http.Path;
 public interface initMyApi {
 
 
-    @POST("/auth/sign-in")
+    @POST("/api/auth/sign-in")
     Call<LoginResponse> getLoginResponse(@Body LoginRequest loginRequest);
 
-    @POST("/auth/sign-up")
+    @POST("/api/auth/sign-up")
     Call<SignupResponse> getSignupResponse(@Body SignupRequest signupRequest);
 
     @PUT("/user/{id}/profile/interest")

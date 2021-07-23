@@ -256,6 +256,7 @@ public class Interests_text_Activity extends AppCompatActivity {
                     Intent intent = new Intent(Interests_text_Activity.this, SetProfile.class);
                     intent.putExtra("interests", result_interests);
                     startActivity(intent);
+                    Interests_text_Activity.this.finish();
                 }
                 else {
                     Toast.makeText(Interests_text_Activity.this, "3~5개의 관심사를 설정해주세요.", Toast.LENGTH_LONG).show();

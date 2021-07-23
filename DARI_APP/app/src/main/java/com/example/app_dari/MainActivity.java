@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             RecyclerItem recyclerItem = new RecyclerItem();
             recyclerItem.userId = otherUser.userId;
             recyclerItem.name = otherUser.name;
+            recyclerItem.introduce = otherUser.introduce;
             recyclerItem.location = getlocation(otherUser.latitude, otherUser.longitude);
             String interests="";
             for(String inerest: otherUser.interests){
@@ -248,8 +249,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
                             intent.putExtra("id", items.get(pos).userId);
                             intent.putExtra("name", items.get(pos).name);
-                            //intent.putExtra("location", items.get(pos).introduce);
-                            //사진도 보내?
+                            intent.putExtra("location", items.get(pos).introduce);
                             intent.putExtra("interests", items.get(pos).interests);
                             startActivity(intent);
 

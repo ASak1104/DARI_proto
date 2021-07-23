@@ -5,4 +5,5 @@ public class RecyclerItem {
     String name;
     String location;
     String interests;
+    String introduce;
 }

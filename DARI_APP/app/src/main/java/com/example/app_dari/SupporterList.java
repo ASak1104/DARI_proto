@@ -28,12 +28,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SupporterList extends AppCompatActivity {
 
+    int s=-1;
+    int e=-1;
+    int count = 0;
+
     long now;
     Date date;
     SimpleDateFormat mformat = new SimpleDateFormat("MM");
     SimpleDateFormat dformat = new SimpleDateFormat("dd");
 
     Button[] buttons = new Button[7];
+    Button[] hbuttons = new Button[13];
 
     Supporters supporters;
 
@@ -52,6 +57,21 @@ public class SupporterList extends AppCompatActivity {
         buttons[4] = findViewById(R.id.day5);
         buttons[5] = findViewById(R.id.day6);
         buttons[6] = findViewById(R.id.day7);
+
+        hbuttons[0] = findViewById(R.id.h09);
+        hbuttons[1] = findViewById(R.id.h10);
+        hbuttons[2] = findViewById(R.id.h11);
+        hbuttons[3] = findViewById(R.id.h12);
+        hbuttons[4] = findViewById(R.id.h13);
+        hbuttons[5] = findViewById(R.id.h14);
+        hbuttons[6] = findViewById(R.id.h15);
+        hbuttons[7] = findViewById(R.id.h16);
+        hbuttons[8] = findViewById(R.id.h17);
+        hbuttons[9] = findViewById(R.id.h18);
+        hbuttons[10] = findViewById(R.id.h19);
+        hbuttons[11] = findViewById(R.id.h20);
+        hbuttons[12] = findViewById(R.id.h21);
+
 
         now=System.currentTimeMillis();
         date=new Date(now);
@@ -107,6 +127,71 @@ public class SupporterList extends AppCompatActivity {
     public void day7(View view){
         daybtclr(6);
 
+    }
+
+    public void hourbt(int h){
+        count++;
+
+        if(count%2==1){
+            for(int i=0; i<13; i++){
+                hbuttons[i].setBackground(this.getResources().getDrawable(R.drawable.button2));
+                hbuttons[i].setTextColor(Color.BLACK);
+            }
+            hbuttons[h].setBackground(this.getResources().getDrawable(R.drawable.button2_001194));
+            hbuttons[h].setTextColor(Color.WHITE);
+            s=h;
+        } else {
+            e=h;
+            for(int i=s; i<=e; i++) {
+                hbuttons[i].setBackground(this.getResources().getDrawable(R.drawable.button2_001194));
+                hbuttons[i].setTextColor(Color.WHITE);
+            }
+            for(int i=e; i<=s; i++) {
+                hbuttons[i].setBackground(this.getResources().getDrawable(R.drawable.button2_001194));
+                hbuttons[i].setTextColor(Color.WHITE);
+            }
+        }
+
+    }
+
+    public void h09(View view){
+        hourbt(0);
+    }
+    public void h10(View view){
+        hourbt(1);
+    }
+    public void h11(View view){
+        hourbt(2);
+    }
+    public void h12(View view){
+        hourbt(3);
+    }
+    public void h13(View view){
+        hourbt(4);
+    }
+    public void h14(View view){
+        hourbt(5);
+    }
+    public void h15(View view){
+        hourbt(6);
+    }
+    public void h16(View view){
+        hourbt(7);
+    }
+    public void h17(View view){
+        hourbt(8);
+    }
+    public void h18(View view){
+        hourbt(9);
+    }
+    public void h19(View view){
+        hourbt(10);
+    }
+    public void h20(View view){
+        hourbt(11);
+    }
+    public void h21(View view){
+        hourbt(12);
     }
 
     public void request(){

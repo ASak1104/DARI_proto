@@ -197,6 +197,7 @@ public class Map_Activity extends AppCompatActivity {
                         interests += "# "+ interest + "  ";
                     }
                     intent.putExtra("interests", interests);
+                    intent.putExtra("introduce", otherUser.introduce);
                     intent.putExtra("userId", otherUser.userId);
                     break;
                 }

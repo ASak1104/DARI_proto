@@ -22,18 +22,16 @@ public class OtherProfile extends AppCompatActivity {
         othername.setText(intent.getExtras().getString("name"));
         TextView interests = findViewById(R.id.interest);
         interests.setText(intent.getExtras().getString("interests"));
-
+        TextView introduce = findViewById(R.id.introduce2);
+        introduce.setText(intent.getExtras().getString("introduce"));
 
         String id =intent.getExtras().getString("userId");
         Log.d("id",id);
-        //introduce랑 이미지 뷰 받기
-
-        TextView introduce = findViewById(R.id.introduce2);
+        //이미지 뷰 받기
 
         ImageView img = (ImageView)findViewById(R.id.view);
         if(id.equals("kang11")){
             img.setImageResource(R.drawable.p0);
-            introduce.setText("안녕하세요. 다리 CEO 강호산입니다. 친구를 찾고있습니다. 편하게 연락주세요.");
         }
         else if(id.equals("asak1104"))
             img.setImageResource(R.drawable.p2);

@@ -1,5 +1,5 @@
 const express = require('express');
-const { isSignedIn, isNotSignedIn, userWithInterests } = require('../middlewares');
+const { isSignedIn, isNotSignedIn } = require('../middlewares');
 const User = require('../../schemas/user');
 const Interest = require('../../schemas/interest');
 const UserToInterest = require('../../schemas/userToInterest');
@@ -11,7 +11,8 @@ const router = express.Router();
 router.get('/:id/profile', async (req, res, next) => {
     try {
         const user = await User.findOne({ userId: req.params.id }, 'userId name introduce latitude longitude').lean();
-        await userWithInterests(user);
+        await User.addInterests(user);
+        delete user._id;
         res.json(user);
     } catch (err) {
         console.log(err);

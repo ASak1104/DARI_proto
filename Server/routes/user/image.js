@@ -28,26 +28,25 @@ const upload = multer({
 });
 
 
-/* GET user/:id/image page */
+/* GET user/:image page */
 // need to change url
 router.get('/:image', (req, res) => {
     const ext = path.extname(path.join(__dirname, `../../uploads/${req.params.image}`));
-    console.log(ext);
     res.sendFile(path.join(__dirname, `../../uploads/${req.params.image}`));
 });
 
 
-/* POST user/:id/image page */
-router.post('/:id/image', upload.single('image'), (req, res) => {
+/* POST user/image page */
+router.post('/image', upload.single('image'), (req, res) => {
     console.log(req.file);
-    res.json({ url: `user/${req.params.id}/image/${req.file.filename}` });
+    res.json({ url: `user/${req.file.filename}` });
 });
 
 
-/* PUT user/:id/image page */
-router.put('/:id/image', upload.single('image'), (req, res) => {
+/* PUT user/image page */
+router.put('/image', upload.single('image'), (req, res) => {
     console.log(req.file);
-    res.json({ url: `user/${req.params.id}/image/${req.file.filename}` });
+    res.json({ url: `user/${req.file.filename}` });
 });
 
 

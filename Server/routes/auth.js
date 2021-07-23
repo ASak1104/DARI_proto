@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
     const { id, password, name } = req.body;
     try {
-        const exUser = await User.findOne({ userId: id }).lean();
+        const exUser = await User.findOne({ userId: id }, '_id').lean();
         if (exUser) {
             return res.status(204).json({ 'isSignedUp': false });
         }

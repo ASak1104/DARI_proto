@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { isSignedIn, isNotSignedIn, userWithInterests } = require('../middlewares');
+const { isSignedIn, isNotSignedIn } = require('../middlewares');
 const User = require('../../schemas/user');
 const Interest = require('../../schemas/interest');
 const UserToInterest = require('../../schemas/userToInterest');
@@ -22,8 +22,8 @@ router.get('/:id', async (req, res, next) => {
                     .then((objs) => objs.map((obj) => obj.user));
                 delete interest._id;
                 interest.otherUsers = await Promise.all(otherUserIds.map(async (o_id) => {
-                    const otherUser = await User.findById(o_id, 'userId name introduce latitude longitude').lean();
-                    await userWithInterests(otherUser);
+                    const otherUser = await User.findById(o_id, 'userId name introduce latitude longitude interests').lean();
+                    await User.addInterests(otherUser);
                     return otherUser;
                 }));
                 return interest;

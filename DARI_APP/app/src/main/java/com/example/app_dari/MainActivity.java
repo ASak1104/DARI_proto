@@ -22,12 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.signature.ObjectKey;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.data.geojson.GeoJsonPoint;
 
-import net.daum.mf.map.api.MapPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
             recyclerItem.userId = otherUser.userId;
             recyclerItem.name = otherUser.name;
             recyclerItem.introduce = otherUser.introduce;
-            recyclerItem.location = getlocation(otherUser.location.getCoordinates().latitude,
-                    otherUser.location.getCoordinates().longitude);
+            recyclerItem.location = getlocation(otherUser.location.coordinates[1],
+                    otherUser.location.coordinates[0]);
             String interests="";
             for(String inerest: otherUser.interests){
                 interests += "# " + inerest + "  ";

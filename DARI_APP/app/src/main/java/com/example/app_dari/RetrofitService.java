@@ -1,10 +1,11 @@
 package com.example.app_dari;
 
 
-import java.util.HashMap;
+import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -37,19 +38,21 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("user/{post}/profile/")
     Call<ProfileUpRq> postData(@Path("post") String post, @Field("introduce") String introduce,
-                               @Field("interests") String[] interests,
-                               @Field("latitude") double latitude,
-                               @Field("longitude") double longitude);
+                               @Field("interests") String[] interests);
 
-    @FormUrlEncoded
+    @POST("user/{post}/location/") //위치 업데이트
+    Call<ProfileUpRq> postData(@Path("post") String post,  @Body JsonObject jsonObject);
+
+
     @PUT("user/{post}/location/") //위치 업데이트
-    Call<ProfileUpRq> putData(@Path("post") String post, @Field("latitude") double latitude,
-                               @Field("longitude") double longitude);
+    Call<ProfileUpRq> putData(@Path("post") String post, @Body JsonObject jsonObject);
+
 
     @FormUrlEncoded
     @PUT("user/{post}/profile/") //정보 업데이트
     Call<ProfileUpRq> putData(@Path("post") String post, @Field("name") String name,
                               @Field("introduce") String introduce, @Field("interests") String[] interests);
+
 
 
 }

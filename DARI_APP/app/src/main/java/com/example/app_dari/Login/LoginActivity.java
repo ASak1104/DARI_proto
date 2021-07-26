@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.app_dari.GetProfile;
 import com.example.app_dari.Interest.Interests;
 import com.example.app_dari.Interest.Interests_Activity;
+import com.example.app_dari.Location;
 import com.example.app_dari.MainActivity;
 import com.example.app_dari.MapData;
 import com.example.app_dari.Map_Activity;
@@ -161,8 +162,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if(getProfile.introduce!=null) {
                                     UserStatic.name = getProfile.name;
                                     UserStatic.userId = getProfile.userId;
-                                    UserStatic.latitude = getProfile.location.getCoordinates().latitude;
-                                    UserStatic.longitude = getProfile.location.getCoordinates().longitude;
+                                    UserStatic.latitude = getProfile.location.coordinates[1];
+                                    UserStatic.longitude = getProfile.location.coordinates[0];
                                     UserStatic.introduce = getProfile.introduce;
                                     UserStatic.interests = getProfile.interests;
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

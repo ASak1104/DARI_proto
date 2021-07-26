@@ -42,6 +42,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.example.app_dari.Chat.Chat_List_Activity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class Profile_Activity extends AppCompatActivity {
 
@@ -58,7 +60,6 @@ public class Profile_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
 
         mylocation = findViewById(R.id.location);
         Geocoder g = new Geocoder(getApplicationContext());
@@ -110,7 +111,17 @@ public class Profile_Activity extends AppCompatActivity {
 
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-                retrofitService.putData(UserStatic.userId, UserStatic.latitude, UserStatic.longitude).enqueue(new Callback<ProfileUpRq>() {
+                JsonObject point = new JsonObject();
+                JsonArray coordinates = new JsonArray();
+                coordinates.add(UserStatic.longitude);
+                coordinates.add(UserStatic.latitude);
+
+                JsonObject jsonObject1 = new JsonObject();
+                jsonObject1.addProperty("type", "Point");
+                jsonObject1.add("coordinates",coordinates);
+                point.add("location", jsonObject1);
+
+                retrofitService.putData(UserStatic.userId, point).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if (response.isSuccessful()) {

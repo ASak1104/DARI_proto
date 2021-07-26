@@ -32,6 +32,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.app_dari.Interest.Interests_Activity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.HashMap;
@@ -108,8 +110,33 @@ public class SetProfile extends AppCompatActivity {
 
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-                retrofitService.postData(UserStatic.userId,UserStatic.introduce,UserStatic.interests,
-                        UserStatic.latitude,UserStatic.longitude).enqueue(new Callback<ProfileUpRq>() {
+                JsonObject point = new JsonObject();
+                JsonArray coordinates = new JsonArray();
+                coordinates.add(UserStatic.longitude);
+                coordinates.add(UserStatic.latitude);
+
+                JsonObject jsonObject1 = new JsonObject();
+                jsonObject1.addProperty("type", "Point");
+                jsonObject1.add("coordinates",coordinates);
+                point.add("location", jsonObject1);
+
+                retrofitService.postData(UserStatic.userId,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
+                    @Override
+                    public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
+                        if(response.isSuccessful()) {
+                            ProfileUpRq profileUpRq = response.body();
+                            Toast.makeText(getApplicationContext(),"프로필 설정 성공!",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfileUpRq> call, Throwable t) {
+                        Log.d("error", t.toString());
+                    }
+                });
+
+                retrofitService.postData(UserStatic.userId,point).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {

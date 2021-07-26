@@ -118,8 +118,8 @@ public class Map_Activity extends AppCompatActivity {
             mapPo[i]=marker;
             otherUserData.tag=i+k*100;
             mapPo[i].setMapPoint(MapPoint.mapPointWithGeoCoord(
-                    otherUserData.location.getCoordinates().latitude,
-                    otherUserData.location.getCoordinates().longitude));
+                    otherUserData.location.coordinates[1],
+                    otherUserData.location.coordinates[0]));
             mapPo[i].setItemName("프로필 보기");
             mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
             mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);

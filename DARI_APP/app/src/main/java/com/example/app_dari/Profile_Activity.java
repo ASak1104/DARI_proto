@@ -65,10 +65,10 @@ public class Profile_Activity extends AppCompatActivity {
         try {
             address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
             mylocation.setText(address.get(3).getAddressLine(0).substring(5));
-            UserStatic.location = address.get(3).getAddressLine(0).substring(5);
+            UserStatic.address = address.get(3).getAddressLine(0).substring(5);
         } catch (Exception e) {
         }
-        mylocation.setText(UserStatic.location);
+        mylocation.setText(UserStatic.address);
         myname = findViewById(R.id.myname);
         myname.setText(UserStatic.name);
         myinterests = findViewById(R.id.myinterest2);
@@ -130,7 +130,7 @@ public class Profile_Activity extends AppCompatActivity {
                 try {
                     address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
                     location.setText(address.get(3).getAddressLine(0).substring(5));
-                    UserStatic.location = address.get(3).getAddressLine(0).substring(5);
+                    UserStatic.address = address.get(3).getAddressLine(0).substring(5);
                 } catch (Exception e) {
                 }
             }

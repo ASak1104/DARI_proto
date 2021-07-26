@@ -147,7 +147,7 @@ public class SetProfile extends AppCompatActivity {
         try {
             address = g.getFromLocation(UserStatic.latitude, UserStatic.longitude, 10);
             setlocation.setText(address.get(3).getAddressLine(0).substring(5));
-            UserStatic.location=address.get(3).getAddressLine(0).substring(5);
+            UserStatic.address=address.get(3).getAddressLine(0).substring(5);
         } catch (Exception e){}
     }
 

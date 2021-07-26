@@ -6,10 +6,9 @@ import com.google.maps.android.data.geojson.GeoJsonPoint;
 public class GetProfile {
     public String name;
     public String userId;
-    public double latitude;
-    public double longitude;
-    public String location;
+    //public double latitude;
+    //public double longitude;
+    public GeoJsonPoint location;
     public String introduce;
     public String[] interests;
-    GeoJsonPoint geoJsonPoint;
 }

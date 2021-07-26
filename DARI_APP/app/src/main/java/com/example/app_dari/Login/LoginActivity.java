@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static String token;
+
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
     EditText idtext;
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(getPreferenceString("check").equals("true")){
             checkBox.setChecked(true);
-            token = getPreferenceString("token");
+            UserStatic.token = getPreferenceString("token");
             Login();
         }
 
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginRequest loginRequest = new LoginRequest(userID,userPassword);
 
         if(getPreferenceString("hastoken").equals("true")){
-            token = getPreferenceString("token");
+            UserStatic.token = getPreferenceString("token");
             Login();
         }
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                     //받은 코드 저장
                     int resultCode = result.getResultCode();
 
-                    token = result.getToken();
+                    UserStatic.token = result.getToken();
 
                     //받은 토큰 저장
                     String name = result.getName();
@@ -161,8 +161,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if(getProfile.introduce!=null) {
                                     UserStatic.name = getProfile.name;
                                     UserStatic.userId = getProfile.userId;
-                                    UserStatic.latitude = getProfile.latitude;
-                                    UserStatic.longitude = getProfile.longitude;
+                                    UserStatic.latitude = getProfile.location.getCoordinates().latitude;
+                                    UserStatic.longitude = getProfile.location.getCoordinates().longitude;
                                     UserStatic.introduce = getProfile.introduce;
                                     UserStatic.interests = getProfile.interests;
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                         });
 
                         //다른 통신을 하기 위해 token 저장
-                        setPreference("token",token);
+                        setPreference("token",UserStatic.token);
                         setPreference("hastoken","true");
 
                         if(checkBox.isChecked() ==true) {
@@ -267,7 +267,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void Login(){
 
-        initMyApi.getLogin(token).enqueue(new Callback<LoginResponse>() {
+        initMyApi.getLogin(UserStatic.token).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 

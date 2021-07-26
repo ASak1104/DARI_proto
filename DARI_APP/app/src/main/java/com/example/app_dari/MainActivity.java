@@ -133,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
             recyclerItem.userId = otherUser.userId;
             recyclerItem.name = otherUser.name;
             recyclerItem.introduce = otherUser.introduce;
-            recyclerItem.location = getlocation(otherUser.latitude, otherUser.longitude);
+            recyclerItem.location = getlocation(otherUser.location.getCoordinates().latitude,
+                    otherUser.location.getCoordinates().longitude);
             String interests="";
             for(String inerest: otherUser.interests){
                 interests += "# " + inerest + "  ";

@@ -93,7 +93,7 @@ public class ProfileUpdate extends AppCompatActivity {
         myname = findViewById(R.id.mynameup);
         myname.setText(UserStatic.name);
         mylocation = findViewById(R.id.location);
-        mylocation.setText(UserStatic.location);
+        mylocation.setText(UserStatic.address);
         myintroduce = findViewById(R.id.myintroduce2up);
         myintroduce.setText(UserStatic.introduce);
         myintroduce = findViewById(R.id.myintroduce2up);

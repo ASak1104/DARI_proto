@@ -25,23 +25,27 @@ router.get('/:id/profile', async (req, res, next) => {
 router.post('/:id/profile', async (req, res, next) => {
     const { introduce, latitude, longitude, interests } = req.body;
     try {
-        const user_id = await User.findOne( { userId: req.params.id }, '_id').lean();
+        const [ user_id, interests_ids ] = await Promise.all([
+            User.findOne( { userId: req.params.id }, '_id').lean(),
+            Interest.find({ name: { $in: interests } }, '_id').lean()
+                .then((objs) => objs.map((obj) => obj._id)),
+        ]);
 
         const updateUser = async () => {
             await User.findByIdAndUpdate(user_id, { introduce, latitude, longitude });
         };
 
         const createUserToInterest = async () => {
-            await Promise.all(interests.map(async (item) => {
-                const interest = await Interest.findOne({ name: item }, '_id').lean();
-                await UserToInterest.create({
-                    user: user_id,
-                    interest: interest._id,
-                });
+            await Promise.all(interests_ids.map(async (interest) => {
+                await UserToInterest.create({ user: user_id, interest });
             }));
         };
 
-        await Promise.all([updateUser(), createUserToInterest()]);
+        const updateUserCount = async () => {
+             await Interest.updateMany({ _id: { $in: interests_ids } }, { $inc: { userCount: +1 } });
+        };
+
+        await Promise.all([updateUser(), createUserToInterest(), updateUserCount()]);
 
         res.status(201).json({ created: true });
     } catch (err) {
@@ -54,26 +58,35 @@ router.post('/:id/profile', async (req, res, next) => {
 /* PUT user/:id/profile page */
 router.put('/:id/profile', async (req, res, next) => {
     const { name, introduce, interests } = req.body;
+    console.log(req.body)
     try {
-        const _id = await User.findOne( { userId: req.params.id }, '_id').lean()
+        const user_id = await User.findOne( { userId: req.params.id }, '_id').lean()
             .then((user) => user._id);
-        const newInterests = await Promise.all(interests.map(async (interestName) => {
-            return await Interest.findOne({ name: interestName }, '_id').lean()
-                .then((obj) => obj._id);
-        }));
+        const preInterests = await UserToInterest.find({ user: user_id }, 'interest -_id').lean()
+            .then((objs) => objs.map((obj) => obj.interest));
 
         const updateUser = async () => {
-            await User.findByIdAndUpdate(_id, { name, introduce });
+            await User.findByIdAndUpdate(user_id, { name, introduce });
         };
 
         const deleteOldUserInterest = async () => {
-            await UserToInterest.deleteMany({ user: _id ,interest: { $nin: newInterests } });
+            const oldInterests = await Interest.find({ name: { $nin: interests }, _id: { $in: preInterests } }, '_id').lean()
+                .then((objs) => objs.map((obj) => obj._id));
+            await Promise.all([
+                UserToInterest.deleteMany({ user: user_id, interest: { $in: oldInterests } }),
+                Interest.updateMany({ _id: { $in: oldInterests } }, { $inc: { userCount: -1 } }),
+            ]);
         };
 
         const createNewUserInterest = async () => {
-            await Promise.all(newInterests.map(async (interest) => {
-                await UserToInterest.findOneAndUpdate({ user: _id, interest }, {}, { upsert: true });
-            }));
+            const newInterests = await Interest.find({ name: { $in: interests }, _id: { $nin: preInterests } }, '_id').lean()
+                .then((objs) => objs.map((obj) => obj._id));
+            await Promise.all([
+                Promise.all(newInterests.map(async (interest) => {
+                    await UserToInterest.create({ user: user_id, interest });
+                })),
+                Interest.updateMany({ _id: { $in: newInterests } }, { $inc: { userCount: +1 } }),
+            ]);
         };
 
         await Promise.all([updateUser(), deleteOldUserInterest(), createNewUserInterest()]);

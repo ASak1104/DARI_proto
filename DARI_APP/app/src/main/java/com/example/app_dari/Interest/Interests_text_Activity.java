@@ -253,7 +253,9 @@ public class Interests_text_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(Interests_Activity.position>=3 && Interests_Activity.position<6) {
                     String[] result_interests = Interests_Activity.str_interests.toArray(new String[Interests_Activity.str_interests.size()]);
+
                     Intent intent = new Intent(Interests_text_Activity.this, SetProfile.class);
+
                     intent.putExtra("interests", result_interests);
                     startActivity(intent);
                     Interests_text_Activity.this.finish();

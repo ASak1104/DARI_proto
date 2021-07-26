@@ -2,6 +2,7 @@ package com.example.app_dari;
 
 
 import android.Manifest;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -31,6 +32,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+import com.example.app_dari.Chat.Chat_List_Activity;
 
 public class Map_Activity extends AppCompatActivity {
 
@@ -81,7 +84,7 @@ public class Map_Activity extends AppCompatActivity {
         btn_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Map_Activity.this, Chat_Activity.class);
+                Intent intent = new Intent(Map_Activity.this, Chat_List_Activity.class);
                 startActivity(intent);
                 Map_Activity.this.finish();
             }

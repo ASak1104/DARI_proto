@@ -41,6 +41,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.example.app_dari.Chat.Chat_List_Activity;
+
 public class Profile_Activity extends AppCompatActivity {
 
 
@@ -159,7 +161,7 @@ public class Profile_Activity extends AppCompatActivity {
         btn_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile_Activity.this, Chat_Activity.class);
+                Intent intent = new Intent(Profile_Activity.this, Chat_List_Activity.class);
                 startActivity(intent);
                 Profile_Activity.this.finish();
             }

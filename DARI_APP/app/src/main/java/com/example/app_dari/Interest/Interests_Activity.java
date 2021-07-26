@@ -35,7 +35,6 @@ public class Interests_Activity extends AppCompatActivity {
     static int position=0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,7 +260,9 @@ public class Interests_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(position>=3 && position<6) {
                     String[] result_interests = str_interests.toArray(new String[str_interests.size()]);
+
                     Intent intent = new Intent(Interests_Activity.this, SetProfile.class);
+
                     intent.putExtra("interests", result_interests);
                     startActivity(intent);
                     Interests_Activity.this.finish();
@@ -283,3 +284,4 @@ public class Interests_Activity extends AppCompatActivity {
         });
     }
 }
+

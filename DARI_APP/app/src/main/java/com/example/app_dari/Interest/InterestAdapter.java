@@ -20,7 +20,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.MyView
     private int position;
 
     //리스트는 무조건 데이터를 필요로함
-    private List<Interests> items=new ArrayList<>();
+    private static List<Interests> items=new ArrayList<>();
 
     public void addItem(int position ,Interests interests){
         items.add(position,interests);

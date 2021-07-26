@@ -23,7 +23,7 @@ router.get('/:id/profile', async (req, res, next) => {
 
 /* POST user/:id/profile page */
 router.post('/:id/profile', async (req, res, next) => {
-    const { introduce, location, interests } = req.body;
+    const { introduce, interests } = req.body;
     try {
         const [ user_id, interests_ids ] = await Promise.all([
             User.findOne( { userId: req.params.id }, '_id').lean(),
@@ -32,7 +32,7 @@ router.post('/:id/profile', async (req, res, next) => {
         ]);
 
         const updateUser = async () => {
-            await User.findByIdAndUpdate(user_id, { introduce, location });
+            await User.findByIdAndUpdate(user_id, { introduce });
         };
 
         const createUserToInterest = async () => {

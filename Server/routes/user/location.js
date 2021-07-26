@@ -5,6 +5,19 @@ const User = require('../../schemas/user');
 const router = express.Router();
 
 
+/* POST user/:id/location page */
+router.post('/:id/location', async (req, res, next) => {
+    const { location } = req.body;
+    try {
+        await User.findOneAndUpdate({ userId: req.params.id }, { location });
+        res.status(201).json({ created: true });
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+});
+
+
 /* PUT user/:id/location page */
 router.put('/:id/location', async (req, res, next) => {
     const { location } = req.body;

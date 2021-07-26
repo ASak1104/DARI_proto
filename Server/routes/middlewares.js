@@ -32,12 +32,12 @@ exports.verifyToken = (req, res, next) => {
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
             return res.status(419).json({
-                code: 419,
+                status: 419,
                 message: 'The token has expired',
             });
         }
         return res.status(401).json({
-            code: 401,
+            status: 401,
             message: 'Invalid token',
         });
     }

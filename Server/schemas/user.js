@@ -39,13 +39,13 @@ userSchema.statics.addInterests = async (user) => {
     }));
 };
 
-userSchema.virtual('image')
-    .set(function(url) {
-        this.image = url;
-    })
-    .get(function() {
-        return this.image;
-    });
+// userSchema.virtual('image')
+//     .set(function(url) {
+//         this.image = url;
+//     })
+//     .get(function() {
+//         return this.image;
+//     });
 
 
 module.exports = mongoose.model('User', userSchema);

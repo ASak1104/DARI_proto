@@ -37,7 +37,7 @@ router.post('/:id/profile', async (req, res, next) => {
                 await UserToInterest.create({
                     user: user_id,
                     interest: interest._id,
-                })
+                });
             }));
         };
 

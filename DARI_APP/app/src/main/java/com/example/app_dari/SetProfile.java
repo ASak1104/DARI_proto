@@ -125,9 +125,9 @@ public class SetProfile extends AppCompatActivity {
                     }
                 });
 
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),Map_Activity.class);
                 startActivity(intent);
-
+                SetProfile.this.finish();
             }
         });
     }

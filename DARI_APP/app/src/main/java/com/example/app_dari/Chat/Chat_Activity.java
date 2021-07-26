@@ -29,8 +29,8 @@ public class Chat_Activity extends AppCompatActivity {
     private Socket mSocket;
     private Gson gson = new Gson();
     private ImageButton send;
-    private String myId = "user2";
-    private String username = "user2";
+    private String myId = "user1";
+    private String username = "user1";
     private String roomNumber = "1";
     private EditText send_text;
     private ImageButton left;

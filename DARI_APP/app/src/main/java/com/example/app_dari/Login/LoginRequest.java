@@ -3,7 +3,7 @@ package com.example.app_dari.Login;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginRequest {
-        @SerializedName("id")
+        @SerializedName("userId")
         public String inputId;
 
         @SerializedName("password")
@@ -26,7 +26,7 @@ public class LoginRequest {
             this.inputPw = inputPw;
         }
 
-        public LoginRequest(String inputId, String inputPw) {
+        public LoginRequest(String inputId , String inputPw) {
             this.inputId = inputId;
             this.inputPw = inputPw;
         }

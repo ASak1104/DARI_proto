@@ -27,6 +27,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    static String token;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
     EditText idtext;
@@ -41,9 +42,16 @@ public class LoginActivity extends AppCompatActivity {
 
         idtext = (EditText)findViewById(R.id.edit_id);
         pwtext = (EditText)findViewById(R.id.edit_pw);
-
+        retrofitClient = RetrofitClient.getInstance();
+        initMyApi = RetrofitClient.getRetrofitInterface();
 
         checkBox = (CheckBox)findViewById(R.id.auto_Login);
+
+        if(getPreferenceString("check").equals("true")){
+            checkBox.setChecked(true);
+            token = getPreferenceString("token");
+            Login();
+        }
 
         Button login = (Button)findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +71,10 @@ public class LoginActivity extends AppCompatActivity {
                     alertDialog.show();;
 
                 }else {
-                    LoginResponse();
+                        LoginResponse();
                 }
             }
         });
-
 
         Button signup = (Button)findViewById(R.id.sign_up);
         signup.setOnClickListener(new View.OnClickListener() {
@@ -87,29 +94,25 @@ public class LoginActivity extends AppCompatActivity {
         String userPassword = pwtext.getText().toString().trim();
 
         //loginRequest에 사용자가 입력한 id와 pw를 저장
-        LoginRequest loginRequest = new LoginRequest(userID, userPassword);
+        LoginRequest loginRequest = new LoginRequest(userID,userPassword);
 
-        //retrofit 생성
-        retrofitClient = RetrofitClient.getInstance();
-        initMyApi = RetrofitClient.getRetrofitInterface();
-
+        if(getPreferenceString("hastoken").equals("true")){
+            token = getPreferenceString("token");
+            Login();
+        }
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
         initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
                 Log.d("retrofit", "Data fetch success");
-
                 //통신 성공
                 if (response.isSuccessful()) {
-
                     //response.body()를 result에 저장
                     LoginResponse result = response.body();
-
                     //받은 코드 저장
                     int resultCode = result.getResultCode();
 
-                    String token = result.getToken();
+                    token = result.getToken();
 
                     //받은 토큰 저장
                     String name = result.getName();
@@ -119,21 +122,19 @@ public class LoginActivity extends AppCompatActivity {
                     int errorPw = 400; //비밀번호 일치x
 
 
-                    if (resultCode ==success) {
+                    if (resultCode == success) {
                         String userID = idtext.getText().toString();
                         String userPassword = pwtext.getText().toString();
 
                         //다른 통신을 하기 위해 token 저장
-                        setPreference(token,token);
+                        setPreference("token",token);
+                        setPreference("hastoken","true");
 
-
-
-
-                        Toast.makeText(LoginActivity.this, name + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("myId", userID);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
+                        if(checkBox.isChecked() ==true) {
+                            setPreference("check", "true");
+                        }
+                        else { setPreference("check","false");}
+                        Login();
 
                     } else if(resultCode==errorId){
 
@@ -205,14 +206,30 @@ public class LoginActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    public void checkAutoLogin(String id){
+    public void Login(){
 
-        Toast.makeText(this, id + "님 환영합니다.", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        initMyApi.getLogin(token).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
+                LoginResponse result = response.body();
+
+                int status = result.getResultCode();
+
+                int success = 200;
+                int fail = 401;
+
+                if(status == success){
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                }
+                else {
+                }
+            }
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            }
+        });
     }
-
-
 }

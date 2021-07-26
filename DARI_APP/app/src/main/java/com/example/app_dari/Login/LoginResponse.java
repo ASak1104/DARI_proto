@@ -18,7 +18,7 @@ public class LoginResponse {
         this.token = token;
     }
 
-    @SerializedName("Token")
+    @SerializedName("token")
     public String token;
 
         public int getResultCode() {

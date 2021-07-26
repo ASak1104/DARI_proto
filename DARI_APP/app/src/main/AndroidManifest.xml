@@ -20,10 +20,10 @@
         <activity android:name=".Profile_Activity"/>
         <activity android:name=".Chat.Chat_List_Activity"/>
         <activity android:name=".Notify_Activity"/>
-        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".Chat.Chat_Activity"/>
         <activity android:name=".Interest.Interests_text_Activity"/>
         <activity android:name=".Interest.Interests_Activity"/>
-        <activity android:name=".Chat.Chat_Activity">
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

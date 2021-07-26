@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const { verifyToken } = require('../middlewares');
 const User = require('../../schemas/user');
 
 const router = express.Router();
@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
 
 
 /* POST api/auth/sign-up */
-router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
+router.post('/sign-up', async (req, res, next) => {
     const { id, password, name } = req.body;
     try {
         const exUser = await User.findOne({ userId: id }, '_id').lean();
@@ -35,7 +35,7 @@ router.post('/sign-up', isNotSignedIn, async (req, res, next) => {
 
 
 /* POST api/auth/sign-in */
-router.post('/sign-in', isNotSignedIn, (req, res, next) => {
+router.post('/sign-in', (req, res, next) => {
     console.log(`#sign-in ${req.body.id}`);
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
@@ -64,7 +64,7 @@ router.post('/sign-in', isNotSignedIn, (req, res, next) => {
 
 
 /* GET api/auth/sign-out */
-router.get('/sign-out', isSignedIn, (req, res) => {
+router.get('/sign-out', verifyToken, (req, res) => {
     req.logout();
     req.session.destroy();
     res.json({ 'isSignedOut': true });

@@ -12,18 +12,32 @@ const router = express.Router();
 // apply isSignedIn MW later
 router.get('/:id', async (req, res, next) => {
     try {
-        const user = await User.findOne( { userId: req.params.id }, '_id').lean();
+        const { _id, location } = await User.findOne( { userId: req.params.id }, '_id location').lean();
 
-        const getUserWithOthers = async (_id) => {
+        const getUserWithOthers = async () => {
             const userInterestIds = await UserToInterest.find({ user: _id }, 'interest').lean();
             return await Promise.all(userInterestIds.map(async (item) => {
-                const interest = await Interest.findById(item.interest, 'name').lean();
+                const interest = await Interest.findById(item.interest, 'name userCount').lean();
                 const otherUserIds = await UserToInterest.find({ _id: { $ne: item._id }, interest: interest._id}, 'user -_id' ).lean()
                     .then((objs) => objs.map((obj) => obj.user));
                 delete interest._id;
                 interest.otherUsers = await Promise.all(otherUserIds.map(async (o_id) => {
-                    const otherUser = await User.findById(o_id, 'userId name introduce latitude longitude interests').lean();
-                    await User.addInterests(otherUser);
+                    const otherUser = await User.findOne({
+                        _id: o_id,
+                        location: {
+                            $nearSphere: {
+                                $geometry : {
+                                    type: "Point",
+                                    coordinates: location.coordinates
+                                },
+                                $maxDistance : 3_000,
+                            }
+                        }
+                    }, 'userId name introduce location').lean();
+                    if (otherUser) {
+                        await User.addInterests(otherUser);
+                        delete otherUser._id;
+                    }
                     return otherUser;
                 }));
                 return interest;
@@ -31,7 +45,7 @@ router.get('/:id', async (req, res, next) => {
         };
 
         res.json({
-            interests: await getUserWithOthers(user._id),
+            interests: await getUserWithOthers(),
         });
     } catch (err) {
         console.log(err);

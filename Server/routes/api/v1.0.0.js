@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
             userId,
             name: user.name,
         }, process.env.JWT_SECRET, {
-            expiresIn: '10m', // 1 minute
+            expiresIn: '1d', // 1 day
             issuer: 'DARI',
         });
         return res.json({

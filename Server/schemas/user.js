@@ -24,13 +24,22 @@ const userSchema = new Schema({
         default: false,
     },
     introduce: String,
-    latitude: Number,
-    longitude: Number,
+    location: {
+        type: {
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+        },
+        coordinates: {
+            type: [Number],
+        }
+    },
     createdAt: {
         type: String,
         default: getDate,
     },
 });
+
+userSchema.index({ location: "2dsphere" });
 
 userSchema.statics.addInterests = async (user) => {
     const interestIds = await UserToInterest.find({ user: user._id }, 'interest -_id').lean();

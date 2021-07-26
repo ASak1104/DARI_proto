@@ -10,7 +10,7 @@ const router = express.Router();
 /* GET user/:id/profile page */
 router.get('/:id/profile', async (req, res, next) => {
     try {
-        const user = await User.findOne({ userId: req.params.id }, 'userId name introduce latitude longitude').lean();
+        const user = await User.findOne({ userId: req.params.id }, 'userId name location longitude').lean();
         await User.addInterests(user);
         delete user._id;
         res.json(user);
@@ -23,7 +23,7 @@ router.get('/:id/profile', async (req, res, next) => {
 
 /* POST user/:id/profile page */
 router.post('/:id/profile', async (req, res, next) => {
-    const { introduce, latitude, longitude, interests } = req.body;
+    const { introduce, location, interests } = req.body;
     try {
         const [ user_id, interests_ids ] = await Promise.all([
             User.findOne( { userId: req.params.id }, '_id').lean(),
@@ -32,7 +32,7 @@ router.post('/:id/profile', async (req, res, next) => {
         ]);
 
         const updateUser = async () => {
-            await User.findByIdAndUpdate(user_id, { introduce, latitude, longitude });
+            await User.findByIdAndUpdate(user_id, { introduce, location });
         };
 
         const createUserToInterest = async () => {

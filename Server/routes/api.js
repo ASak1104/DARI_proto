@@ -2,13 +2,13 @@ const express = require('express');
 const authRouter = require('./api/auth');
 const mapRouter = require('./api/map');
 const messengerRouter = require('./api/messenger');
-const tokenRouter = require('./api/v1.0.0');
+const testRouter = require('./api/test');
 
 const router = express.Router();
 
 router.use('/auth', authRouter);
 router.use('/map', mapRouter);
 router.use('/messenger', messengerRouter);
-router.use('/token', tokenRouter);
+router.use('/test', testRouter);
 
 module.exports = router;

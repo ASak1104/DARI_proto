@@ -1,28 +1,30 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { verifyToken } = require('../middlewares');
 const User = require('../../schemas/user');
 
 const router = express.Router();
 
-/* GET /auth listing. */
-router.get('/', (req, res, next) => {
-    res.send('<h1>Test /users GET router</h1>');
+
+/* GET api/auth/token page */
+router.get('/token', verifyToken, (req, res, next) => {
+    res.json({ status: 200, message: 'Success to authorize token' });
 });
 
 
-/* POST api/auth/sign-up */
+/* POST api/auth/sign-up page */
 router.post('/sign-up', async (req, res, next) => {
-    const { id, password, name } = req.body;
+    const { userId, password, name } = req.body;
     try {
-        const exUser = await User.findOne({ userId: id }, '_id').lean();
+        const exUser = await User.findOne({ userId }, '_id').lean();
         if (exUser) {
             return res.status(204).json({ 'isSignedUp': false });
         }
         const hash = await bcrypt.hash(password, 14);
         await User.create({
-            userId: id,
+            userId,
             password: hash,
             name,
         });
@@ -34,9 +36,9 @@ router.post('/sign-up', async (req, res, next) => {
 });
 
 
-/* POST api/auth/sign-in */
+/* POST api/auth/sign-in page */
 router.post('/sign-in', (req, res, next) => {
-    console.log(`#sign-in ${req.body.id}`);
+    console.log(`#sign-in ${req.body.userId}`);
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
             console.error(authError);
@@ -44,8 +46,8 @@ router.post('/sign-in', (req, res, next) => {
         }
         if (!user) {
             return res.json({
-                isSignedIn: false,
                 status: info.status,
+                message: info.message,
             });
         }
         return req.login(user, (loginError) => {
@@ -53,20 +55,27 @@ router.post('/sign-in', (req, res, next) => {
                 console.log(loginError);
                 return next(loginError);
             }
-            req.session.userId = req.body.id;
-            return res.json({
-                isSignedIn: true,
+            const token = jwt.sign({
+                _id: user._id,
+                userId: user.userId,
+                name: user.name,
+            }, process.env.JWT_SECRET, {
+                expiresIn: '1d', // 1 day
+                issuer: 'DARI',
+            });
+            return res.status(201).json({
                 status: info.status,
+                message: info.message,
+                token,
             });
         });
     })(req, res, next);
 });
 
 
-/* GET api/auth/sign-out */
+/* GET api/auth/sign-out page */
 router.get('/sign-out', verifyToken, (req, res) => {
     req.logout();
-    req.session.destroy();
     res.json({ 'isSignedOut': true });
 });
 

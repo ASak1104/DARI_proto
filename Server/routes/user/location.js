@@ -1,15 +1,15 @@
 const express = require('express');
-const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const { verifyToken } = require('../middlewares');
 const User = require('../../schemas/user');
 
 const router = express.Router();
 
 
-/* POST user/:id/location page */
-router.post('/:id/location', async (req, res, next) => {
-    const { location } = req.body;
+/* POST user/location page */
+router.post('/', verifyToken, async (req, res, next) => {
     try {
-        await User.findOneAndUpdate({ userId: req.params.id }, { location });
+        const { location } = req.body;
+        await User.findOneAndUpdate({ _id: req.decoded._id }, { location });
         res.status(201).json({ created: true });
     } catch (err) {
         console.log(err);
@@ -18,11 +18,11 @@ router.post('/:id/location', async (req, res, next) => {
 });
 
 
-/* PUT user/:id/location page */
-router.put('/:id/location', async (req, res, next) => {
-    const { location } = req.body;
+/* PUT user/location page */
+router.put('/', verifyToken, async (req, res, next) => {
     try {
-        await User.findOneAndUpdate({ userId: req.params.id }, { location });
+        const { location } = req.body;
+        await User.findOneAndUpdate({ _id: req.decoded._id }, { location });
         res.status(202).json({ updated: true });
     } catch (err) {
         console.log(err);

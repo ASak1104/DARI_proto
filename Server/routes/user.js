@@ -5,8 +5,8 @@ const imageRouter = require('./user/image');
 
 const router = express.Router();
 
-router.use(profileRouter);
-router.use(locationRouter);
-router.use(imageRouter);
+router.use('/profile', profileRouter);
+router.use('/location', locationRouter);
+router.use('/image', imageRouter);
 
 module.exports = router;

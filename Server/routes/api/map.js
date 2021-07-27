@@ -1,6 +1,5 @@
 const express = require('express');
-const passport = require('passport');
-const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const { verifyToken } = require('../middlewares');
 const User = require('../../schemas/user');
 const Interest = require('../../schemas/interest');
 const UserToInterest = require('../../schemas/userToInterest');
@@ -8,14 +7,14 @@ const UserToInterest = require('../../schemas/userToInterest');
 const router = express.Router();
 
 
-/* GET api/map/:id page */
-// apply isSignedIn MW later
-router.get('/:id', async (req, res, next) => {
+/* GET api/map page */
+router.get('/', verifyToken, async (req, res, next) => {
     try {
-        const { _id, location } = await User.findOne( { userId: req.params.id }, '_id location').lean();
+        const user_id = req.decoded._id
+        const { location } = await User.findById(user_id, '_id location').lean();
 
         const getUserWithOthers = async () => {
-            const userInterestIds = await UserToInterest.find({ user: _id }, 'interest').lean();
+            const userInterestIds = await UserToInterest.find({ user: user_id }, 'interest').lean();
             return await Promise.all(userInterestIds.map(async (item) => {
                 const interest = await Interest.findById(item.interest, 'name userCount').lean();
                 const otherUserIds = await UserToInterest.find({ _id: { $ne: item._id }, interest: interest._id}, 'user -_id' ).lean()

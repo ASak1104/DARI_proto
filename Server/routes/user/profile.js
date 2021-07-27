@@ -1,5 +1,5 @@
 const express = require('express');
-const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const { verifyToken } = require('../middlewares');
 const User = require('../../schemas/user');
 const Interest = require('../../schemas/interest');
 const UserToInterest = require('../../schemas/userToInterest');
@@ -7,10 +7,10 @@ const UserToInterest = require('../../schemas/userToInterest');
 const router = express.Router();
 
 
-/* GET user/:id/profile page */
-router.get('/:id/profile', async (req, res, next) => {
+/* GET user/profile page */
+router.get('/', verifyToken, async (req, res, next) => {
     try {
-        const user = await User.findOne({ userId: req.params.id }, 'userId name location longitude').lean();
+        const user = await User.findById(req.decoded._id, 'userId introduce name location').lean();
         await User.addInterests(user);
         delete user._id;
         res.json(user);
@@ -21,15 +21,13 @@ router.get('/:id/profile', async (req, res, next) => {
 });
 
 
-/* POST user/:id/profile page */
-router.post('/:id/profile', async (req, res, next) => {
-    const { introduce, interests } = req.body;
+/* POST user/profile page */
+router.post('/', verifyToken, async (req, res, next) => {
     try {
-        const [ user_id, interests_ids ] = await Promise.all([
-            User.findOne( { userId: req.params.id }, '_id').lean(),
-            Interest.find({ name: { $in: interests } }, '_id').lean()
-                .then((objs) => objs.map((obj) => obj._id)),
-        ]);
+        const user_id = req.decoded._id;
+        const { introduce, interests } = req.body;
+        const interests_ids = await Interest.find({ name: { $in: interests } }, '_id').lean()
+            .then((objs) => objs.map((obj) => obj._id))
 
         const updateUser = async () => {
             await User.findByIdAndUpdate(user_id, { introduce });
@@ -55,13 +53,11 @@ router.post('/:id/profile', async (req, res, next) => {
 });
 
 
-/* PUT user/:id/profile page */
-router.put('/:id/profile', async (req, res, next) => {
-    const { name, introduce, interests } = req.body;
-    console.log(req.body)
+/* PUT user/profile page */
+router.put('/', verifyToken, async (req, res, next) => {
     try {
-        const user_id = await User.findOne( { userId: req.params.id }, '_id').lean()
-            .then((user) => user._id);
+        const user_id = req.decoded._id;
+        const { name, introduce, interests } = req.body;
         const preInterests = await UserToInterest.find({ user: user_id }, 'interest -_id').lean()
             .then((objs) => objs.map((obj) => obj.interest));
 

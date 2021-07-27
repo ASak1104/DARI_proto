@@ -1,6 +1,5 @@
 const express = require('express');
-const passport = require('passport');
-const { isSignedIn, isNotSignedIn } = require('../middlewares');
+const { verifyToken } = require('../middlewares');
 const User = require('../../schemas/user');
 const Channel = require('../../schemas/channel');
 const Message = require('../../schemas/message');

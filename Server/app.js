@@ -3,7 +3,6 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const passport = require('passport');
 
 dotenv.config()
@@ -18,17 +17,7 @@ const webSocket = require('./socket');
 const app = express();
 app.set('port', process.env.PORT || 3000);
 passportConfig();
-app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: process.env.COOKIE_SECRET,
-    cookie: {
-        httpOnly: true,
-        secure: false,
-    },
-}));
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -53,7 +42,6 @@ app.use((err, req, res, next) => {
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
     res.status(err.status || 500).send();
 });
-
 
 const server = app.listen(app.get('port'), () => {
     console.log(`Listening localhost:${app.get('port')}`);

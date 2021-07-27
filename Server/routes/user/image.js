@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const { getDate } = require('../middlewares');
+const { getDate, verifyToken } = require('../middlewares');
 const imageRepo = 'uploads'
 
 const router = express.Router();
@@ -32,24 +32,22 @@ const upload = multer({
 });
 
 
-/* GET user/:id/image page */
-router.get('/:id/image', (req, res) => {
+/* GET user/image/:id page */
+router.get('/:id', verifyToken, (req, res) => {
     const ext = path.extname(path.join(__dirname, `../../${imageRepo}/${req.params.image}`));
     res.sendFile(path.join(__dirname, `../../${imageRepo}/${req.params.id}.jpg`));
 });
 
 
-/* POST user/:id/image page */
-router.post('/:id/image', upload.single('image'), (req, res) => {
-    // console.log(req.file);
-    res.json({ url: `user/${req.params.id}/image` });
+/* POST user/image page */
+router.post('/', verifyToken, upload.single('image'), (req, res) => {
+    res.json({ url: `user/${req.decoded.id}/image` });
 });
 
 
-/* PUT user/:id/image page */
-router.put('/:id/image', upload.single('image'), (req, res) => {
-    // console.log(req.file);
-    res.json({ url: `user/${req.params.id}/image` });
+/* PUT user/image page */
+router.put('/', verifyToken, upload.single('image'), (req, res) => {
+    res.json({ url: `user/${req.decoded.id}/image` });
 });
 
 

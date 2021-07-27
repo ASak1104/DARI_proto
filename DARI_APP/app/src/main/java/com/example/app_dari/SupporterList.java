@@ -253,7 +253,7 @@ public class SupporterList extends AppCompatActivity {
                 suintroduce= itemView.findViewById(R.id.suintroduce);
                 showstar= itemView.findViewById(R.id.showstar);
 
-                /*itemView.setOnClickListener(new View.OnClickListener()
+                itemView.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
@@ -262,17 +262,15 @@ public class SupporterList extends AppCompatActivity {
                         if (pos != RecyclerView.NO_POSITION)
                         {
                             // click event
-                            Intent intent = new Intent(getApplicationContext(),OtherProfile.class);
-                            intent.putExtra("id", items.get(pos).userId);
-                            intent.putExtra("name", items.get(pos).name);
-                            //intent.putExtra("location", items.get(pos).introduce);
-                            //사진도 보내?
-                            intent.putExtra("interests", items.get(pos).interests);
+                            Intent intent = new Intent(getApplicationContext(),Booking.class);
+                            intent.putExtra("id", UserStatic.userId);
+                            intent.putExtra("name", UserStatic.name);
+                            intent.putExtra("interests", UserStatic.interests);
                             startActivity(intent);
 
                         }
                     }
-                });*/
+                });
             }
 
         }

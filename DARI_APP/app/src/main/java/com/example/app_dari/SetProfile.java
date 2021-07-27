@@ -109,7 +109,7 @@ public class SetProfile extends AppCompatActivity {
                 UserStatic.introduce = setmyintroduce.getText().toString();
                 if(selectedImageUri==null){
                     Toast.makeText(getApplicationContext(),"프로필 사진을 설정해주세요!",Toast.LENGTH_SHORT).show();
-                } else if(UserStatic.introduce==null){
+                } else if(UserStatic.introduce==""){
                     Toast.makeText(getApplicationContext(),"소개글을 작성해주세요!",Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -134,10 +134,25 @@ public class SetProfile extends AppCompatActivity {
                     retrofitService.postData(UserStatic.token, UserStatic.introduce, UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
                         @Override
                         public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
-                            if (response.isSuccessful()) {
-                                ProfileUpRq profileUpRq = response.body();
-                                Toast.makeText(getApplicationContext(), "프로필 설정 성공!", Toast.LENGTH_SHORT).show();
-                            }
+                            retrofitService.postData(UserStatic.token, point).enqueue(new Callback<ProfileUpRq>() {
+                                @Override
+                                public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
+                                    if (response.isSuccessful()) {
+                                        ProfileUpRq profileUpRq = response.body();
+                                        Toast.makeText(getApplicationContext(), "프로필 설정 성공!", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(getApplicationContext(), Map_Activity.class);
+                                        startActivity(intent);
+                                        SetProfile.this.finish();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ProfileUpRq> call, Throwable t) {
+                                    Log.d("error", t.toString());
+                                }
+                            });
 
                         }
 
@@ -147,25 +162,6 @@ public class SetProfile extends AppCompatActivity {
                         }
                     });
 
-                    retrofitService.postData(UserStatic.token, point).enqueue(new Callback<ProfileUpRq>() {
-                        @Override
-                        public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
-                            if (response.isSuccessful()) {
-                                ProfileUpRq profileUpRq = response.body();
-                                Toast.makeText(getApplicationContext(), "프로필 설정 성공!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ProfileUpRq> call, Throwable t) {
-                            Log.d("error", t.toString());
-                        }
-                    });
-
-                    Intent intent = new Intent(getApplicationContext(), Map_Activity.class);
-                    startActivity(intent);
-                    SetProfile.this.finish();
                 }
             }
         });

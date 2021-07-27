@@ -108,64 +108,65 @@ public class SetProfile extends AppCompatActivity {
             public void onClick(View v) {
                 UserStatic.introduce = setmyintroduce.getText().toString();
                 if(selectedImageUri==null){
-
+                    Toast.makeText(getApplicationContext(),"프로필 사진을 설정해주세요!",Toast.LENGTH_SHORT).show();
                 } else if(UserStatic.introduce==null){
+                    Toast.makeText(getApplicationContext(),"소개글을 작성해주세요!",Toast.LENGTH_SHORT).show();
+                } else {
 
-                } else{}
+                    uploadImage(selectedImageUri, getApplicationContext());
 
-                uploadImage(selectedImageUri, getApplicationContext());
+                    //서버로 보내버리기 post
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
+                            addConverterFactory(GsonConverterFactory.create()).build();
 
-                //서버로 보내버리기 post
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
-                        addConverterFactory(GsonConverterFactory.create()).build();
+                    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+                    JsonObject point = new JsonObject();
+                    JsonArray coordinates = new JsonArray();
+                    coordinates.add(UserStatic.longitude);
+                    coordinates.add(UserStatic.latitude);
 
-                JsonObject point = new JsonObject();
-                JsonArray coordinates = new JsonArray();
-                coordinates.add(UserStatic.longitude);
-                coordinates.add(UserStatic.latitude);
+                    JsonObject jsonObject1 = new JsonObject();
+                    jsonObject1.addProperty("type", "Point");
+                    jsonObject1.add("coordinates", coordinates);
+                    point.add("location", jsonObject1);
 
-                JsonObject jsonObject1 = new JsonObject();
-                jsonObject1.addProperty("type", "Point");
-                jsonObject1.add("coordinates",coordinates);
-                point.add("location", jsonObject1);
+                    retrofitService.postData(UserStatic.token, UserStatic.introduce, UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
+                        @Override
+                        public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
+                            if (response.isSuccessful()) {
+                                ProfileUpRq profileUpRq = response.body();
+                                Toast.makeText(getApplicationContext(), "프로필 설정 성공!", Toast.LENGTH_SHORT).show();
+                            }
 
-                retrofitService.postData(UserStatic.token,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
-                    @Override
-                    public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
-                        if(response.isSuccessful()) {
-                            ProfileUpRq profileUpRq = response.body();
-                            Toast.makeText(getApplicationContext(),"프로필 설정 성공!",Toast.LENGTH_SHORT).show();
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<ProfileUpRq> call, Throwable t) {
+                            Log.d("error", t.toString());
+                        }
+                    });
 
-                    @Override
-                    public void onFailure(Call<ProfileUpRq> call, Throwable t) {
-                        Log.d("error", t.toString());
-                    }
-                });
+                    retrofitService.postData(UserStatic.token, point).enqueue(new Callback<ProfileUpRq>() {
+                        @Override
+                        public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
+                            if (response.isSuccessful()) {
+                                ProfileUpRq profileUpRq = response.body();
+                                Toast.makeText(getApplicationContext(), "프로필 설정 성공!", Toast.LENGTH_SHORT).show();
+                            }
 
-                retrofitService.postData(UserStatic.token,point).enqueue(new Callback<ProfileUpRq>() {
-                    @Override
-                    public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
-                        if(response.isSuccessful()) {
-                            ProfileUpRq profileUpRq = response.body();
-                            Toast.makeText(getApplicationContext(),"프로필 설정 성공!",Toast.LENGTH_SHORT).show();
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<ProfileUpRq> call, Throwable t) {
+                            Log.d("error", t.toString());
+                        }
+                    });
 
-                    @Override
-                    public void onFailure(Call<ProfileUpRq> call, Throwable t) {
-                        Log.d("error", t.toString());
-                    }
-                });
-
-                Intent intent = new Intent(getApplicationContext(),Map_Activity.class);
-                startActivity(intent);
-                SetProfile.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), Map_Activity.class);
+                    startActivity(intent);
+                    SetProfile.this.finish();
+                }
             }
         });
     }

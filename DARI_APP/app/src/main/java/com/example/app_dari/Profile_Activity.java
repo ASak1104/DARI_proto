@@ -271,6 +271,7 @@ public class Profile_Activity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         UserStatic.userId=getPreferenceString("userId");
+        UserStatic.token=getPreferenceString("token");
 
     }
     @Override

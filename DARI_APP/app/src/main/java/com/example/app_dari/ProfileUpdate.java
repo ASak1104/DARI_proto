@@ -210,13 +210,6 @@ public class ProfileUpdate extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart(){
-        super.onRestart();
-        UserStatic.userId=getPreference("userId");
-
-    }
-
-    @Override
     protected void onPause(){
         super.onPause();
         setPreference("userId", UserStatic.userId);
@@ -224,15 +217,24 @@ public class ProfileUpdate extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        UserStatic.userId=getPreferenceString("userId");
+        UserStatic.token=getPreferenceString("token");
+
+    }
+
     public void setPreference(String key, String value){
-        SharedPreferences pref = getSharedPreferences("UserStatic", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences( "Tfile", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key, value);
         editor.apply();
-
     }
-    public String getPreference(String key) {
-        SharedPreferences pref = getSharedPreferences("UserStatic", MODE_PRIVATE);
+
+    //내부 저장소에 저장된 데이터 가져오기
+    public String getPreferenceString(String key) {
+        SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
 }

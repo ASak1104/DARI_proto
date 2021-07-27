@@ -74,6 +74,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.setAdapter(adapter);
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("러닝");
+                A.setChecked(true);
             } else if(interest.equals("게임")){
                 Interests.interests.add(Interests.b);
                 adapter.setting(Interests.interests);
@@ -81,6 +82,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 position++;
                 str_interests.add("게임");
+                B.setChecked(true);
             } else if(interest.equals("자동차")){
                 Interests.interests.add(Interests.c);
                 adapter.setting(Interests.interests);
@@ -88,6 +90,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 position++;
                 str_interests.add("자동차");
+                C.setChecked(true);
             } else if(interest.equals("빵만들기")){
                 Interests.interests.add(Interests.d);
                 adapter.setting(Interests.interests);
@@ -95,6 +98,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("빵만들기");
                 position++;
+                D.setChecked(true);
             } else if(interest.equals("기차")){
                 Interests.interests.add(Interests.e);
                 adapter.setting(Interests.interests);
@@ -102,6 +106,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("기차");
                 position++;
+                E.setChecked(true);
             } else if(interest.equals("식당투어")){
                 Interests.interests.add(Interests.f);
                 adapter.setting(Interests.interests);
@@ -109,6 +114,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("식당투어");
                 position++;
+                F.setChecked(true);
             } else if(interest.equals("영화")){
                 Interests.interests.add(Interests.g);
                 adapter.setting(Interests.interests);
@@ -116,6 +122,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("영화");
                 position++;
+                G.setChecked(true);
             } else if(interest.equals("자전거")){
                 Interests.interests.add(Interests.h);
                 adapter.setting(Interests.interests);
@@ -123,6 +130,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("자전거");
                 position++;
+                H.setChecked(true);
             }
         }
 
@@ -311,8 +319,6 @@ public class Interests_Activity_later extends AppCompatActivity {
                 if(position>=3 && position<6) {
                     String[] result_interests = str_interests.toArray(new String[str_interests.size()]);
 
-                    Intent intent = new Intent(Interests_Activity_later.this, ProfileUpdate.class);
-                    intent.putExtra("interests", result_interests);
                     Interests_Activity_later.this.finish();
                 }
                 else {

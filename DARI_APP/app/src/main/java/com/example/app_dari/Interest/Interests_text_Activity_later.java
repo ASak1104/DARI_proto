@@ -252,8 +252,7 @@ public class Interests_text_Activity_later extends AppCompatActivity {
                 if(Interests_Activity.position>=3 && Interests_Activity.position<6) {
                     String[] result_interests = Interests_Activity.str_interests.toArray(new String[Interests_Activity.str_interests.size()]);
 
-                    Intent intent = new Intent(Interests_text_Activity_later.this, ProfileUpdate.class);
-                    intent.putExtra("interests", result_interests);
+
                     Interests_text_Activity_later.this.finish();
                 }
                 else {

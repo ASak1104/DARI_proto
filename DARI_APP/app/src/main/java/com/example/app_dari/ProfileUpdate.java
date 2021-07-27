@@ -132,16 +132,7 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.name = myname.getText().toString();
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
-                Intent intent = getIntent();
-                if(intent!=null){
-                    UserStatic.interests=intent.getStringArrayExtra("interests");
-                    myinterests = findViewById(R.id.myinterest2up);
-                    String interests="";
-                    for(String interest: UserStatic.interests) {
-                        interests += "# " + interest + "  ";
-                    }
-                    myinterests.setText(interests);
-                }
+
 
                 //서버로 보내버리기 post
 

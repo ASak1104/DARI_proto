@@ -2,6 +2,7 @@ package com.example.app_dari;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -32,6 +33,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.app_dari.Chat.Chat_List_Activity;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,11 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView myimage = findViewById(R.id.imageView2);
 
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
+                .addHeader("authorization",UserStatic.token)
+                .build());
+
         Glide.with(this)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .load(glideUrl)
                 .centerCrop()
                 .into(myimage);
 
@@ -194,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         RetrofitService service1 = retrofit.create(RetrofitService.class);
-        Call<MapData> call = service1.getPosts(UserStatic.userId);
+        Call<MapData> call = service1.getPosts(UserStatic.token);
 
         call.enqueue(new Callback<MapData>() {
             @Override
@@ -208,7 +216,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 interestbtclr(0);
-                makeRecyclerView(0);
+                if(mapData.interests.get(0).otherUsers.get(0)!=null) {
+                    makeRecyclerView(0);
+                }
             }
 
             @Override
@@ -223,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<RecyclerItem> list;
         Adapter(ArrayList<RecyclerItem> list) {
             this.list = list;
-            Log.d("rr",list.get(0).name);
         }
         @NonNull
         @Override
@@ -238,10 +247,13 @@ public class MainActivity extends AppCompatActivity {
             holder.textView2.setText(list.get(position).location);
             holder.textView3.setText(list.get(position).interests);
 
+            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+items.get(position).userId , new LazyHeaders.Builder()
+                    .addHeader("authorization",UserStatic.token)
+                    .build());
             Glide.with(getApplicationContext())
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .load("http://dari-app.kro.kr/user/"+items.get(position).userId+"/image")
+                    .load(glideUrl)
                     .centerCrop()
                     .into(holder.imageView);
         }
@@ -282,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-
         }
     }
 

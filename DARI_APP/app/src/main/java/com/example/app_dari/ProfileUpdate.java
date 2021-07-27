@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -73,12 +75,17 @@ public class ProfileUpdate extends AppCompatActivity {
         }
 
         myimage = findViewById(R.id.imageViewup);
+
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
+                .addHeader("authorization",UserStatic.token)
+                .build());
+
         Glide.with(this)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .centerCrop()
-                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .load(glideUrl)
                 .into(myimage);
 
         myimage.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +140,7 @@ public class ProfileUpdate extends AppCompatActivity {
 
                 RetrofitService retrofitService = retrofit.create(RetrofitService.class);*/
 
-                retrofitService.putData(UserStatic.userId,UserStatic.name,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.token,UserStatic.name,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
@@ -189,7 +196,7 @@ public class ProfileUpdate extends AppCompatActivity {
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", image.getName(), requestBody);
 
 
-        retrofitService.uploadImage(UserStatic.userId,body).enqueue(new Callback<ProfileUpRq>() {
+        retrofitService.uploadImage(UserStatic.token,body).enqueue(new Callback<ProfileUpRq>() {
             @Override
             public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
 

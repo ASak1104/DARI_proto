@@ -5,7 +5,7 @@ import android.app.DownloadManager;
 import com.google.gson.annotations.SerializedName;
 
 public class SignupRequest {
-    @SerializedName("id")
+    @SerializedName("userId")
     public String inputId;
 
     @SerializedName("password")

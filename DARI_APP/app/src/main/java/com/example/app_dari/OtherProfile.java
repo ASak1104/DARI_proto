@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 
 public class OtherProfile extends AppCompatActivity {
 
@@ -30,11 +32,16 @@ public class OtherProfile extends AppCompatActivity {
 
         String id =intent.getExtras().getString("userId");
         ImageView otherimage = findViewById(R.id.view);
+
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+id , new LazyHeaders.Builder()
+                .addHeader("authorization",UserStatic.token)
+                .build());
+
         Glide.with(this)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .load("http://dari-app.kro.kr/user/"+id+"/image")
+                .load(glideUrl)
                 .centerCrop()
                 .into(otherimage);
 

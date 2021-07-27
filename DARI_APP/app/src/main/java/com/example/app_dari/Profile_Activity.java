@@ -22,9 +22,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 
@@ -60,6 +63,10 @@ public class Profile_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        int permissionChecked = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionChecked != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
 
         mylocation = findViewById(R.id.location);
         Geocoder g = new Geocoder(getApplicationContext());
@@ -83,9 +90,13 @@ public class Profile_Activity extends AppCompatActivity {
 
 
         myimage = (ImageView) findViewById(R.id.imageView);
-        /*Glide.with(this)
+        /*GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
+                .addHeader("authorization",UserStatic.token)
+                .build());
+
+        Glide.with(this)
                 .asBitmap()
-                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .load(glideUrl)
                 .centerCrop()
                 .into(myimage);*/
 
@@ -121,7 +132,7 @@ public class Profile_Activity extends AppCompatActivity {
                 jsonObject1.add("coordinates",coordinates);
                 point.add("location", jsonObject1);
 
-                retrofitService.putData(UserStatic.userId, point).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.putData(UserStatic.token, point).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if (response.isSuccessful()) {
@@ -216,13 +227,15 @@ public class Profile_Activity extends AppCompatActivity {
         myintroduce = findViewById(R.id.myintroduce2);
         myintroduce.setText(UserStatic.introduce);
 
-
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
+                .addHeader("authorization",UserStatic.token)
+                .build());
         Glide.with(this)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .centerCrop()
-                .load("http://dari-app.kro.kr/user/"+UserStatic.userId+"/image")
+                .load(glideUrl)
                 .into(myimage);
 
     }

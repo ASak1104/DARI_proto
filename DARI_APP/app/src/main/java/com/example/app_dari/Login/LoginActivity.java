@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -120,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
             UserStatic.token = getPreferenceString("token");
             Login();
         }
+
+
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
         initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
@@ -137,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                     //받은 토큰 저장
                     String name = result.getName();
 
-                    int success = 200; //로그인 성공
+                    int success = 201; //로그인 성공
                     int errorId = 300; //아이디 일치x
                     int errorPw = 400; //비밀번호 일치x
 
@@ -149,52 +152,16 @@ public class LoginActivity extends AppCompatActivity {
                         String userPassword = pwtext.getText().toString();
 
 
-                        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
-                                .addConverterFactory(GsonConverterFactory.create()).build();
-
-                        RetrofitService service1 = retrofit.create(RetrofitService.class);
-                        Call<GetProfile> call2 = service1.getProfile(UserStatic.userId);
-
-                        call2.enqueue(new Callback<GetProfile>() {
-                            @Override
-                            public void onResponse(Call<GetProfile> call2, Response<GetProfile> response) {
-                                getProfile=response.body();
-                                if(getProfile.introduce!=null) {
-                                    UserStatic.name = getProfile.name;
-                                    UserStatic.userId = getProfile.userId;
-                                    UserStatic.latitude = getProfile.location.coordinates[1];
-                                    UserStatic.longitude = getProfile.location.coordinates[0];
-                                    UserStatic.introduce = getProfile.introduce;
-                                    UserStatic.interests = getProfile.interests;
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    LoginActivity.this.finish();
-                                }
-                                else{
-                                    UserStatic.name = getProfile.name;
-                                    Toast.makeText(LoginActivity.this, UserStatic.name + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
-                                    intent.putExtra("myId", userID);
-                                    startActivity(intent);
-                                    LoginActivity.this.finish();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<GetProfile> call2, Throwable t) {
-
-                            }
-                        });
-
                         //다른 통신을 하기 위해 token 저장
                         setPreference("token",UserStatic.token);
                         setPreference("hastoken","true");
-
                         if(checkBox.isChecked() ==true) {
                             setPreference("check", "true");
                         }
                         else { setPreference("check","false");}
-                        Login();
+
+                        GetProfile();
+
 
                     } else if(resultCode==errorId){
 
@@ -276,19 +243,57 @@ public class LoginActivity extends AppCompatActivity {
 
                 int status = result.getResultCode();
 
-                int success = 200;
-                int fail = 401;
+                int success = 200; //로그인 성공
+                int fail = 401; //토큰 유효x
+                int fail2 = 419; //토큰 기간 만료
 
                 if(status == success){
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    LoginActivity.this.finish();
+                    GetProfile();
                 }
                 else {
                 }
             }
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+            }
+        });
+    }
+
+    public void GetProfile(){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+
+        RetrofitService service1 = retrofit.create(RetrofitService.class);
+        Call<GetProfile> call2 = service1.getProfile(UserStatic.token);
+
+        call2.enqueue(new Callback<GetProfile>() {
+            @Override
+            public void onResponse(Call<GetProfile> call2, Response<GetProfile> response) {
+                getProfile=response.body();
+                if(getProfile.introduce!=null) {
+                    UserStatic.name = getProfile.name;
+                    UserStatic.userId = getProfile.userId;
+                    UserStatic.latitude = getProfile.location.coordinates[1];
+                    UserStatic.longitude = getProfile.location.coordinates[0];
+                    UserStatic.introduce = getProfile.introduce;
+                    UserStatic.interests = getProfile.interests;
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                }
+                else{
+                    UserStatic.name = getProfile.name;
+                    Toast.makeText(LoginActivity.this, UserStatic.name + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
+                    intent.putExtra("myId", UserStatic.userId);
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetProfile> call2, Throwable t) {
+
             }
         });
     }

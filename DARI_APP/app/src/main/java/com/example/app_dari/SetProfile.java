@@ -62,6 +62,11 @@ public class SetProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_profile);
 
+        int permissionChecked = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionChecked != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)) {
             } else {
@@ -101,9 +106,15 @@ public class SetProfile extends AppCompatActivity {
         setprofilebt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserStatic.introduce = setmyintroduce.getText().toString();
+                if(selectedImageUri==null){
+
+                } else if(UserStatic.introduce==null){
+
+                } else{}
+
                 uploadImage(selectedImageUri, getApplicationContext());
 
-                UserStatic.introduce = setmyintroduce.getText().toString();
                 //서버로 보내버리기 post
                 Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
                         addConverterFactory(GsonConverterFactory.create()).build();
@@ -120,7 +131,7 @@ public class SetProfile extends AppCompatActivity {
                 jsonObject1.add("coordinates",coordinates);
                 point.add("location", jsonObject1);
 
-                retrofitService.postData(UserStatic.userId,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.postData(UserStatic.token,UserStatic.introduce,UserStatic.interests).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
@@ -136,7 +147,7 @@ public class SetProfile extends AppCompatActivity {
                     }
                 });
 
-                retrofitService.postData(UserStatic.userId,point).enqueue(new Callback<ProfileUpRq>() {
+                retrofitService.postData(UserStatic.token,point).enqueue(new Callback<ProfileUpRq>() {
                     @Override
                     public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
                         if(response.isSuccessful()) {
@@ -230,7 +241,7 @@ public class SetProfile extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         RetrofitService retrofitClient = retrofit.create(RetrofitService.class);
-        retrofitClient.setloadImage(UserStatic.userId,body).enqueue(new Callback<ProfileUpRq>() {
+        retrofitClient.setloadImage(UserStatic.token,body).enqueue(new Callback<ProfileUpRq>() {
             @Override
             public void onResponse(Call<ProfileUpRq> call, Response<ProfileUpRq> response) {
 

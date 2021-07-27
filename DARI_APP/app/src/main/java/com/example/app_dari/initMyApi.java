@@ -24,10 +24,10 @@ import retrofit2.http.Path;
 public interface initMyApi {
 
 
-    @POST("/api/token")
+    @POST("/api/auth/sign-in")
     Call<LoginResponse> getLoginResponse(@Body LoginRequest loginRequest);
 
-    @GET("/api/token/test")
+    @GET("/api/auth/token/")
     Call<LoginResponse> getLogin(@Header("authorization") String token);
 
     @POST("/api/auth/sign-up")

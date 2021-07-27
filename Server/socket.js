@@ -2,7 +2,7 @@ const socketIO = require('socket.io');
 
 module.exports = (server, app) => {
     const io = new socketIO.Server({ path: '/socket.io' }).attach(server);
-    // app.set('io', io);
+    app.set('io', io);
     // const channel = io.of('/channel');
     // const message = io.of('/message');
 

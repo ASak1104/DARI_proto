@@ -25,7 +25,7 @@ const upload = multer({
             if(!['.png', '.jpg', '.jpeg', '.gif'].includes(ext)) {
                 return cb(new Error('Only images are allowed'));
             }
-            cb(null, req.params.id + '.jpg');
+            cb(null, req.decoded.userId + '.jpg');
         },
     }),
     limits: { fileSize: 5 * 1024 * 1024 },
@@ -34,20 +34,27 @@ const upload = multer({
 
 /* GET user/image/:id page */
 router.get('/:id', verifyToken, (req, res) => {
-    const ext = path.extname(path.join(__dirname, `../../${imageRepo}/${req.params.image}`));
-    res.sendFile(path.join(__dirname, `../../${imageRepo}/${req.params.id}.jpg`));
+    const file = path.join(__dirname, `../../${ imageRepo }/${ req.params.id }.jpg`);
+    fs.access(file, (err) => {
+        if (err) {
+            // console.error(err);
+            res.status(404).send();
+        } else {
+            res.sendFile(path.join(__dirname, `../../${ imageRepo }/${ req.params.id }.jpg`));
+        }
+    });
 });
 
 
 /* POST user/image page */
 router.post('/', verifyToken, upload.single('image'), (req, res) => {
-    res.json({ url: `user/${req.decoded.id}/image` });
+    res.json({ url: `user/${req.decoded.userId}/image` });
 });
 
 
 /* PUT user/image page */
 router.put('/', verifyToken, upload.single('image'), (req, res) => {
-    res.json({ url: `user/${req.decoded.id}/image` });
+    res.json({ url: `user/${req.decoded.userId}/image` });
 });
 
 

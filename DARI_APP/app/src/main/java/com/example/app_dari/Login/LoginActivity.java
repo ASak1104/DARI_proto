@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
         checkBox = (CheckBox)findViewById(R.id.auto_Login);
 
-        if(getPreferenceString("check").equals("true")){
+        if(getPreferenceString("check").equals("true")&&getPreferenceString("hastoken").equals("true")){
             checkBox.setChecked(true);
             UserStatic.token = getPreferenceString("token");
             Login();

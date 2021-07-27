@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -45,12 +46,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.example.app_dari.Chat.Chat_List_Activity;
+import com.example.app_dari.Login.LoginActivity;
+import com.example.app_dari.Login.LoginRequest;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class Profile_Activity extends AppCompatActivity {
-
-
 
     TextView myname;
     TextView myinterests;
@@ -99,6 +100,32 @@ public class Profile_Activity extends AppCompatActivity {
                 .load(glideUrl)
                 .centerCrop()
                 .into(myimage);*/
+
+        Button logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
+                        addConverterFactory(GsonConverterFactory.create()).build();
+
+                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+
+                retrofitService.getlogout(UserStatic.token).enqueue(new Callback<LoginRequest>() {
+                    @Override
+                    public void onResponse(Call<LoginRequest> call, Response<LoginRequest> response) {
+                        setPreference("hastoken","false");
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        Profile_Activity.this.finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginRequest> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
 
         Button modprofile = findViewById(R.id.modprofile);
         modprofile.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +279,7 @@ public class Profile_Activity extends AppCompatActivity {
         setPreference("userId", UserStatic.userId);
 
     }
-    public void setPreference(String key, String value){
+    /*public void setPreference(String key, String value){
         try{
             FileOutputStream fos = openFileOutput("myFile.dat", MODE_PRIVATE);
             DataOutputStream dos = new DataOutputStream(fos);
@@ -272,5 +299,18 @@ public class Profile_Activity extends AppCompatActivity {
             dis.close();
         }catch (Exception e){}
         return data2;
+    }*/
+
+    public void setPreference(String key, String value){
+        SharedPreferences pref = getSharedPreferences( "Tfile", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    //내부 저장소에 저장된 데이터 가져오기
+    public String getPreferenceString(String key) {
+        SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
+        return pref.getString(key, "");
     }
 }

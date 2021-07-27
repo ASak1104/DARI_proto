@@ -1,6 +1,7 @@
 package com.example.app_dari;
 
 
+import com.example.app_dari.Login.LoginRequest;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -54,6 +55,8 @@ public interface RetrofitService {
     Call<ProfileUpRq> putData(@Header("authorization") String token, @Field("name") String name,
                               @Field("introduce") String introduce, @Field("interests") String[] interests);
 
+    @GET("api/auth/sign-out")
+    Call<LoginRequest> getlogout(@Header("authorization") String token);
 
 
 }

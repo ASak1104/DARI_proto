@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         RetrofitService service1 = retrofit.create(RetrofitService.class);
-        Call<MapData> call = service1.getPosts(UserStatic.token);
+        Call<MapData> call = service1.getMainData(UserStatic.token);
 
         call.enqueue(new Callback<MapData>() {
             @Override

@@ -37,6 +37,8 @@
         <activity android:name=".Notify_Activity" />
         <activity android:name=".Interest.Interests_text_Activity" />
         <activity android:name=".Interest.Interests_Activity" />
+        <activity android:name=".Interest.Interests_text_Activity_later" />
+        <activity android:name=".Interest.Interests_Activity_later" />
         <activity android:name=".Slpash" />
         <activity android:name=".ProfileUpdate" />
         <activity

@@ -31,6 +31,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
+import com.example.app_dari.Interest.Interests_Activity_later;
 
 import java.io.File;
 import java.util.HashMap;
@@ -115,8 +116,8 @@ public class ProfileUpdate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //관심사 누르면 화면 전환..
-                //Intent intent = new Intent(getApplicationContext(), Interests_Activity_later.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), Interests_Activity_later.class);
+                startActivity(intent);
             }
         });
 
@@ -131,9 +132,18 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.name = myname.getText().toString();
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
+                Intent intent = getIntent();
+                if(intent!=null){
+                    UserStatic.interests=intent.getStringArrayExtra("interests");
+                    myinterests = findViewById(R.id.myinterest2up);
+                    String interests="";
+                    for(String interest: UserStatic.interests) {
+                        interests += "# " + interest + "  ";
+                    }
+                    myinterests.setText(interests);
+                }
+
                 //서버로 보내버리기 post
-
-
 
                 /*Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
                         addConverterFactory(GsonConverterFactory.create()).build();

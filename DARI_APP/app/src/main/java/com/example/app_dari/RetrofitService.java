@@ -35,7 +35,10 @@ public interface RetrofitService {
     Call<GetProfile> getProfile(@Header("authorization") String token);
 
     @GET("api/map")
-    Call<MapData> getPosts(@Header("authorization") String token);
+    Call<MapData> getMapData(@Header("authorization") String token);
+
+    @GET("api/main")
+    Call<MapData> getMainData(@Header("authorization") String token);
 
     @FormUrlEncoded
     @POST("user/profile/")

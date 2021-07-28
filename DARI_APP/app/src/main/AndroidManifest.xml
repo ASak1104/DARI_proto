@@ -20,12 +20,15 @@
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
 
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="5bc517cace880af11fb5148e0f96c9df" />
 
-        <activity android:name=".Booking"
+        <activity android:name=".Chat.SelectMeeting"
+            android:label="다리 활동지원 서비스를 이용하시겠습니까?"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity
+            android:name=".Booking"
             android:label="예약 하시겠습니까?"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".SupporterList" />

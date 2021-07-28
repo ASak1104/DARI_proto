@@ -88,6 +88,17 @@ public class SupporterList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        Button showsupporter = findViewById(R.id.showsupporter);
+        showsupporter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Booking.class);
+                //intent.putExtra();
+                //otherUserId, OtherName, day, startTime, endTime ...
+                startActivity(intent);
+            }
+        });
+
         //request();
     }
 
@@ -199,7 +210,7 @@ public class SupporterList extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         RetrofitService service1 = retrofit.create(RetrofitService.class);
-        Call<Supporters> call = service1.getSupporter(UserStatic.userId);
+        Call<Supporters> call = service1.getSupporter(UserStatic.token);
 
         call.enqueue(new Callback<Supporters>() {
             @Override

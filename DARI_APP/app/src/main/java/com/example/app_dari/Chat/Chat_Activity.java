@@ -3,6 +3,7 @@ package com.example.app_dari.Chat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -39,10 +40,13 @@ public class Chat_Activity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<ChatData> mDataset;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
 
         recyclerView = (RecyclerView)findViewById(R.id.view);
         recyclerView.setHasFixedSize(true);
@@ -67,6 +71,7 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
+        
     }
     private void init(){
         try{

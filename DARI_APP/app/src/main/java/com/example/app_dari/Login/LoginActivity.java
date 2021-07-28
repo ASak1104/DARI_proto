@@ -27,12 +27,14 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static String token;
+    static public String token;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
     EditText idtext;
     EditText pwtext;
     CheckBox checkBox;
+    static public String name;
+
 
 
     @Override
@@ -44,14 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         pwtext = (EditText)findViewById(R.id.edit_pw);
         retrofitClient = RetrofitClient.getInstance();
         initMyApi = RetrofitClient.getRetrofitInterface();
-
         checkBox = (CheckBox)findViewById(R.id.auto_Login);
 
-        if(getPreferenceString("check").equals("true")){
-            checkBox.setChecked(true);
-            token = getPreferenceString("token");
-            Login();
-        }
 
         Button login = (Button)findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setPositiveButton("확인",null)
                             .create().show();
                     AlertDialog alertDialog = builder.create();
-                    alertDialog.show();;
+                    alertDialog.show();
 
                 }else {
                         LoginResponse();
@@ -96,10 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         //loginRequest에 사용자가 입력한 id와 pw를 저장
         LoginRequest loginRequest = new LoginRequest(userID,userPassword);
 
-        if(getPreferenceString("hastoken").equals("true")){
-            token = getPreferenceString("token");
-            Login();
-        }
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
         initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
@@ -115,9 +107,10 @@ public class LoginActivity extends AppCompatActivity {
                     token = result.getToken();
 
                     //받은 토큰 저장
-                    String name = result.getName();
+                    name = result.getName();
 
-                    int success = 200; //로그인 성공
+
+                    int success = 201; //로그인 성공
                     int errorId = 300; //아이디 일치x
                     int errorPw = 400; //비밀번호 일치x
 
@@ -134,7 +127,11 @@ public class LoginActivity extends AppCompatActivity {
                             setPreference("check", "true");
                         }
                         else { setPreference("check","false");}
-                        Login();
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+
 
                     } else if(resultCode==errorId){
 
@@ -216,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 int status = result.getResultCode();
 
-                int success = 200;
+                int success = 201;
                 int fail = 401;
 
                 if(status == success){

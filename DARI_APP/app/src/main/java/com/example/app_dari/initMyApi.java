@@ -1,5 +1,10 @@
 package com.example.app_dari;
 
+import com.example.app_dari.Chat.ChatData;
+import com.example.app_dari.Chat.ChatResponse;
+import com.example.app_dari.Chat.Chat_List_Activity;
+import com.example.app_dari.Chat.Chat_List_Response;
+import com.example.app_dari.Chat.MessageData;
 import com.example.app_dari.Interest.Its_Response;
 import com.example.app_dari.Interest.Its_Request;
 import com.example.app_dari.Login.LoginActivity;
@@ -12,6 +17,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -23,10 +30,10 @@ import retrofit2.http.Path;
 public interface initMyApi {
 
 
-    @POST("/api/token")
+    @POST("/api/auth/sign-in")
     Call<LoginResponse> getLoginResponse(@Body LoginRequest loginRequest);
 
-    @GET("/api/token/test")
+    @GET("/api/auth/token")
     Call<LoginResponse> getLogin(@Header("authorization") String token);
 
     @POST("/api/auth/sign-up")
@@ -35,4 +42,14 @@ public interface initMyApi {
     @PUT("/user/{id}/profile/interest")
     Call<Its_Response> getIts_Response(@Path("id") String id , @Body Its_Request its_resquest);
 
+    @GET("/api/messenger/channel")
+    Call<Chat_List_Response> get_ChatList(@Header("authorization") String token);
+
+    @FormUrlEncoded
+    @POST("/api/messenger/channel")
+    Call<ChatResponse> post_ChatList(@Header("authorization") String token ,@Field("otherUserId") String id);
+
+
+    @GET("/api/messenger/{channel_id}")
+    Call<ChatResponse> get_Chat(@Header("authorization") String token , @Path("channel_id") String channel_id);
 }

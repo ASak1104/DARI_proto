@@ -32,8 +32,17 @@ public class Interests_Activity_later extends AppCompatActivity {
 
     private RecyclerView my_interests;
     InterestAdapter adapter;
-    static int position=0;
-    static List<String> str_interests = new ArrayList<>();
+    public static int position=0;
+    public static List<String> str_interests = new ArrayList<>();
+
+    ToggleButton A;
+    ToggleButton B;
+    ToggleButton C;
+    ToggleButton D;
+    ToggleButton E;
+    ToggleButton F;
+    ToggleButton G;
+    ToggleButton H;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +55,21 @@ public class Interests_Activity_later extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         my_interests.setLayoutManager(layoutManager);
         my_interests.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        ToggleButton A = (ToggleButton) findViewById(R.id.A);
-        ToggleButton B = (ToggleButton) findViewById(R.id.B);
-        ToggleButton C = (ToggleButton) findViewById(R.id.C);
-        ToggleButton D = (ToggleButton) findViewById(R.id.D);
-        ToggleButton E = (ToggleButton) findViewById(R.id.E);
-        ToggleButton F = (ToggleButton) findViewById(R.id.F);
-        ToggleButton G = (ToggleButton) findViewById(R.id.G);
-        ToggleButton H = (ToggleButton) findViewById(R.id.H);
+        A = (ToggleButton) findViewById(R.id.A);
+        B = (ToggleButton) findViewById(R.id.B);
+        C = (ToggleButton) findViewById(R.id.C);
+        D = (ToggleButton) findViewById(R.id.D);
+        E = (ToggleButton) findViewById(R.id.E);
+        F = (ToggleButton) findViewById(R.id.F);
+        G = (ToggleButton) findViewById(R.id.G);
+        H = (ToggleButton) findViewById(R.id.H);
 
         adapter.setting(Interests.interests);
         my_interests.setAdapter(adapter);
-        if(Interests.interests.contains(Interests.a)){ A.setChecked(true);}
-        if(Interests.interests.contains(Interests.b)){ B.setChecked(true);}
-        if(Interests.interests.contains(Interests.c)){ C.setChecked(true);}
-        if(Interests.interests.contains(Interests.d)){ D.setChecked(true);}
-        if(Interests.interests.contains(Interests.e)){ E.setChecked(true);}
-        if(Interests.interests.contains(Interests.f)){ F.setChecked(true);}
-        if(Interests.interests.contains(Interests.g)){ G.setChecked(true);}
-        if(Interests.interests.contains(Interests.h)){ H.setChecked(true);}
 
+        if(position==0){
         for(String interest : UserStatic.interests) {
-            if(interest.equals("러닝")){
+            if(interest.equals("러닝")&&!Interests.interests.contains(Interests.a)){
                 position++;
                 Interests.interests.add(Interests.a);
                 adapter.setting(Interests.interests);
@@ -75,7 +77,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 my_interests.scrollToPosition(adapter.getItemCount()-1);
                 str_interests.add("러닝");
                 A.setChecked(true);
-            } else if(interest.equals("게임")){
+            } else if(interest.equals("게임")&&!Interests.interests.contains(Interests.b)){
                 Interests.interests.add(Interests.b);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -83,7 +85,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 position++;
                 str_interests.add("게임");
                 B.setChecked(true);
-            } else if(interest.equals("자동차")){
+            } else if(interest.equals("자동차")&&!Interests.interests.contains(Interests.c)){
                 Interests.interests.add(Interests.c);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -91,7 +93,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 position++;
                 str_interests.add("자동차");
                 C.setChecked(true);
-            } else if(interest.equals("빵만들기")){
+            } else if(interest.equals("빵만들기")&&!Interests.interests.contains(Interests.d)){
                 Interests.interests.add(Interests.d);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -99,7 +101,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 str_interests.add("빵만들기");
                 position++;
                 D.setChecked(true);
-            } else if(interest.equals("기차")){
+            } else if(interest.equals("기차")&&!Interests.interests.contains(Interests.e)){
                 Interests.interests.add(Interests.e);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -107,7 +109,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 str_interests.add("기차");
                 position++;
                 E.setChecked(true);
-            } else if(interest.equals("식당투어")){
+            } else if(interest.equals("식당투어")&&!Interests.interests.contains(Interests.f)){
                 Interests.interests.add(Interests.f);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -115,7 +117,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 str_interests.add("식당투어");
                 position++;
                 F.setChecked(true);
-            } else if(interest.equals("영화")){
+            } else if(interest.equals("영화")&&!Interests.interests.contains(Interests.g)){
                 Interests.interests.add(Interests.g);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -123,7 +125,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 str_interests.add("영화");
                 position++;
                 G.setChecked(true);
-            } else if(interest.equals("자전거")){
+            } else if(interest.equals("자전거")&&!Interests.interests.contains(Interests.h)){
                 Interests.interests.add(Interests.h);
                 adapter.setting(Interests.interests);
                 my_interests.setAdapter(adapter);
@@ -132,6 +134,7 @@ public class Interests_Activity_later extends AppCompatActivity {
                 position++;
                 H.setChecked(true);
             }
+        }
         }
 
         A.setOnClickListener(new View.OnClickListener() {
@@ -330,4 +333,205 @@ public class Interests_Activity_later extends AppCompatActivity {
 
     }
 
+    public void onReStart(){
+        super.onRestart();
+        if(position!=0){
+            for(String interest : str_interests) {
+                if(interest.equals("러닝")&&A.isChecked()==false){
+                    position++;
+                    Interests.interests.add(Interests.a);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("러닝");
+                    A.setChecked(true);
+                } else if(interest.equals("게임")&&B.isChecked()==false){
+                    Interests.interests.add(Interests.b);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    position++;
+                    str_interests.add("게임");
+                    B.setChecked(true);
+                } else if(interest.equals("자동차")&&C.isChecked()==false){
+                    Interests.interests.add(Interests.c);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    position++;
+                    str_interests.add("자동차");
+                    C.setChecked(true);
+                } else if(interest.equals("빵만들기")&&D.isChecked()==false){
+                    Interests.interests.add(Interests.d);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("빵만들기");
+                    position++;
+                    D.setChecked(true);
+                } else if(interest.equals("기차")&&E.isChecked()==false){
+                    Interests.interests.add(Interests.e);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("기차");
+                    position++;
+                    E.setChecked(true);
+                } else if(interest.equals("식당투어")&&F.isChecked()==false){
+                    Interests.interests.add(Interests.f);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("식당투어");
+                    position++;
+                    F.setChecked(true);
+                } else if(interest.equals("영화")&&G.isChecked()==false){
+                    Interests.interests.add(Interests.g);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("영화");
+                    position++;
+                    G.setChecked(true);
+                } else if(interest.equals("자전거")&&H.isChecked()==false){
+                    Interests.interests.add(Interests.h);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("자전거");
+                    position++;
+                    H.setChecked(true);
+                }
+            }
+        } else{
+            for(String interest : UserStatic.interests) {
+                if(interest.equals("러닝")&&!Interests.interests.contains(Interests.a)){
+                    position++;
+                    Interests.interests.add(Interests.a);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("러닝");
+                    A.setChecked(true);
+                } else if(interest.equals("게임")&&!Interests.interests.contains(Interests.b)){
+                    Interests.interests.add(Interests.b);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    position++;
+                    str_interests.add("게임");
+                    B.setChecked(true);
+                } else if(interest.equals("자동차")&&!Interests.interests.contains(Interests.c)){
+                    Interests.interests.add(Interests.c);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    position++;
+                    str_interests.add("자동차");
+                    C.setChecked(true);
+                } else if(interest.equals("빵만들기")&&!Interests.interests.contains(Interests.d)){
+                    Interests.interests.add(Interests.d);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("빵만들기");
+                    position++;
+                    D.setChecked(true);
+                } else if(interest.equals("기차")&&!Interests.interests.contains(Interests.e)){
+                    Interests.interests.add(Interests.e);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("기차");
+                    position++;
+                    E.setChecked(true);
+                } else if(interest.equals("식당투어")&&!Interests.interests.contains(Interests.f)){
+                    Interests.interests.add(Interests.f);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("식당투어");
+                    position++;
+                    F.setChecked(true);
+                } else if(interest.equals("영화")&&!Interests.interests.contains(Interests.g)){
+                    Interests.interests.add(Interests.g);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("영화");
+                    position++;
+                    G.setChecked(true);
+                } else if(interest.equals("자전거")&&!Interests.interests.contains(Interests.h)){
+                    Interests.interests.add(Interests.h);
+                    adapter.setting(Interests.interests);
+                    my_interests.setAdapter(adapter);
+                    my_interests.scrollToPosition(adapter.getItemCount()-1);
+                    str_interests.add("자전거");
+                    position++;
+                    H.setChecked(true);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(Interests.interests.contains(Interests.a)){
+            Interests.interests.remove(Interests.a);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.b)){
+            Interests.interests.remove(Interests.b);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.c)){
+            Interests.interests.remove(Interests.c);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.d)){
+            Interests.interests.remove(Interests.d);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.e)){
+            Interests.interests.remove(Interests.e);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.f)){
+            Interests.interests.remove(Interests.f);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.g)){
+            Interests.interests.remove(Interests.g);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+        if(Interests.interests.contains(Interests.h)){
+            Interests.interests.remove(Interests.h);
+            adapter.setting(Interests.interests);
+            my_interests.setAdapter(adapter);
+            my_interests.scrollToPosition(adapter.getItemCount()-1);
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        position=0;
+        str_interests.clear();
+    }
 }

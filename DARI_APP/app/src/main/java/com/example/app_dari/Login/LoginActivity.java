@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
         checkBox = (CheckBox)findViewById(R.id.auto_Login);
 
+        //자동로그인
         if(getPreferenceString("check").equals("true")&&getPreferenceString("hastoken").equals("true")){
             checkBox.setChecked(true);
             UserStatic.token = getPreferenceString("token");
@@ -117,10 +118,10 @@ public class LoginActivity extends AppCompatActivity {
         //loginRequest에 사용자가 입력한 id와 pw를 저장
         LoginRequest loginRequest = new LoginRequest(userID,userPassword);
 
-        if(getPreferenceString("hastoken").equals("true")){
+        /*if(getPreferenceString("hastoken").equals("true")){
             UserStatic.token = getPreferenceString("token");
             Login();
-        }
+        }*/
 
 
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
@@ -251,6 +252,8 @@ public class LoginActivity extends AppCompatActivity {
                     GetProfile();
                 }
                 else {
+                    setPreference("hasetoken","false");
+                    Toast.makeText(getApplicationContext(),"토큰이 유효하지 않습니다.",Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

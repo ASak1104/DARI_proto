@@ -37,14 +37,4 @@ public class LoginResponse {
             this.name = name;
         }
 
-        public boolean isResultCode() {
-        return resultCode2;
-    }
-
-        public void setResultCode(boolean resultCode) {
-        this.resultCode2 = resultCode;
-    }
-
-        @SerializedName("isSignedUp")
-        public boolean resultCode2;
 }

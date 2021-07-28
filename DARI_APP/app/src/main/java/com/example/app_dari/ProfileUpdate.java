@@ -133,6 +133,9 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
 
+                if(Interests_Activity_later.str_interests!=null) {
+                    UserStatic.interests=Interests_Activity_later.str_interests.toArray(new String[0]);
+                }
 
                 //서버로 보내버리기 post
 
@@ -147,6 +150,8 @@ public class ProfileUpdate extends AppCompatActivity {
                         if(response.isSuccessful()) {
                             ProfileUpRq profileUpRq = response.body();
                             Toast.makeText(getApplicationContext(),"프로필 업데이트 성공!",Toast.LENGTH_SHORT).show();
+                            Interests_Activity_later.position=0;
+                            Interests_Activity_later.str_interests.clear();
                         }
                     }
 
@@ -226,6 +231,26 @@ public class ProfileUpdate extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(Interests_Activity_later.position!=0){
+            myinterests = findViewById(R.id.myinterest2up);
+            String interests="";
+            for(String interest: Interests_Activity_later.str_interests) {
+                interests += "# " + interest + "  ";
+            }
+            myinterests.setText(interests);
+        }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Interests_Activity_later.position=0;
+        Interests_Activity_later.str_interests.clear();
+    }
+
     public void setPreference(String key, String value){
         SharedPreferences pref = getSharedPreferences( "Tfile", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -238,4 +263,6 @@ public class ProfileUpdate extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
+
+
 }

@@ -4,9 +4,9 @@ const path = require('path');
 const router = express.Router();
 
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-    res.status(403).send();
+/* GET robots.txt page. */
+router.all('/', (req, res, next) => {
+    res.render('robots.txt');
 });
 
 module.exports = router;

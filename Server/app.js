@@ -11,6 +11,7 @@ const indexRouter = require('./routes');
 const userRouter = require('./routes/user');
 const apiRouter = require('./routes/api');
 const adminRouter = require('./routes/admin');
+const robotsRouter = require('./routes/robots')
 const passportConfig = require('./passport');
 const webSocket = require('./socket');
 
@@ -20,6 +21,7 @@ passportConfig();
 app.use(passport.initialize());
 
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
@@ -28,6 +30,7 @@ connect()
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
+app.use('/robots.txt', robotsRouter);
 app.use(process.env.ADMIN_PAGE, adminRouter);
 
 app.use((req, res, next) => {

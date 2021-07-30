@@ -19,13 +19,13 @@ public class Booking extends AppCompatActivity {
         /*TextView othername = findViewById(R.id.otherprofilename);
         othername.setText(intent.getExtras().getString("name"));*/
 
-        //otherUserId, OtherName, day, startTime, endTime ...
+        //otherUserId, OtherName, day, startTime, endTime
 
         Button booking = findViewById(R.id.booking);
         booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //userId, name, otherUserId, OtherName, day, startTime, endTime ...
+                //userId, name, otherUserId, OtherName, day, startTime, endTime
             }
         });
     }

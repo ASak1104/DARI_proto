@@ -23,7 +23,6 @@ public class Chat_List_Activity extends AppCompatActivity {
 
         ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);
         ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
-        ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
         ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
 
         btn_main.setOnClickListener(new View.OnClickListener() {
@@ -46,14 +45,6 @@ public class Chat_List_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Chat_List_Activity.this, Profile_Activity.class);
-                startActivity(intent);
-                Chat_List_Activity.this.finish();
-            }
-        });
-        btn_notify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Chat_List_Activity.this, Notify_Activity.class);
                 startActivity(intent);
                 Chat_List_Activity.this.finish();
             }

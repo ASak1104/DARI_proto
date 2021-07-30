@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
         ImageButton btn_chat = (ImageButton)findViewById(R.id.btn_chat);
         ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
-        ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
 
         buttons[0] = findViewById(R.id.minterest1);
         buttons[1] = findViewById(R.id.minterest2);
@@ -116,15 +115,6 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.finish();
                 }
             });
-        btn_notify.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, Notify_Activity.class);
-
-                    startActivity(intent);
-                    MainActivity.this.finish();
-                }
-            });
 
 
     }
@@ -132,19 +122,20 @@ public class MainActivity extends AppCompatActivity {
     public void makeRecyclerView(int k){
         items.clear();
         for(OtherUserData otherUser: mapData.interests.get(k).otherUsers){
-            RecyclerItem recyclerItem = new RecyclerItem();
-            recyclerItem.userId = otherUser.userId;
-            recyclerItem.name = otherUser.name;
-            recyclerItem.introduce = otherUser.introduce;
-            recyclerItem.location = getlocation(otherUser.location.coordinates[1],
-                    otherUser.location.coordinates[0]);
-            String interests="";
-            for(String inerest: otherUser.interests){
-                interests += "# " + inerest + "  ";
+            if(otherUser!=null) {
+                RecyclerItem recyclerItem = new RecyclerItem();
+                recyclerItem.userId = otherUser.userId;
+                recyclerItem.name = otherUser.name;
+                recyclerItem.introduce = otherUser.introduce;
+                recyclerItem.location = getlocation(otherUser.location.coordinates[1],
+                        otherUser.location.coordinates[0]);
+                String interests = "";
+                for (String inerest : otherUser.interests) {
+                    interests += "# " + inerest + "  ";
+                }
+                recyclerItem.interests = interests;
+                items.add(recyclerItem);
             }
-            recyclerItem.interests = interests;
-            items.add(recyclerItem);
-
         }
 
         adapter = new Adapter(items);

@@ -34,7 +34,7 @@ public class Chat_Activity extends AppCompatActivity {
     private String username = "user1";
     private String roomNumber = "1";
     private EditText send_text;
-    private ImageButton left;
+    private Button left;
     private RecyclerView recyclerView;
     private ChatAdapter chatAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -58,8 +58,8 @@ public class Chat_Activity extends AppCompatActivity {
 
         send = (ImageButton)findViewById(R.id.send_btn);
         send_text = (EditText)findViewById(R.id.content_edit);
-        left = (ImageButton)findViewById(R.id.left);
-        ImageButton meet = (ImageButton)findViewById(R.id.meeting);
+        left = findViewById(R.id.left);
+        Button meet = findViewById(R.id.meeting);
 
         init();
 
@@ -71,6 +71,13 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
+        Button back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         
     }
     private void init(){

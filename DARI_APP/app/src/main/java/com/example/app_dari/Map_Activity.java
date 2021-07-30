@@ -72,7 +72,6 @@ public class Map_Activity extends AppCompatActivity {
         ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);
         ImageButton btn_chat = (ImageButton)findViewById(R.id.btn_chat);
         ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
-        ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
 
         btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +97,6 @@ public class Map_Activity extends AppCompatActivity {
                 Map_Activity.this.finish();
             }
         });
-        btn_notify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Map_Activity.this, Notify_Activity.class);
-                startActivity(intent);
-                Map_Activity.this.finish();
-            }
-        });
 
 
     }
@@ -115,15 +106,17 @@ public class Map_Activity extends AppCompatActivity {
         int i=0;
         for(OtherUserData otherUserData : mapData.interests.get(k).otherUsers){
             MapPOIItem marker = new MapPOIItem();
-            marker.setTag(i+k*100);
-            mapPo[i]=marker;
-            otherUserData.tag=i+k*100;
-            mapPo[i].setMapPoint(MapPoint.mapPointWithGeoCoord(
-                    otherUserData.location.coordinates[1],
-                    otherUserData.location.coordinates[0]));
-            mapPo[i].setItemName("프로필 보기");
-            mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+            mapPo[i] = marker;
+            if(otherUserData!=null) {
+                marker.setTag(i + k * 100);
+                otherUserData.tag = i + k * 100;
+                mapPo[i].setMapPoint(MapPoint.mapPointWithGeoCoord(
+                        otherUserData.location.coordinates[1],
+                        otherUserData.location.coordinates[0]));
+                mapPo[i].setItemName("프로필 보기");
+                mapPo[i].setMarkerType(MapPOIItem.MarkerType.BluePin);
+                mapPo[i].setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+            }
             i++;
         }
         mapView.addPOIItems(mapPo);

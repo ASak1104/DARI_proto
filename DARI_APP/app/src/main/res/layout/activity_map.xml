@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="3dp0dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="지도"
@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="60dp"
@@ -150,18 +150,6 @@
             android:layout_height="55dp"
             android:layout_weight="1">
             <ImageButton
-                android:id="@+id/btn_profile"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/profile" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_weight="1">
-            <ImageButton
                 android:id="@+id/btn_chat"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -173,11 +161,11 @@
             android:layout_height="55dp"
             android:layout_weight="1">
             <ImageButton
-                android:id="@+id/btn_notify"
+                android:id="@+id/btn_profile"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/notify" />
+                android:background="@drawable/profile" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

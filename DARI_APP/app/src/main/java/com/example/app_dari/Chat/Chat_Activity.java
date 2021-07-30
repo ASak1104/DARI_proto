@@ -2,16 +2,21 @@ package com.example.app_dari.Chat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_dari.MainActivity;
 import com.example.app_dari.R;
 
 import java.net.URISyntaxException;
@@ -36,16 +41,18 @@ public class Chat_Activity extends AppCompatActivity {
     private Gson gson = new Gson();
     private ImageButton send;
     private String myId = "chatapp";
-    private String username = "chatapp";
+    private String myName = "chatapp";
     private String channel_id;
     private EditText send_text;
-    private ImageButton left;
+    private ImageButton chat_back;
     private RecyclerView recyclerView;
     private ChatAdapter chatAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ChatData> mDataset;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
+    private String otheruser;
+    TextView other_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +65,12 @@ public class Chat_Activity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
+        other_user = (TextView)findViewById(R.id.other_user);
 
         Intent intent = getIntent();
         channel_id = intent.getExtras().getString("channel_id");
+        otheruser = intent.getExtras().getString("otheruser");
+        other_user.setText(otheruser);
 
 
         initMyApi.get_Chat(getPreferenceString("token"),channel_id).enqueue(new Callback<ChatResponse>() {
@@ -71,8 +81,7 @@ public class Chat_Activity extends AppCompatActivity {
                     int size = messageData.size();
                     for(int i =0 ; i <size ; i++){
                         MessageData data = messageData.get(i);
-                        Log.d("message", data.getUserName());
-                        if(data.getUserName().equals(username)){
+                        if(data.getUserName().equals(myName) && data.getUserId().equals(myId)){
                             mDataset.add(new ChatData(data.getUserName(), data.getContent(), data.getCreatedAt().substring(11,16), "Right"));
                         }
                         else {
@@ -94,7 +103,7 @@ public class Chat_Activity extends AppCompatActivity {
 
         send = (ImageButton)findViewById(R.id.send_btn);
         send_text = (EditText)findViewById(R.id.content_edit);
-        left = (ImageButton)findViewById(R.id.left);
+        chat_back = (ImageButton)findViewById(R.id.chat_back);
         ImageButton meet = (ImageButton)findViewById(R.id.meeting);
 
 
@@ -106,47 +115,48 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
+        init();
+
     }
     private void init(){
-        try{
-            IO.Options options = new IO.Options();
-            options.transports = new String[] { WebSocket.NAME, Polling.NAME};
-            options.path ="/socket.io";
-            options.query = getPreferenceString("token");
-            mSocket = IO.socket("http://dari-app.kro.kr/channel",options);
-            Log.d("SOCKET", "Connection success : " + mSocket.id());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        mSocket.connect();
-        mSocket.emit("enter", channel_id);
+        mSocket = SocketHandler.getSocket();
 
-        mSocket.on("join" ,(data) -> {
-           Log.d("join",data.toString());
+        mSocket.on("system" , args-> {
+           Log.d("join", "join success!");
         });
 
-        send.setOnClickListener(v -> sendMessage());
-        left.setOnClickListener(v -> onDestroy());
 
-        mSocket.on("update", args -> {
+        send.setOnClickListener(v -> sendMessage());
+        chat_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDestroy();
+                Intent intent = new Intent(Chat_Activity.this, Chat_List_Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        mSocket.on("message", args -> {
             MessageData data = gson.fromJson(args[0].toString(), MessageData.class);
             addChat(data);
+
         });
 
     }
     private void sendMessage(){
-        if(!send_text.getText().toString().isEmpty()) {
-            mSocket.emit("newMessage", gson.toJson(new SendMessage(
-                    channel_id,
-                    myId,
-                    send_text.getText().toString()
-                   )));
-            Log.d("Message", new SendMessage(
-                    channel_id,
-                    myId,
-                    send_text.getText().toString()).toString());
-              send_text.setText("");
-        }
+        initMyApi.post_Chat(getPreferenceString("token"),channel_id,send_text.getText().toString()).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+        send_text.setText("");
     }
 
     private String toDate(long currentMiliis) {
@@ -156,14 +166,13 @@ public class Chat_Activity extends AppCompatActivity {
             runOnUiThread(()-> {
                 if(data.getUserName() ==null){}
                 else {
-                    if ( data.getUserName().equals(myId)) {
-                        mDataset.add(new ChatData(data.getUserName(), data.getContent(), data.getCreatedAt(), "Right"));
+                    if ( data.getUserName().equals(myName) &&data.getUserId().equals(myId)) {
+                        mDataset.add(new ChatData(data.getUserName(), data.getContent(), data.getCreatedAt().substring(11,16), "Right"));
                     } else {
-                        mDataset.add(new ChatData(data.getUserName(), data.getContent(), data.getCreatedAt(), "Left"));
+                        mDataset.add(new ChatData(data.getUserName(), data.getContent(), data.getCreatedAt().substring(11,16), "Left"));
                     }
                 }
                 chatAdapter = new ChatAdapter(mDataset);
-                chatAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                 recyclerView.setAdapter(chatAdapter);
             });
@@ -172,11 +181,27 @@ public class Chat_Activity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSocket.emit("left", gson.toJson(new RoomData(myId, channel_id , username)));
+        mSocket.emit("left", gson.toJson(new RoomData(myId, channel_id , myName)));
         mSocket.disconnect();
     }
     public String getPreferenceString(String key) {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

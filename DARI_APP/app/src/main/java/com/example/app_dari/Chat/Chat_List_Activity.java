@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -18,9 +19,15 @@ import com.example.app_dari.Notify_Activity;
 import com.example.app_dari.Profile_Activity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
+import com.google.gson.Gson;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.engineio.client.transports.Polling;
+import io.socket.engineio.client.transports.WebSocket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +39,8 @@ public class Chat_List_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Chat_ListAdapter chat_listAdapter;
+    Socket mSocket;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +55,16 @@ public class Chat_List_Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
 
+
+
         ImageButton btn_main = (ImageButton)findViewById(R.id.btn_main);
         ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
         ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
         ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
+
+        init();
+
+
 
         initMyApi.get_ChatList(getPreferenceString("token")).enqueue(new Callback<Chat_List_Response>() {
             @Override
@@ -61,10 +76,11 @@ public class Chat_List_Activity extends AppCompatActivity {
                     chat_listAdapter.setOnItemClickListener(new Chat_ListAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View v, int position) {
+                            SocketHandler.getSocket().emit("channel", chat_list.get(position).get_id());
                             Intent intent = new Intent(Chat_List_Activity.this, Chat_Activity.class);
                             intent.putExtra("channel_id",chat_list.get(position).get_id());
+                            intent.putExtra("otheruser",chat_list.get(position).getUserNameTitle());
                             startActivity(intent);
-                            Chat_List_Activity.this.finish();
                         }
                     });
 
@@ -76,9 +92,6 @@ public class Chat_List_Activity extends AppCompatActivity {
 
             }
         });
-
-
-
 
 
 
@@ -120,4 +133,21 @@ public class Chat_List_Activity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
+    private void init() {
+        try {
+            IO.Options options = new IO.Options();
+            options.transports = new String[]{WebSocket.NAME, Polling.NAME};
+            options.path = "/socket.io";
+            options.query = "token=" + getPreferenceString("token");
+            mSocket = IO.socket("http://dari-app.kro.kr", options);
+            Log.d("SOCKET", "Connection success : " + mSocket.id());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        SocketHandler.setSocket(mSocket);
+        SocketHandler.getSocket().connect();
+
+
+    }
+
 }

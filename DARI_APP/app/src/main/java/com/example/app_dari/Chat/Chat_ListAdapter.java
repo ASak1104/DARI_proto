@@ -41,6 +41,7 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,int position){
             ((ViewHolder) holder).name_text.setText(mDataSet.get(position).getUserNameTitle());
+
     }
 
     @Override

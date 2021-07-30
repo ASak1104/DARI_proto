@@ -49,6 +49,9 @@ public interface initMyApi {
     @POST("/api/messenger/channel")
     Call<ChatResponse> post_ChatList(@Header("authorization") String token ,@Field("otherUserId") String id);
 
+    @FormUrlEncoded
+    @POST("/api/messenger/{channel_id}")
+    Call<Void> post_Chat(@Header("authorization") String token , @Path("channel_id") String channel_id , @Field("content") String content);
 
     @GET("/api/messenger/{channel_id}")
     Call<ChatResponse> get_Chat(@Header("authorization") String token , @Path("channel_id") String channel_id);

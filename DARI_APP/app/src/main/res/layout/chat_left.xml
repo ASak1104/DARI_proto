@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintWidth_max="250dp"
         android:background="@drawable/left_chat_box"
         android:paddingLeft="16dp"
         android:paddingTop="4dp"

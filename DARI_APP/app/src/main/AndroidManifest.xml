@@ -42,7 +42,7 @@
         <activity android:name=".Interest.Interests_Activity" />
         <activity android:name=".Interest.Interests_text_Activity_later" />
         <activity android:name=".Interest.Interests_Activity_later" />
-        <activity android:name=".Slpash" />
+
         <activity android:name=".ProfileUpdate" />
         <activity
             android:name=".OtherProfile"
@@ -50,7 +50,8 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".Chat.Chat_List_Activity" />
         <activity android:name=".Chat.Chat_Activity" />
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".Slpash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

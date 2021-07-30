@@ -34,6 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.UserStatic;
 import com.google.gson.Gson;
 
 public class Chat_Activity extends AppCompatActivity {
@@ -41,8 +42,8 @@ public class Chat_Activity extends AppCompatActivity {
     private Socket mSocket;
     private Gson gson = new Gson();
     private ImageButton send;
-    private String myId = "chatapp";
-    private String myName = "chatapp";
+    private String myId = UserStatic.userId;
+    private String myName = UserStatic.name;
     private String channel_id;
     private EditText send_text;
     private Button left;
@@ -95,6 +96,7 @@ public class Chat_Activity extends AppCompatActivity {
                         }
                     }
                     chatAdapter = new ChatAdapter(mDataset);
+                    recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                     recyclerView.setAdapter(chatAdapter);
                 }
             }
@@ -139,10 +141,9 @@ public class Chat_Activity extends AppCompatActivity {
         chat_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDestroy();
-                Intent intent = new Intent(Chat_Activity.this, Chat_List_Activity.class);
-                startActivity(intent);
-
+                mSocket.emit("left", gson.toJson(new RoomData(myId, channel_id , myName)));
+                mSocket.disconnect();
+                onBackPressed();
             }
         });
 
@@ -197,7 +198,7 @@ public class Chat_Activity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
         if (focusView != null) {
@@ -212,5 +213,5 @@ public class Chat_Activity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
+    }*/
 }

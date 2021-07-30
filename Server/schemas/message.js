@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const User = require('../schemas/user');
 
 const { Schema } = mongoose;
 const { getDate } = require('../routes/middlewares');
 const { Types: { ObjectId } } = Schema;
 const messageSchema = new Schema({
-    user:{
+    user: {
         type: ObjectId,
         required: true,
         ref: 'User',
@@ -21,5 +22,12 @@ const messageSchema = new Schema({
         default: getDate,
     },
 });
+
+messageSchema.statics.addUserIdAndName = async (message) => {
+    const user = await User.findById(message.user, 'userId name -_id').lean();
+    message.userId = user.userId;
+    message.userName = user.name;
+};
+
 
 module.exports = mongoose.model('Message', messageSchema);

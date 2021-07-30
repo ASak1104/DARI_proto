@@ -1,48 +1,34 @@
 const socketIO = require('socket.io');
+const socketioJwt = require('socketio-jwt');
+
 
 module.exports = (server, app) => {
     const io = new socketIO.Server({ path: '/socket.io' }).attach(server);
     app.set('io', io);
-    // const channel = io.of('/channel');
-    // const message = io.of('/message');
+    const channel = io.of('channel');
 
-    io.sockets.on('connection', (socket) => {
-        console.log(`Socket connected : ${socket.id}`)
+    io.use(socketioJwt.authorize({
+        secret: process.env.JWT_SECRET,
+        handshake: true,
+        customDecoded: (decoded) => {
+            return decoded;
+        },
+        decodedPropertyName: 'decoded',
+    }));
 
-        socket.on('enter', (data) => {
-            const roomData = JSON.parse(data)
-            const username = roomData.username
-            const roomNumber = roomData.roomNumber
+    io.on('connection', (socket) => {
+        console.log(`Connect socket user : ${ socket.decoded.userId }`);
+        // socket.join(socket.decoded.userId);
 
-            socket.join(`${roomNumber}`)
-            console.log(`[Username : ${username}] entered [room number : ${roomNumber}]`)
+        socket.on('disconnect', () => {
+            console.log(`Disconnect socket user : ${ socket.decoded.userId }`);
+        });
 
-            const enterData = {
-                type: "ENTER",
-                content: `${username} entered the room`
-            }
-            socket.broadcast.to(`${roomNumber}`).emit('update', JSON.stringify(enterData))
-        })
-
-        socket.on('left', (data) => {
-            const roomData = JSON.parse(data)
-            const username = roomData.username
-            const roomNumber = roomData.roomNumber
-
-            socket.leave(`${roomNumber}`)
-            console.log(`[Username : ${username}] left [room number : ${roomNumber}]`)
-
-            const leftData = {
-                type: "LEFT",
-                content: `${username} left the room`
-            }
-            socket.broadcast.to(`${roomNumber}`).emit('update', JSON.stringify(leftData))
-        })
-
-        socket.on('newMessage', (data) => {
-            const messageData = JSON.parse(data)
-            console.log(`[Room Number ${messageData.to}] ${messageData.from} : ${messageData.content}`)
-            io.to(`${messageData.to}`).emit('update', JSON.stringify(messageData))
-        })
+        socket.on('channel', (data) => {
+            const channel_id = data;
+            console.log(`${ socket.decoded.userId } joins channel ${ channel_id }`);
+            socket.join(channel_id);
+            io.to(channel_id).emit('system', `Entered user ${ socket.decoded.name }`);
+        });
     });
 };

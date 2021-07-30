@@ -10,6 +10,7 @@ const adminBro = new AdminBro({
     databases: [mongoose],
 });
 const adminRouter = AdminBroExpress.buildRouter(adminBro);
+adminBro.options.rootPath = process.env.ADMIN_PAGE;
 
 
 const router = express.Router();

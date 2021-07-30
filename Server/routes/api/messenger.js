@@ -41,20 +41,60 @@ router.post('/channel', verifyToken, async (req, res, next) => {
 
         // when otherUserName -> otherUserNames, [user_id, ...otherUser_ids]
         await Promise.all([_id, otherUser_id].map(async (user) => {
-            await UserToChannel.create({ user, channel: newChannel._id })
+            await UserToChannel.create({ user, channel: newChannel._id });
         }));
 
         res.status(201).json({
             status: 201,
             channel_id: newChannel._id,
         });
-
     } catch (err) {
         console.log(err);
         return next(err);
     }
 });
 
+
+/* GET api/messenger/:channel_id page */
+router.get('/:channel_id', verifyToken, async (req, res, next) => {
+    try {
+        const { channel_id } = req.params;
+        const messages = await Message.find({ channel: { $eq: channel_id } }, 'user content image createdAt -_id').sort({ createdAt: 1 }).lean();
+        await Promise.all(messages.map(async (message) => {
+            await Message.addUserIdAndName(message);
+            delete message.user;
+        }));
+        res.json({ messages });
+    } catch(err) {
+        console.log(err);
+        return next(err);
+    }
+});
+
+
+/* POST api/messenger/:channel_id page */
+router.post('/:channel_id', verifyToken, async (req, res, next) => {
+    try {
+        const { channel_id } = req.params;
+        const { content } = req.body;
+        const message = await Message.create({
+            channel: channel_id,
+            user: req.decoded._id,
+            content,
+        });
+        const obj = {
+            userId: req.decoded.userId,
+            userName: req.decoded.name,
+            content,
+            createdAt: message.createdAt,
+        };
+        req.app.get('io').to(channel_id).emit('message', obj);
+        res.status(201).json({ status: 201 });
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+});
 
 
 module.exports = router;

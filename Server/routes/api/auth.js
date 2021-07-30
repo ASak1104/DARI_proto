@@ -60,7 +60,7 @@ router.post('/sign-in', (req, res, next) => {
                 userId: user.userId,
                 name: user.name,
             }, process.env.JWT_SECRET, {
-                expiresIn: '1d', // 1 day
+                expiresIn: '2d', // 2 day
                 issuer: 'DARI',
             });
             return res.status(201).json({

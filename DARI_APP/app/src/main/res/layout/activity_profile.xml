@@ -184,18 +184,6 @@
             android:layout_height="55dp"
             android:layout_weight="1">
             <ImageButton
-                android:id="@+id/btn_profile"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/profile_pressed" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_weight="1">
-            <ImageButton
                 android:id="@+id/btn_chat"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -207,11 +195,11 @@
             android:layout_height="55dp"
             android:layout_weight="1">
             <ImageButton
-                android:id="@+id/btn_notify"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:id="@+id/btn_profile"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/notify" />
+                android:background="@drawable/profile_pressed" />
         </RelativeLayout>
     </LinearLayout>
 

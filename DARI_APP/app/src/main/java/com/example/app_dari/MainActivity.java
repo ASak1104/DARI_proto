@@ -3,11 +3,12 @@ package com.example.app_dari;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,12 +39,12 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.app_dari.Chat.Chat_List_Activity;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
-    MapData mapData;
-
     Button[] buttons = new Button[7];
-
+    MapData mapData;
     int interest_index=0;
     RecyclerView recyclerView;
     Adapter adapter;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         request();
+
 
 
         btn_map.setOnClickListener(new View.OnClickListener() {

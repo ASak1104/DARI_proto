@@ -1,40 +1,18 @@
 package com.example.app_dari.Chat;
 
 public class MessageData {
-    private String type;
-    private String from;
-    private String to;
-
-    public MessageData( String from, String to, String content, long sendTime) {
-        this.from = from;
-        this.to = to;
-        this.content = content;
-        this.sendTime = sendTime;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getType() {
-        return type;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    private String userName;
 
-    public String getFrom() {
-        return from;
-    }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
 
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
 
     public String getContent() {
         return content;
@@ -44,15 +22,28 @@ public class MessageData {
         this.content = content;
     }
 
-    public long getSendTime() {
-        return sendTime;
-    }
 
-    public void setSendTime(long sendTime) {
-        this.sendTime = sendTime;
-    }
 
     private String content;
-    private long sendTime;
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    private String createdAt;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String userId;
 
 }

@@ -48,11 +48,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
 
 
+    static public String token;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
     EditText idtext;
     EditText pwtext;
     CheckBox checkBox;
+    static public String name;
+
 
     GetProfile getProfile;
 
@@ -65,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
         pwtext = (EditText)findViewById(R.id.edit_pw);
         retrofitClient = RetrofitClient.getInstance();
         initMyApi = RetrofitClient.getRetrofitInterface();
-
         checkBox = (CheckBox)findViewById(R.id.auto_Login);
 
         //자동로그인
@@ -90,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setPositiveButton("확인",null)
                             .create().show();
                     AlertDialog alertDialog = builder.create();
-                    alertDialog.show();;
+                    alertDialog.show();
 
                 }else {
                         LoginResponse();
@@ -123,7 +125,6 @@ public class LoginActivity extends AppCompatActivity {
             Login();
         }*/
 
-
         //loginRequest에 저장된 데이터와 함께 init에서 정의한 getLoginResponse 함수를 실행한 후 응답을 받음
         initMyApi.getLoginResponse(loginRequest).enqueue(new Callback<LoginResponse>() {
             @Override
@@ -139,7 +140,8 @@ public class LoginActivity extends AppCompatActivity {
                     UserStatic.token = result.getToken();
 
                     //받은 토큰 저장
-                    String name = result.getName();
+                    name = result.getName();
+
 
                     int success = 201; //로그인 성공
                     int errorId = 300; //아이디 일치x

@@ -3,6 +3,7 @@ package com.example.app_dari.Interest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -245,7 +246,7 @@ public class Interests_text_Activity_later extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ImageButton next = (ImageButton)findViewById(R.id.next);
+        Button next = findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

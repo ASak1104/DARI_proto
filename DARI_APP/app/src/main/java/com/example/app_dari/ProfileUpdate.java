@@ -133,7 +133,7 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
 
-                if(Interests_Activity_later.str_interests!=null) {
+                if(Interests_Activity_later.str_interests.get(0)!=null) {
                     UserStatic.interests=Interests_Activity_later.str_interests.toArray(new String[0]);
                 }
 

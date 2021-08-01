@@ -52,12 +52,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="나의 관심사"
         android:textColor="#000000"
-        android:textSize="18dp"/>
+        android:textSize="18dp" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -67,12 +71,16 @@
         android:scrollbars="horizontal"
         android:orientation="horizontal"
         />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
         android:text="관심사 목록"
-        android:textSize="18dp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:textSize="18dp" />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -82,118 +90,121 @@
         android:layout_height="match_parent"
         >
 
-            <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top">
-                <TableRow>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top">
+
+            <TableRow>
+
                 <ToggleButton
                     android:id="@+id/A"
-                    android:textSize="21dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
                     android:padding="14dp"
+                    android:textColor="@drawable/text_change"
                     android:textOff="러닝"
                     android:textOn="러닝"
-                    android:textColor="@drawable/text_change"
-                    android:background="@drawable/toggle_text"
+                    android:textSize="21dp"
 
                     />
+
                 <ToggleButton
                     android:id="@+id/B"
-                    android:textSize="21dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
                     android:padding="14dp"
+                    android:textColor="@drawable/text_change"
                     android:textOff="게임"
                     android:textOn="게임"
-                    android:textColor="@drawable/text_change"
-                    android:background="@drawable/toggle_text"
-                    />
+                    android:textSize="21dp" />
+
                 <ToggleButton
                     android:id="@+id/C"
-                    android:textSize="21dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
                     android:padding="14dp"
+                    android:textColor="@drawable/text_change"
                     android:textOff="자동차"
                     android:textOn="자동차"
-                    android:textColor="@drawable/text_change"
-                    android:background="@drawable/toggle_text"/>
-                </TableRow>
+                    android:textSize="21dp" />
+            </TableRow>
+
             <TableRow>
+
                 <ToggleButton
                     android:id="@+id/D"
-                    android:textSize="21dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
                     android:padding="14dp"
+                    android:textColor="@drawable/text_change"
                     android:textOff="빵만들기"
                     android:textOn="빵만들기"
-                    android:textColor="@drawable/text_change"
-                    android:background="@drawable/toggle_text"
-                    />
+                    android:textSize="21dp" />
+
                 <ToggleButton
                     android:id="@+id/E"
-                    android:textSize="21dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
                     android:padding="14dp"
+                    android:textColor="@drawable/text_change"
                     android:textOff="기차"
                     android:textOn="기차"
-                    android:textColor="@drawable/text_change"
+                    android:textSize="21dp" />
+
+
+                <ToggleButton
+                    android:id="@+id/F"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:background="@drawable/toggle_text"
-                    />
-
-
-                    <ToggleButton
-                        android:id="@+id/F"
-                        android:textSize="21dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="14dp"
-                        android:textOff="식당투어"
-                        android:textOn="식당투어"
-                        android:textColor="@drawable/text_change"
-                        android:background="@drawable/toggle_text"
-                        />
+                    android:padding="14dp"
+                    android:textColor="@drawable/text_change"
+                    android:textOff="식당투어"
+                    android:textOn="식당투어"
+                    android:textSize="21dp" />
             </TableRow>
-                <TableRow>
-                    <ToggleButton
-                        android:id="@+id/G"
-                        android:textSize="21dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="14dp"
-                        android:textOff="영화"
-                        android:textOn="영화"
-                        android:textColor="@drawable/text_change"
-                        android:background="@drawable/toggle_text"
-                        />
-                    <ToggleButton
-                        android:id="@+id/H"
-                        android:textSize="21dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="14dp"
-                        android:textOff="자전거"
-                        android:textOn="자전거"
-                        android:textColor="@drawable/text_change"
-                        android:background="@drawable/toggle_text"
-                        />
-                </TableRow>
+
+            <TableRow>
+
+                <ToggleButton
+                    android:id="@+id/G"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
+                    android:padding="14dp"
+                    android:textColor="@drawable/text_change"
+                    android:textOff="영화"
+                    android:textOn="영화"
+                    android:textSize="21dp" />
+
+                <ToggleButton
+                    android:id="@+id/H"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/toggle_text"
+                    android:padding="14dp"
+                    android:textColor="@drawable/text_change"
+                    android:textOff="자전거"
+                    android:textOn="자전거"
+                    android:textSize="21dp" />
+            </TableRow>
 
 
-
-            </TableLayout>
+        </TableLayout>
     </ScrollView>
     <ImageButton
         android:id="@+id/change_img"

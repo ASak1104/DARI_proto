@@ -3,6 +3,7 @@ const Interest = require('../schemas/interest');
 const UserToInterest = require('../schemas/userToInterest');
 
 const { Schema } = mongoose;
+const { Types: { ObjectId } } = Schema;
 const { getDate } = require('../routes/middlewares');
 const userSchema = new Schema({
     userId: {
@@ -15,7 +16,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    name: {
+    userName: {
         type: String,
         required: true,
     },
@@ -33,6 +34,12 @@ const userSchema = new Schema({
             type: [Number],
         }
     },
+    interests: [
+        {
+            type: ObjectId,
+            ref: 'Interest',
+        }
+    ],
     createdAt: {
         type: String,
         default: getDate,

@@ -11,12 +11,13 @@ const channelSchema = new Schema({
         required: true,
         default: 'test',
     },
-    max: {
-        type: Number,
-        required: true,
-        min: 2,
-        default: 2,
-    },
+    users: [
+        {
+            type: ObjectId,
+            ref: 'User',
+            required: true,
+        }
+    ],
     lastMessage: String,
     createdAt: {
         type: String,
@@ -31,7 +32,7 @@ const channelSchema = new Schema({
 channelSchema.statics.addUserNameTitle = async (channel, user_id) => {
     const otherUsers = await UserToChannel.find({ channel: channel._id, user: { $ne: user_id } }, 'user -_id').lean();
     const otherUserNames = await Promise.all(otherUsers.map(async (otherUser) => {
-        return User.findById(otherUser.user, 'name -_id').lean().then((obj) => obj.name);
+        return User.findById(otherUser.user, 'userName -_id').lean().then((obj) => obj.userName);
     }));
     channel.userNameTitle = otherUserNames.join(', ');
 };

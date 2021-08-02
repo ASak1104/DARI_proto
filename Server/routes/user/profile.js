@@ -10,7 +10,7 @@ const router = express.Router();
 /* GET user/profile page */
 router.get('/', verifyToken, async (req, res, next) => {
     try {
-        const user = await User.findById(req.decoded._id, 'userId introduce name location').lean();
+        const user = await User.findById(req.decoded._id, 'userId introduce userName location').lean();
         await User.addInterests(user);
         delete user._id;
         res.json(user);
@@ -30,7 +30,7 @@ router.post('/', verifyToken, async (req, res, next) => {
             .then((objs) => objs.map((obj) => obj._id))
 
         const updateUser = async () => {
-            await User.findByIdAndUpdate(user_id, { introduce });
+            await User.findByIdAndUpdate(user_id, { introduce, interests: interests_ids });
         };
 
         const createUserToInterest = async () => {
@@ -45,7 +45,7 @@ router.post('/', verifyToken, async (req, res, next) => {
 
         await Promise.all([updateUser(), createUserToInterest(), updateUserCount()]);
 
-        res.status(201).json({ created: true });
+        res.status(201).json({ status: 201 });
     } catch (err) {
         console.log(err);
         return next(err);
@@ -58,11 +58,15 @@ router.put('/', verifyToken, async (req, res, next) => {
     try {
         const user_id = req.decoded._id;
         const { name, introduce, interests } = req.body;
-        const preInterests = await UserToInterest.find({ user: user_id }, 'interest -_id').lean()
-            .then((objs) => objs.map((obj) => obj.interest));
+        const [ inputInterests, preInterests ] = await Promise.all([
+            Interest.find({ name: { $in: interests }}, '_id').lean()
+                .then((objs) => objs.map((obj) => obj._id)),
+            User.findById(user_id, 'interests -_id').lean()
+                .then((obj) => obj.interests),
+        ]);
 
         const updateUser = async () => {
-            await User.findByIdAndUpdate(user_id, { name, introduce });
+            await User.findByIdAndUpdate(user_id, { name, introduce, interests: inputInterests });
         };
 
         const deleteOldUserInterest = async () => {
@@ -87,7 +91,7 @@ router.put('/', verifyToken, async (req, res, next) => {
 
         await Promise.all([updateUser(), deleteOldUserInterest(), createNewUserInterest()]);
 
-        res.status(202).json({ updated: true });
+        res.status(202).json({ status: 202 });
     } catch (err) {
         console.log(err);
         return next(err);

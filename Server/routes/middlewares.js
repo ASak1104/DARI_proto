@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 require('moment-timezone');
+const multer = require('multer');
+const path = require('path');
 
 moment.tz.setDefault('Asia/Seoul');
 
@@ -27,3 +29,20 @@ exports.verifyToken = (req, res, next) => {
         });
     }
 };
+
+
+exports.upload = (dir) => multer({
+    storage: multer.diskStorage({
+        destination(req, file, cb) {
+            cb(null, dir);
+        },
+        filename(req, file, cb) {
+            const ext = path.extname(file.originalname);
+            if(!['.png', '.jpg', '.jpeg', '.gif'].includes(ext)) {
+                return cb(new Error('Only images are allowed'));
+            }
+            cb(null, req.decoded.userId + '.jpg');
+        },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 },
+});

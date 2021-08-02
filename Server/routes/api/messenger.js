@@ -37,7 +37,7 @@ router.post('/channel', verifyToken, async (req, res, next) => {
             .then((obj) => obj._id);
 
         const title = req.body.title ? (req.body.title): `${ userId }, ${ otherUserId }`;
-        const newChannel = await Channel.create({ title });
+        const newChannel = await Channel.create({ title, users: [ _id, otherUser_id ] });
 
         // when otherUserName -> otherUserNames, [user_id, ...otherUser_ids]
         await Promise.all([_id, otherUser_id].map(async (user) => {

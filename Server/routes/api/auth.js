@@ -26,7 +26,7 @@ router.post('/sign-up', async (req, res, next) => {
         await User.create({
             userId,
             password: hash,
-            name,
+            userName: name,
         });
         return res.status(201).json({ 'isSignedUp': true });
     } catch (err) {
@@ -58,7 +58,7 @@ router.post('/sign-in', (req, res, next) => {
             const token = jwt.sign({
                 _id: user._id,
                 userId: user.userId,
-                name: user.name,
+                userName: user.userName,
             }, process.env.JWT_SECRET, {
                 expiresIn: '2d', // 2 day
                 issuer: 'DARI',

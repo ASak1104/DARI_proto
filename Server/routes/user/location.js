@@ -10,7 +10,7 @@ router.post('/', verifyToken, async (req, res, next) => {
     try {
         const { location } = req.body;
         await User.findOneAndUpdate({ _id: req.decoded._id }, { location });
-        res.status(201).json({ created: true });
+        res.status(201).json({ status: 201 });
     } catch (err) {
         console.log(err);
         return next(err);
@@ -23,7 +23,7 @@ router.put('/', verifyToken, async (req, res, next) => {
     try {
         const { location } = req.body;
         await User.findOneAndUpdate({ _id: req.decoded._id }, { location });
-        res.status(202).json({ updated: true });
+        res.status(202).json({ status: 202 });
     } catch (err) {
         console.log(err);
         return next(err);

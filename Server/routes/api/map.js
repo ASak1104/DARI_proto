@@ -16,7 +16,7 @@ router.get('/', verifyToken, async (req, res, next) => {
         const getUserWithOthers = async () => {
             const userInterestIds = await UserToInterest.find({ user: user_id }, 'interest').lean();
             return await Promise.all(userInterestIds.map(async (item) => {
-                const interest = await Interest.findById(item.interest, 'name userCount').lean();
+                const interest = await Interest.findById(item.interest, 'userName userCount').lean();
                 const otherUserIds = await UserToInterest.find({ _id: { $ne: item._id }, interest: interest._id}, 'user -_id' ).lean()
                     .then((objs) => objs.map((obj) => obj.user));
                 delete interest._id;
@@ -32,7 +32,7 @@ router.get('/', verifyToken, async (req, res, next) => {
                                 $maxDistance : 3_000,
                             }
                         }
-                    }, 'userId name introduce location').lean();
+                    }, 'userId userName introduce location').lean();
                     if (otherUser) {
                         await User.addInterests(otherUser);
                         delete otherUser._id;

@@ -10,9 +10,9 @@ module.exports = (server, app) => {
     io.use(socketioJwt.authorize({
         secret: process.env.JWT_SECRET,
         handshake: true,
-        customDecoded: (decoded) => {
-            return decoded;
-        },
+        // customDecoded: (decoded) => {
+        //     return decoded;
+        // },
         decodedPropertyName: 'decoded',
     }));
 

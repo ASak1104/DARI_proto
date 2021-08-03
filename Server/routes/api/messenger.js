@@ -14,7 +14,7 @@ router.get('/channel', verifyToken, async (req, res, next) => {
         const user_id = req.decoded._id;
         const channels_ids = await UserToChannel.find({ user: user_id }, 'channel -_id').lean()
             .then((objs) => objs.map((obj) => obj.channel));
-        const channels = await Channel.find({ _id: { $in: channels_ids } }, '_id').sort({ updatedAt: -1 }).lean();
+        const channels = await Channel.find({ _id: { $in: channels_ids } }, 'lastMessage updatedAt').sort({ updatedAt: -1 }).lean();
         await Promise.all(channels.map(async (channel) => {
             await Channel.addUserNameTitle(channel, user_id);
         }));
@@ -77,18 +77,23 @@ router.post('/:channel_id', verifyToken, async (req, res, next) => {
     try {
         const { channel_id } = req.params;
         const { content } = req.body;
-        const message = await Message.create({
+
+        const newMessage = await Message.create({
             channel: channel_id,
             user: req.decoded._id,
             content,
         });
+
+        await Channel.findByIdAndUpdate(channel_id, { lastMessage: content, updatedAt: newMessage.createdAt });
+
         const obj = {
             userId: req.decoded.userId,
-            userName: req.decoded.name,
+            userName: req.decoded.userName,
             content,
-            createdAt: message.createdAt,
+            createdAt: newMessage.createdAt,
         };
-        req.app.get('io').to(channel_id).emit('message', obj);
+
+        req.app.get('io').to(channel_id).emit('newMessage', obj);
         res.status(201).json({ status: 201 });
     } catch (err) {
         console.log(err);

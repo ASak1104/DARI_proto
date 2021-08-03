@@ -24,9 +24,9 @@ const messageSchema = new Schema({
 });
 
 messageSchema.statics.addUserIdAndName = async (message) => {
-    const user = await User.findById(message.user, 'userId name -_id').lean();
+    const user = await User.findById(message.user, 'userId userName -_id').lean();
     message.userId = user.userId;
-    message.userName = user.name;
+    message.userName = user.userName;
 };
 
 

@@ -24,7 +24,7 @@ router.get('/', verifyToken, async (req, res, next) => {
                                 type: "Point",
                                 coordinates: user.location.coordinates,
                             },
-                            $maxDistance : 3_000,
+                            $maxDistance : 3_000_000,
                         }
                     },
                 }, 'userId userName introduce location interests -_id').lean();

@@ -10,8 +10,11 @@ const router = express.Router();
 /* GET user/profile page */
 router.get('/', verifyToken, async (req, res, next) => {
     try {
-        const user = await User.findById(req.decoded._id, 'userId introduce userName location').lean();
-        await User.addInterests(user);
+        const user = await User.findById(req.decoded._id, 'userId introduce userName location interests').lean();
+        user.interests = await Promise.all(user.interests.map(async (interest) => {
+            return await Interest.findById(interest, 'name -_id').lean()
+                .then((obj) => obj.name);
+        }));
         delete user._id;
         res.json(user);
     } catch (err) {
@@ -66,7 +69,7 @@ router.put('/', verifyToken, async (req, res, next) => {
         ]);
 
         const updateUser = async () => {
-            await User.findByIdAndUpdate(user_id, { name, introduce, interests: inputInterests });
+            await User.findByIdAndUpdate(user_id, { userName: name, introduce, interests: inputInterests });
         };
 
         const deleteOldUserInterest = async () => {

@@ -10,42 +10,39 @@ const router = express.Router();
 /* GET api/main page */
 router.get('/', verifyToken, async (req, res, next) => {
     try {
-        const user_id = req.decoded._id
-        const { location } = await User.findById(user_id, '_id location').lean();
+        const user = await User.findById(req.decoded._id, 'interests location').lean();
 
         const getUserWithOthers = async () => {
-            const userInterestIds = await UserToInterest.find({ user: user_id }, 'interest').lean();
-            return await Promise.all(userInterestIds.map(async (item) => {
-                const interest = await Interest.findById(item.interest, 'userName userCount').lean();
-                const otherUserIds = await UserToInterest.find({ _id: { $ne: item._id }, interest: interest._id}, 'user -_id' ).lean()
-                    .then((objs) => objs.map((obj) => obj.user));
-                delete interest._id;
-                interest.otherUsers = await Promise.all(otherUserIds.map(async (o_id) => {
-                    const otherUser = await User.findOne({
-                        _id: o_id,
-                        location: {
-                            $nearSphere: {
-                                $geometry : {
-                                    type: "Point",
-                                    coordinates: location.coordinates
-                                },
-                                $maxDistance : 3_000,
-                            }
+            const interests = await Interest.find({ _id: { $in: user.interests } }, 'name').lean();
+            await Promise.all(interests.map(async (interest) => {
+                const otherUsers = await User.find({
+                    _id: { $ne: user._id },
+                    interests: interest._id,
+                    location: {
+                        $nearSphere: {
+                            $geometry : {
+                                type: "Point",
+                                coordinates: user.location.coordinates,
+                            },
+                            $maxDistance : 3_000,
                         }
-                    }, 'userId userName introduce location').lean();
-                    if (otherUser) {
-                        await User.addInterests(otherUser);
-                        delete otherUser._id;
-                    }
-                    return otherUser;
+                    },
+                }, 'userId userName introduce location interests -_id').lean();
+                await Promise.all(otherUsers.map(async (otherUser) => {
+                    otherUser.interests = await Promise.all(otherUser.interests.map(async (_id) => {
+                        return await Interest.findById(_id, 'name -_id').lean()
+                            .then((obj) => obj.name);
+                    }));
                 }));
-                return interest;
+                interest.otherUsers = otherUsers;
+                delete interest._id;
             }));
+            return interests;
         };
 
         res.json({
             interests: await getUserWithOthers(),
-        });
+        })
     } catch (err) {
         console.log(err);
         return next(err);

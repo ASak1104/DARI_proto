@@ -54,7 +54,7 @@ public class ProfileUpdate extends AppCompatActivity {
     ImageView myimage;
     private final int GET_IMAGE_FOR_IMAGEVIEW = 201;
 
-    Uri selectedImageUri;
+    static Uri selectedImageUri;
 
     Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/")
             .addConverterFactory(GsonConverterFactory.create()).build();
@@ -133,7 +133,7 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
 
-                if(Interests_Activity_later.str_interests.get(0)!=null) {
+                if(Interests_Activity_later.str_interests!=null) {
                     UserStatic.interests=Interests_Activity_later.str_interests.toArray(new String[0]);
                 }
 
@@ -150,8 +150,10 @@ public class ProfileUpdate extends AppCompatActivity {
                         if(response.isSuccessful()) {
                             ProfileUpRq profileUpRq = response.body();
                             Toast.makeText(getApplicationContext(),"프로필 업데이트 성공!",Toast.LENGTH_SHORT).show();
-                            Interests_Activity_later.position=0;
-                            Interests_Activity_later.str_interests.clear();
+                            if(Interests_Activity_later.str_interests!=null) {
+                                Interests_Activity_later.position = 0;
+                                Interests_Activity_later.str_interests.clear();
+                            }
                         }
                     }
 
@@ -247,8 +249,10 @@ public class ProfileUpdate extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        Interests_Activity_later.position=0;
-        Interests_Activity_later.str_interests.clear();
+        if(Interests_Activity_later.str_interests!=null) {
+            Interests_Activity_later.position = 0;
+            Interests_Activity_later.str_interests.clear();
+        }
     }
 
     public void setPreference(String key, String value){

@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.app_dari.Login.LoginActivity;
+import com.example.app_dari.Login.LoginRequest;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,14 +95,12 @@ public class SupporterList extends AppCompatActivity {
         showsupporter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Booking.class);
-                //intent.putExtra();
-                //otherUserId, OtherName, day, startTime, endTime ...
-                startActivity(intent);
+
+                //request();
+
             }
         });
 
-        //request();
     }
 
     public void daybtclr(int k){
@@ -278,6 +279,9 @@ public class SupporterList extends AppCompatActivity {
                             intent.putExtra("name", UserStatic.name);
                             intent.putExtra("interests", UserStatic.interests);
                             startActivity(intent);
+
+                            //intent.putExtra();
+                            //otherUserId, OtherName, day, startTime, endTime ...
 
                         }
                     }

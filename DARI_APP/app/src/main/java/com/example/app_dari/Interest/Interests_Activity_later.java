@@ -34,7 +34,7 @@ public class Interests_Activity_later extends AppCompatActivity {
     private RecyclerView my_interests;
     InterestAdapter adapter;
     public static int position=0;
-    public static List<String> str_interests = new ArrayList<>();
+    public static List<String> str_interests = null;
 
     ToggleButton A;
     ToggleButton B;
@@ -50,6 +50,7 @@ public class Interests_Activity_later extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests);
 
+        List<String> str_interests = new ArrayList<>();
         my_interests =findViewById(R.id.iterests_view);
 
         adapter = new InterestAdapter();

@@ -188,7 +188,7 @@ public class Map_Activity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
             for(OtherUserData otherUser : mapData.interests.get(mapPOIItem.getTag()/100).otherUsers){
                 if(otherUser.tag==mapPOIItem.getTag()){
-                    intent.putExtra("name", otherUser.name);
+                    intent.putExtra("name", otherUser.userName);
                     String interests = "";
                     for(String interest: otherUser.interests){
                         interests += "# "+ interest + "  ";

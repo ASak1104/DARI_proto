@@ -26,9 +26,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 
@@ -50,6 +53,8 @@ import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.Login.LoginRequest;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import static com.example.app_dari.ProfileUpdate.selectedImageUri;
 
 public class Profile_Activity extends AppCompatActivity {
 
@@ -91,7 +96,7 @@ public class Profile_Activity extends AppCompatActivity {
 
 
         myimage = (ImageView) findViewById(R.id.imageView);
-        /*GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
                 .addHeader("authorization",UserStatic.token)
                 .build());
 
@@ -99,7 +104,7 @@ public class Profile_Activity extends AppCompatActivity {
                 .asBitmap()
                 .load(glideUrl)
                 .centerCrop()
-                .into(myimage);*/
+                .into(myimage);
 
         Button logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -246,17 +251,21 @@ public class Profile_Activity extends AppCompatActivity {
         myintroduce = findViewById(R.id.myintroduce2);
         myintroduce.setText(UserStatic.introduce);
 
-        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+UserStatic.userId , new LazyHeaders.Builder()
-                .addHeader("authorization",UserStatic.token)
-                .build());
-        Glide.with(this)
-                .asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .centerCrop()
-                .load(glideUrl)
-                .into(myimage);
-
+        if(selectedImageUri!=null){
+            MultiTransformation option1 = new MultiTransformation(new CenterCrop(), new RoundedCorners(30));
+            Glide.with(getApplicationContext()).load(selectedImageUri).apply(RequestOptions.bitmapTransform(option1)).into(myimage);
+        } else {
+            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/" + UserStatic.userId, new LazyHeaders.Builder()
+                    .addHeader("authorization", UserStatic.token)
+                    .build());
+            Glide.with(this)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .centerCrop()
+                    .load(glideUrl)
+                    .into(myimage);
+        }
     }
 
     @Override
@@ -264,6 +273,7 @@ public class Profile_Activity extends AppCompatActivity {
         super.onRestart();
         UserStatic.userId=getPreferenceString("userId");
         UserStatic.token=getPreferenceString("token");
+
 
     }
     @Override

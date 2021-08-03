@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<GetProfile> call2, Response<GetProfile> response) {
                 getProfile=response.body();
                 if(getProfile.introduce!=null) {
-                    UserStatic.name = getProfile.name;
+                    UserStatic.name = getProfile.userName;
                     UserStatic.userId = getProfile.userId;
                     UserStatic.latitude = getProfile.location.coordinates[1];
                     UserStatic.longitude = getProfile.location.coordinates[0];
@@ -287,7 +287,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginActivity.this.finish();
                 }
                 else{
-                    UserStatic.name = getProfile.name;
+                    UserStatic.name = getProfile.userName;
                     Toast.makeText(LoginActivity.this, UserStatic.name + "님 환영합니다.", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
                     intent.putExtra("myId", UserStatic.userId);

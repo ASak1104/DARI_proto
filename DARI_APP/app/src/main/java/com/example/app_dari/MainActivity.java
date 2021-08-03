@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             if(otherUser!=null) {
                 RecyclerItem recyclerItem = new RecyclerItem();
                 recyclerItem.userId = otherUser.userId;
-                recyclerItem.name = otherUser.name;
+                recyclerItem.name = otherUser.userName;
                 recyclerItem.introduce = otherUser.introduce;
                 recyclerItem.location = getlocation(otherUser.location.coordinates[1],
                         otherUser.location.coordinates[0]);
@@ -209,9 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 interestbtclr(0);
-                if(mapData.interests.get(0).otherUsers.get(0)!=null) {
-                    makeRecyclerView(0);
-                }
+                makeRecyclerView(0);
+
             }
 
             @Override

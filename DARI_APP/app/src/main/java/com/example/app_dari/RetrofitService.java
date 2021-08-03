@@ -61,5 +61,10 @@ public interface RetrofitService {
     @GET("api/auth/sign-out")
     Call<LoginRequest> getlogout(@Header("authorization") String token);
 
+    @FormUrlEncoded
+    @POST("user/booking/")
+    Call<ProfileUpRq> bookingData(@Header("authorization") String token, @Field("suppoterId") String supporterId,
+                               @Field("userId") String userId, @Field("otherUserId") String otherUserId);
+
 
 }

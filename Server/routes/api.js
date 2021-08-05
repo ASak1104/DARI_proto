@@ -1,6 +1,6 @@
 const express = require('express');
 const authRouter = require('./api/auth');
-const mainRouter = require('./api/main')
+const mainRouter = require('./api/main');
 const mapRouter = require('./api/map');
 const messengerRouter = require('./api/messenger');
 const testRouter = require('./api/test');

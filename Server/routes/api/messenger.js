@@ -1,9 +1,11 @@
 const express = require('express');
-const { verifyToken } = require('../middlewares');
+const { getDate, verifyToken, imageDirs, upload } = require('../middlewares');
 const User = require('../../schemas/user');
 const Channel = require('../../schemas/channel');
 const Message = require('../../schemas/message');
 const UserToChannel = require('../../schemas/userToChannel');
+const path = require('path');
+const fs = require('fs');
 
 const router = express.Router();
 
@@ -55,10 +57,10 @@ router.post('/channel', verifyToken, async (req, res, next) => {
 });
 
 
-/* GET api/messenger/:channel_id page */
-router.get('/:channel_id', verifyToken, async (req, res, next) => {
+/* GET api/messenger/message page */
+router.get('/message', verifyToken, async (req, res, next) => {
     try {
-        const { channel_id } = req.params;
+        const { channel_id } = req.body;
         const messages = await Message.find({ channel: { $eq: channel_id } }, 'user content image createdAt -_id').sort({ createdAt: 1 }).lean();
         await Promise.all(messages.map(async (message) => {
             await Message.addUserIdAndName(message);
@@ -72,30 +74,101 @@ router.get('/:channel_id', verifyToken, async (req, res, next) => {
 });
 
 
-/* POST api/messenger/:channel_id page */
-router.post('/:channel_id', verifyToken, async (req, res, next) => {
+/* POST api/messenger/message page */
+router.post('/message', verifyToken, async (req, res, next) => {
     try {
-        const { channel_id } = req.params;
-        const { content } = req.body;
+        const { channel_id, content } = req.body;
+        const createdAt = getDate();
 
-        const newMessage = await Message.create({
-            channel: channel_id,
-            user: req.decoded._id,
-            content,
-        });
+        const [ , { users } ] = await Promise.all([
+            Message.create({
+                channel: channel_id,
+                user: req.decoded._id,
+                content,
+                createdAt,
+            }),
+            Channel.findByIdAndUpdate(channel_id, {
+                lastMessage: content, updatedAt: createdAt,
+            }).lean(),
+        ]);
 
-        await Channel.findByIdAndUpdate(channel_id, { lastMessage: content, updatedAt: newMessage.createdAt });
+        const io = req.app.get('io');
 
-        const obj = {
+        io.to(users.map(String)).emit('newMessage', {
+            channel_id,
             userId: req.decoded.userId,
             userName: req.decoded.userName,
             content,
-            createdAt: newMessage.createdAt,
-        };
+            createdAt,
+        });
 
-        req.app.get('io').to(channel_id).emit('newMessage', obj);
+        /*
+        io.to(channel_id).emit('newMessage', {
+            userId: req.decoded.userId,
+            userName: req.decoded.userName,
+            content,
+            createdAt,
+        });
+        */
+
         res.status(201).json({ status: 201 });
     } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+});
+
+
+/* GET api/messenger/image/:file page */
+router.get('/image/:file', verifyToken, async (req, res, next) => {
+    try {
+        const file = path.join(__dirname, `../../${ imageDirs.messenger }/${ req.params.file }`);
+        fs.access(file, (err) => {
+            if (err) {
+                // console.error(err);
+                res.status(404).send();
+            } else {
+                res.sendFile(path.join(__dirname, `../../${ imageDirs.messenger }/${ req.params.file }`));
+            }
+        });
+    } catch(err) {
+        console.log(err);
+        return next(err);
+    }
+});
+
+
+/* POST api/messenger/image page */
+router.post('/image', verifyToken, upload(imageDirs.messenger, getDate()).single('image'), async (req, res, next) => {
+    try {
+        const { channel_id } = req.body;
+        const createdAt = req.decoded.imageCreatedAt;
+        const image = req.file.filename;
+
+        const [ , { users } ] = await Promise.all([
+            Message.create({
+                channel: channel_id,
+                user: req.decoded._id,
+                image,
+                createdAt,
+            }),
+            Channel.findByIdAndUpdate(channel_id, {
+                lastMessage: '사진을 보냈습니다.', updatedAt: createdAt,
+            }).lean(),
+        ]);
+
+        const io = req.app.get('io');
+
+        io.to(users.map(String)).emit('newMessage', {
+            channel_id,
+            userId: req.decoded.userId,
+            userName: req.decoded.userName,
+            image,
+            createdAt,
+        });
+
+        res.status(201).json({ status: 201 });
+    } catch(err) {
         console.log(err);
         return next(err);
     }

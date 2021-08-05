@@ -2,17 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
-const { verifyToken, upload } = require('../middlewares');
-
-const baseDir = 'uploads'
-const imageDirs = {
-    base: baseDir,
-    user: `${ baseDir }/user`,
-    supporter: `${ baseDir }/supporter`,
-    messenger: `${ baseDir }/messenger`,
-}
-
-const router = express.Router();
+const { verifyToken, imageDirs,  upload } = require('../middlewares');
 
 for (const key in imageDirs) {
     try {
@@ -22,6 +12,8 @@ for (const key in imageDirs) {
         fs.mkdirSync(imageDirs[key]);
     }
 }
+
+const router = express.Router();
 
 
 /* GET user/image/:id page */
@@ -40,13 +32,13 @@ router.get('/:id', verifyToken, (req, res) => {
 
 /* POST user/image page */
 router.post('/', verifyToken, upload(imageDirs.user).single('image'), (req, res) => {
-    res.json({ url: `${ imageDirs.user }/${ req.decoded.userId }/image` });
+    res.json({ url: `${ process.env.DOMAIN }/${ imageDirs.user }/${ req.decoded.userId }/image` });
 });
 
 
 /* PUT user/image page */
 router.put('/', verifyToken, upload(imageDirs.user).single('image'), (req, res) => {
-    res.json({ url: `${ imageDirs.user }/${ req.decoded.userId }/image` });
+    res.json({ url: `${ process.env.DOMAIN }/${ imageDirs.user }/${ req.decoded.userId }/image` });
 });
 
 

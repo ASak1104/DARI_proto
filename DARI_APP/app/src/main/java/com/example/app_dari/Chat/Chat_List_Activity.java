@@ -34,12 +34,15 @@ import retrofit2.Response;
 
 public class Chat_List_Activity extends AppCompatActivity {
 
+    private Socket mSocket;
+    private Gson gson = new Gson();
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Chat_ListAdapter chat_listAdapter;
-    Socket mSocket;
+    private ArrayList<Chat_List_Data> chat_list;
+    private int flag;
 
 
     @Override
@@ -62,7 +65,6 @@ public class Chat_List_Activity extends AppCompatActivity {
         ImageButton btn_notify = (ImageButton)findViewById(R.id.btn_notify);
         ImageButton btn_profile = (ImageButton)findViewById(R.id.btn_profile);
 
-        init();
 
 
 
@@ -70,20 +72,10 @@ public class Chat_List_Activity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Chat_List_Response> call, Response<Chat_List_Response> response) {
                 if(response.isSuccessful()){
-                    ArrayList<Chat_List_Data> chat_list = response.body().getChat_list();
+                    chat_list = response.body().getChat_list();
                     chat_listAdapter = new Chat_ListAdapter(chat_list);
                     recyclerView.setAdapter(chat_listAdapter);
-                    chat_listAdapter.setOnItemClickListener(new Chat_ListAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View v, int position) {
-                            SocketHandler.getSocket().emit("channel", chat_list.get(position).get_id());
-                            Intent intent = new Intent(Chat_List_Activity.this, Chat_Activity.class);
-                            intent.putExtra("channel_id",chat_list.get(position).get_id());
-                            intent.putExtra("otheruser",chat_list.get(position).getUserNameTitle());
-                            startActivity(intent);
-                        }
-                    });
-
+                    click();
                 }
             }
 
@@ -91,6 +83,16 @@ public class Chat_List_Activity extends AppCompatActivity {
             public void onFailure(Call<Chat_List_Response> call, Throwable t) {
 
             }
+        });
+
+        mSocket = SocketHandler.getSocket();
+
+        mSocket.on("newMessage", args -> {
+            MessageData data = gson.fromJson(args[0].toString(), MessageData.class);
+            Log.d("message","List success");
+            flag = 0;
+            updateChatList(data);
+
         });
 
 
@@ -133,21 +135,41 @@ public class Chat_List_Activity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
-    private void init() {
-        try {
-            IO.Options options = new IO.Options();
-            options.transports = new String[]{WebSocket.NAME, Polling.NAME};
-            options.path = "/socket.io";
-            options.query = "token=" + getPreferenceString("token");
-            mSocket = IO.socket("http://dari-app.kro.kr", options);
-            Log.d("SOCKET", "Connection success : " + mSocket.id());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        SocketHandler.setSocket(mSocket);
-        SocketHandler.getSocket().connect();
 
-
+    private void updateChatList(MessageData data){
+        runOnUiThread(()-> {
+            int size = chat_list.size();
+            for(int i =0 ; i < size; i++) {
+                if(chat_list.get(i).get_id().equals(data.getChannel_id())){
+                    flag =1;
+                    chat_list.remove(i);
+                    chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+                    chat_listAdapter = new Chat_ListAdapter(chat_list);
+                    recyclerView.setAdapter(chat_listAdapter);
+                    click();
+                }
+            }
+            if (flag == 0)
+            {
+                chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+                chat_listAdapter = new Chat_ListAdapter(chat_list);
+                recyclerView.setAdapter(chat_listAdapter);
+                click();
+            }
+        });
+    }
+    private void click(){
+        chat_listAdapter.setOnItemClickListener(new Chat_ListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                SocketHandler.getSocket().emit("channel", chat_list.get(position).get_id());
+                Intent intent = new Intent(Chat_List_Activity.this, Chat_Activity.class);
+                intent.putExtra("channel_id",chat_list.get(position).get_id());
+                intent.putExtra("otheruser",chat_list.get(position).getUserNameTitle());
+                startActivity(intent);
+                Chat_List_Activity.this.finish();
+            }
+        });
     }
 
 }

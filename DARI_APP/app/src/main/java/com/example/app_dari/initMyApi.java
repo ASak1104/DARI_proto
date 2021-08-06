@@ -15,6 +15,8 @@ import com.example.app_dari.Signup.SignupResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -22,6 +24,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -50,9 +53,13 @@ public interface initMyApi {
     Call<ChatResponse> post_ChatList(@Header("authorization") String token ,@Field("otherUserId") String id);
 
     @FormUrlEncoded
-    @POST("/api/messenger/{channel_id}")
-    Call<Void> post_Chat(@Header("authorization") String token , @Path("channel_id") String channel_id , @Field("content") String content);
+    @POST("/api/messenger/message")
+    Call<Void> post_Chat(@Header("authorization") String token , @Field("channel_id") String channel_id , @Field("content") String content);
 
-    @GET("/api/messenger/{channel_id}")
+    @Multipart
+    @POST("/api/messenger/image")
+    Call<Void> post_Image(@Header("authorization") String token , @Part("channel_id") RequestBody channel_id, @Part MultipartBody.Part image);
+
+    @GET("/api/messenger/message/{channel_id}")
     Call<ChatResponse> get_Chat(@Header("authorization") String token , @Path("channel_id") String channel_id);
 }

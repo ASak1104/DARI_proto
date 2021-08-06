@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             btn_profile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    initMyApi.post_ChatList(getPreferenceString("token"),"dododo").enqueue(new Callback<ChatResponse>() {
+                    initMyApi.post_ChatList(getPreferenceString("token"),"cococo").enqueue(new Callback<ChatResponse>() {
                         @Override
                         public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
                             if(response.isSuccessful()){

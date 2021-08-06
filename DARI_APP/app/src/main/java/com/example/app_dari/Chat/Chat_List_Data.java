@@ -7,11 +7,20 @@ public class Chat_List_Data {
         return userNameTitle;
     }
 
+    public Chat_List_Data(String userNameTitle, String _id, String updatedAt, String lastMessage) {
+        this.userNameTitle = userNameTitle;
+        this._id = _id;
+        this.updatedAt = updatedAt;
+        this.lastMessage = lastMessage;
+    }
+
     public void setUserNameTitle(String userNameTitle) {
         this.userNameTitle = userNameTitle;
     }
 
     private String userNameTitle;
+
+
 
     public String get_id() {
         return _id;
@@ -21,4 +30,24 @@ public class Chat_List_Data {
         this._id = _id;
     }
     private String _id;
+
+    private String updatedAt;
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    private String lastMessage;
 }

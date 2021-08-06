@@ -23,6 +23,7 @@ import com.example.app_dari.GetProfile;
 import com.example.app_dari.Interest.Interests;
 import com.example.app_dari.Interest.Interests_Activity;
 import com.example.app_dari.Location;
+import com.example.app_dari.Chat.SocketHandler;
 import com.example.app_dari.MainActivity;
 import com.example.app_dari.MapData;
 import com.example.app_dari.Map_Activity;
@@ -38,7 +39,12 @@ import net.daum.mf.map.api.MapPoint;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.net.URISyntaxException;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.engineio.client.transports.Polling;
+import io.socket.engineio.client.transports.WebSocket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    private Socket mSocket;
     static public String token;
     private RetrofitClient retrofitClient;
     private com.example.app_dari.initMyApi initMyApi;
@@ -282,6 +288,8 @@ public class LoginActivity extends AppCompatActivity {
                     UserStatic.longitude = getProfile.location.coordinates[0];
                     UserStatic.introduce = getProfile.introduce;
                     UserStatic.interests = getProfile.interests;
+
+                    init();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     LoginActivity.this.finish();
@@ -289,6 +297,7 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     UserStatic.name = getProfile.userName;
                     Toast.makeText(LoginActivity.this, UserStatic.name + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                    init();
                     Intent intent = new Intent(LoginActivity.this, Interests_Activity.class);
                     intent.putExtra("myId", UserStatic.userId);
                     startActivity(intent);
@@ -301,5 +310,21 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void init() {
+        try {
+            IO.Options options = new IO.Options();
+            options.transports = new String[]{WebSocket.NAME, Polling.NAME};
+            options.path = "/socket.io";
+            options.query = "token=" + getPreferenceString("token");
+            mSocket = IO.socket("http://dari-app.kro.kr", options);
+            Log.d("SOCKET", "Connection success : " + mSocket.id());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        SocketHandler.setSocket(mSocket);
+        SocketHandler.getSocket().connect();
+
+
     }
 }

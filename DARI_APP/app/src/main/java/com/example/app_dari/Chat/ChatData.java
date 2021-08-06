@@ -5,8 +5,19 @@ public class ChatData {
     private String from;
     private String to;
 
-    public ChatData(String from, String content, String sendTime , String type) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String userId;
+
+    public ChatData(String from,String userId ,String content, String sendTime , String type) {
         this.from = from;
+        this.userId = userId;
         this.type = type;
         this.content = content;
         this.sendTime = sendTime;

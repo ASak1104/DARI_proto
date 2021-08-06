@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <ImageView
         android:id="@+id/profile_view"
         android:layout_width="50dp"
@@ -21,26 +22,22 @@
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintLeft_toRightOf="@id/profile_view"
-        app:layout_constraintBottom_toTopOf="@+id/msg_text"
-         />
+        app:layout_constraintBottom_toTopOf="@+id/img_view" />
 
-    <TextView
-        android:id="@+id/msg_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/img_view"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintWidth_max="250dp"
-        android:background="@drawable/left_chat_box"
+        android:layout_marginTop="8dp"
+
         android:paddingLeft="16dp"
         android:paddingTop="4dp"
         android:paddingRight="16dp"
         android:paddingBottom="4dp"
-        android:text="상대방이 보낸 메세지"
-        android:textColor="#333d4b"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/name_text"
-        app:layout_constraintLeft_toRightOf="@+id/profile_view"/>
+
+        app:layout_constraintLeft_toRightOf="@id/profile_view"
+        app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
     <TextView
         android:id="@+id/send_time_text"
@@ -51,7 +48,7 @@
         android:text="00:00"
         android:textColor="#b9bcce"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/msg_text"
+        app:layout_constraintStart_toEndOf="@+id/img_view"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, Profile_Activity.class);
-
                     startActivity(intent);
                     MainActivity.this.finish();
                 }

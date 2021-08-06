@@ -28,11 +28,11 @@ router.get('/:file', verifyToken, async (req, res, next) => {
 
 
 /* POST api/messenger/image page */
-router.post('/', verifyToken, upload(imageDirs.messenger, getDate()).single('image'), async (req, res, next) => {
+router.post('/', verifyToken, upload(imageDirs.messenger, true).single('image'), async (req, res, next) => {
     try {
         const { channel_id } = req.body;
-        const createdAt = req.decoded.imageCreatedAt;
         const image = req.file.filename;
+        const createdAt = req.decoded.imageCreatedAt;
 
         const [ , { users } ] = await Promise.all([
             Message.create({
@@ -52,10 +52,12 @@ router.post('/', verifyToken, upload(imageDirs.messenger, getDate()).single('ima
             channel_id,
             userId: req.decoded.userId,
             userName: req.decoded.userName,
+            content: '사진을 보냈습니다.',
             image,
             createdAt,
         });
 
+        delete req.decoded.imageCreatedAt;
         res.status(201).json({ status: 201 });
     } catch(err) {
         console.log(err);

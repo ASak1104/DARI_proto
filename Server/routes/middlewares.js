@@ -8,9 +8,11 @@ const fs = require('fs');
 moment.tz.setDefault('Asia/Seoul');
 
 
-exports.getDate = () => {
+const getDate = () => {
     return moment().format('YYYY-MM-DD HH:mm:ss:ms');
 };
+
+exports.getDate = getDate
 
 
 exports.verifyToken = (req, res, next) => {
@@ -41,7 +43,7 @@ exports.imageDirs = {
 }
 
 
-exports.upload = (dir, time=null) => multer({
+exports.upload = (dir, nameWithDate=false) => multer({
     storage: multer.diskStorage({
         destination(req, file, cb) {
             cb(null, dir);
@@ -51,9 +53,9 @@ exports.upload = (dir, time=null) => multer({
             if(!['.png', '.jpg', '.jpeg', '.gif'].includes(ext)) {
                 return cb(new Error('Only images are allowed'));
             }
-            if (time) {
-                req.decoded.imageCreatedAt = time;
-                cb(null, `${ req.decoded.userId }_${ time.replace(' ', '_') }${ ext }`);
+            if (nameWithDate) {
+                req.decoded.imageCreatedAt = getDate();
+                cb(null, `${ req.decoded.userId }_${ req.decoded.imageCreatedAt.replace(' ', '_') }${ ext }`);
             } else {
                 cb(null, `${ req.decoded.userId }.jpg`)
             }

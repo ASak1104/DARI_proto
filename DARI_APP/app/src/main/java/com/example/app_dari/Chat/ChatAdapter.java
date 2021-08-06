@@ -71,7 +71,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((LeftViewHolder) holder).msg_text.setText(mDataSet.get(position).getContent());
             ((LeftViewHolder) holder).name_text.setText(mDataSet.get(position).getFrom());
             ((LeftViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());
-            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserId() , new LazyHeaders.Builder()
+            /*GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserId() , new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
             Glide.with(((LeftViewHolder) holder).profile_view.getContext())
@@ -80,7 +80,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(glideUrl)
                     .centerCrop()
-                    .into(((LeftViewHolder) holder).profile_view);
+                    .into(((LeftViewHolder) holder).profile_view);*/
         }
         if(holder instanceof RightImageViewHolder) {
             ((RightImageViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());

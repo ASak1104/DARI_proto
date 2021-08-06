@@ -92,6 +92,8 @@ public class Chat_Activity extends AppCompatActivity {
         otheruser = intent.getExtras().getString("otheruser");
         other_user.setText(otheruser);
 
+        image_btn=findViewById(R.id.image_btn);
+
 
         initMyApi.get_Chat(getPreferenceString("token"),channel_id).enqueue(new Callback<ChatResponse>() {
             @Override
@@ -138,16 +140,10 @@ public class Chat_Activity extends AppCompatActivity {
 
         send = (ImageButton)findViewById(R.id.send_btn);
         send_text = (EditText)findViewById(R.id.content_edit);
-<<<<<<< HEAD
 
         left = findViewById(R.id.left);
         Button meet = findViewById(R.id.meeting);
         chat_back = findViewById(R.id.back);
-=======
-        chat_back = (ImageButton)findViewById(R.id.chat_back);
-        ImageButton meet = (ImageButton)findViewById(R.id.meeting);
-        image_btn = (ImageButton)findViewById(R.id.image_btn);
->>>>>>> origin/chat
 
 
         meet.setOnClickListener(new View.OnClickListener() {
@@ -158,16 +154,13 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
-=======
+
         image_btn.setOnClickListener(v -> {
             Intent imageIntent = new Intent(Intent.ACTION_PICK);
             imageIntent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(imageIntent, SELECT_IMAGE);
+
         });
-
-
->>>>>>> origin/chat
 
         init();
 
@@ -184,16 +177,10 @@ public class Chat_Activity extends AppCompatActivity {
         chat_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
-                mSocket.emit("left", gson.toJson(new RoomData(myId, channel_id , myName)));
-                mSocket.disconnect();
-                onBackPressed();
-=======
+
                 Intent intent = new Intent(Chat_Activity.this, Chat_List_Activity.class);
                 startActivity(intent);
                 Chat_Activity.this.finish();
-
->>>>>>> origin/chat
             }
         });
 
@@ -271,10 +258,8 @@ public class Chat_Activity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-<<<<<<< HEAD
     }*/
-=======
-    }
+
 
     private String getRealPathFromURI(Uri contentUri, Context context) {
         String[] proj = { MediaStore.Images.Media.DATA };
@@ -317,5 +302,4 @@ public class Chat_Activity extends AppCompatActivity {
             uploadImage(selectedImageUri, getApplicationContext());
         }
     }
->>>>>>> origin/chat
 }

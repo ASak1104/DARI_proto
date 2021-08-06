@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.R;
+import com.example.app_dari.UserStatic;
 
 import java.util.ArrayList;
 
@@ -53,15 +54,15 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ViewHolder) holder).msg_text.setText(mDataSet.get(position).getLastMessage());
         ((ViewHolder) holder).send_time.setText(mDataSet.get(position).getUpdatedAt().substring(11,16));
 
-        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
-                .addHeader("authorization", LoginActivity.token)
+        /*GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
+                .addHeader("authorization", UserStatic.token)
                 .build());
         Glide.with(((ViewHolder) holder).chat_list_img.getContext())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(glideUrl)
                 .centerCrop()
-                .into(((ViewHolder) holder).chat_list_img);
+                .into(((ViewHolder) holder).chat_list_img);*/
 
     }
 

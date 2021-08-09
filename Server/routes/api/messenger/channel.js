@@ -35,18 +35,27 @@ router.post('/', verifyToken, async (req, res, next) => {
         const otherUser_id = await User.findOne({ userId: otherUserId }, '_id')
             .then((obj) => obj._id);
 
-        const title = req.body.title ? (req.body.title): `${ userId }, ${ otherUserId }`;
-        const newChannel = await Channel.create({ title, users: [ _id, otherUser_id ] });
+        // when otherUser_id -> otherUser_ids, [_id, ...otherUser_ids]
+        const users = [ _id, otherUser_id ].sort();
+        const existChannel = await Channel.findOne({ users: { $eq: users } }).lean()
 
-        // when otherUserName -> otherUserNames, [user_id, ...otherUser_ids]
-        await Promise.all([_id, otherUser_id].map(async (user) => {
-            await UserToChannel.create({ user, channel: newChannel._id });
-        }));
+        if (existChannel) {
+            res.status(400).json({
+                status: 400,
+            });
+        } else {
+            const title = req.body.title ? (req.body.title): `${[ userId, otherUserId ].sort().join(', ')}`;
+            const newChannel = await Channel.create({ title, users });
 
-        res.status(201).json({
-            status: 201,
-            channel_id: newChannel._id,
-        });
+            await Promise.all(users.map(async (user) => {
+                await UserToChannel.create({ user, channel: newChannel._id });
+            }));
+
+            res.status(201).json({
+                status: 201,
+                channel_id: newChannel._id,
+            });
+        }
     } catch (err) {
         console.log(err);
         return next(err);

@@ -1,6 +1,8 @@
 package com.example.app_dari.Chat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +27,12 @@ import java.util.ArrayList;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<ChatData> mDataSet;
     MultiTransformation option = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
+    public Activity context;
 
 
-
-    public ChatAdapter(ArrayList<ChatData> myDataSet){
+    public ChatAdapter(ArrayList<ChatData> myDataSet, Activity context){
         mDataSet = myDataSet;
-
+        this.context = context;
 
     }
 
@@ -74,7 +76,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserId() , new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
-            Glide.with(((LeftViewHolder) holder).profile_view.getContext())
+            Glide.with(context)
                     .asBitmap()
                     .apply(RequestOptions.bitmapTransform(option))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -87,7 +89,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/"+mDataSet.get(position).getContent() , new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
-            Glide.with(((RightImageViewHolder) holder).img_view.getContext())
+            Log.d("glide", glideUrl.toString());
+            Glide.with(context)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(glideUrl)
@@ -99,7 +102,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/"+mDataSet.get(position).getContent() , new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
-            Glide.with(((LeftImageViewHolder) holder).img_view.getContext())
+            Log.d("glide", glideUrl.toString());
+            Glide.with(context)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(glideUrl)
@@ -109,7 +113,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             GlideUrl glideUrl2 = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserId() , new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
-            Glide.with(((LeftImageViewHolder) holder).profile_view.getContext())
+            Glide.with(context)
                     .asBitmap()
                     .apply(RequestOptions.bitmapTransform(option))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)

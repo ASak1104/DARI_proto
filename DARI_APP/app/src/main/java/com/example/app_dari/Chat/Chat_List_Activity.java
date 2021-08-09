@@ -43,6 +43,7 @@ public class Chat_List_Activity extends AppCompatActivity {
     private Chat_ListAdapter chat_listAdapter;
     private ArrayList<Chat_List_Data> chat_list;
     private int flag;
+    private String myName;
 
 
     @Override
@@ -73,7 +74,7 @@ public class Chat_List_Activity extends AppCompatActivity {
             public void onResponse(Call<Chat_List_Response> call, Response<Chat_List_Response> response) {
                 if(response.isSuccessful()){
                     chat_list = response.body().getChat_list();
-                    chat_listAdapter = new Chat_ListAdapter(chat_list);
+                    chat_listAdapter = new Chat_ListAdapter(chat_list,Chat_List_Activity.this);
                     recyclerView.setAdapter(chat_listAdapter);
                     click();
                 }
@@ -142,9 +143,15 @@ public class Chat_List_Activity extends AppCompatActivity {
             for(int i =0 ; i < size; i++) {
                 if(chat_list.get(i).get_id().equals(data.getChannel_id())){
                     flag =1;
-                    chat_list.remove(i);
+                    if(data.getUserName().equals(myName))
+                    {
+                        chat_list.add(0,new Chat_List_Data(chat_list.get(i).getUserNameTitle(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+                    }
+                    else {
                     chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
-                    chat_listAdapter = new Chat_ListAdapter(chat_list);
+                    }
+                    chat_list.remove(i+1);
+                    chat_listAdapter = new Chat_ListAdapter(chat_list,Chat_List_Activity.this);
                     recyclerView.setAdapter(chat_listAdapter);
                     click();
                 }
@@ -152,7 +159,7 @@ public class Chat_List_Activity extends AppCompatActivity {
             if (flag == 0)
             {
                 chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
-                chat_listAdapter = new Chat_ListAdapter(chat_list);
+                chat_listAdapter = new Chat_ListAdapter(chat_list,Chat_List_Activity.this);
                 recyclerView.setAdapter(chat_listAdapter);
                 click();
             }
@@ -171,5 +178,7 @@ public class Chat_List_Activity extends AppCompatActivity {
             }
         });
     }
+
+
 
 }

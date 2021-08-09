@@ -115,7 +115,7 @@ public class Chat_Activity extends AppCompatActivity {
 
                         }
                     }
-                    chatAdapter = new ChatAdapter(mDataset);
+                    chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
                     recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                     recyclerView.setAdapter(chatAdapter);
                 }
@@ -200,7 +200,7 @@ public class Chat_Activity extends AppCompatActivity {
     private void addChat(MessageData data){
             runOnUiThread(()-> {
                 if(data.getImage() ==null) {
-                    Log.d("image content","not image");
+
                     if (data.getUserName() == null) {
                     } else {
                         if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
@@ -213,7 +213,6 @@ public class Chat_Activity extends AppCompatActivity {
                 else {
                     if (data.getUserName() == null) {}
                     else{
-                        Log.d("image content","image success");
                         if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
                             mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Right_Image"));
                         } else {
@@ -222,7 +221,7 @@ public class Chat_Activity extends AppCompatActivity {
                     }
 
                 }
-                chatAdapter = new ChatAdapter(mDataset);
+                chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
                 recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                 recyclerView.setAdapter(chatAdapter);
             });

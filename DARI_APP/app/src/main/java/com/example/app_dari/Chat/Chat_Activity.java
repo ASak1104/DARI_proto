@@ -124,7 +124,7 @@ public class Chat_Activity extends AppCompatActivity {
 
                         }
                     }
-                    chatAdapter = new ChatAdapter(mDataset);
+                    chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
                     recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                     recyclerView.setAdapter(chatAdapter);
                 }
@@ -232,7 +232,7 @@ public class Chat_Activity extends AppCompatActivity {
                     }
 
                 }
-                chatAdapter = new ChatAdapter(mDataset);
+                chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
                 recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
                 recyclerView.setAdapter(chatAdapter);
             });

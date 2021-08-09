@@ -44,6 +44,7 @@ public class Chat_List_Activity extends AppCompatActivity {
     private ArrayList<Chat_List_Data> chat_list;
     private int flag;
     private String myName;
+    private String[] otheruserid ={"0"};
 
 
     @Override
@@ -145,10 +146,12 @@ public class Chat_List_Activity extends AppCompatActivity {
                     flag =1;
                     if(data.getUserName().equals(myName))
                     {
-                        chat_list.add(0,new Chat_List_Data(chat_list.get(i).getUserNameTitle(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+
+                        chat_list.add(0,new Chat_List_Data(chat_list.get(i).getUserNameTitle(),data.getChannel_id(),data.getCreatedAt(),data.getContent(),chat_list.get(i).getOtherUserIds()));
                     }
                     else {
-                    chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+                        otheruserid[0] = data.getUserId();
+                    chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent(),otheruserid));
                     }
                     chat_list.remove(i+1);
                     chat_listAdapter = new Chat_ListAdapter(chat_list,Chat_List_Activity.this);
@@ -158,7 +161,8 @@ public class Chat_List_Activity extends AppCompatActivity {
             }
             if (flag == 0)
             {
-                chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+                otheruserid[0] = data.getUserId();
+                chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent(),otheruserid));
                 chat_listAdapter = new Chat_ListAdapter(chat_list,Chat_List_Activity.this);
                 recyclerView.setAdapter(chat_listAdapter);
                 click();

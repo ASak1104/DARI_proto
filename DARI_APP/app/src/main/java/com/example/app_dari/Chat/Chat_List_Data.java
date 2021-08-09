@@ -7,12 +7,23 @@ public class Chat_List_Data {
         return userNameTitle;
     }
 
-    public Chat_List_Data(String userNameTitle, String _id, String updatedAt, String lastMessage) {
+    public Chat_List_Data(String userNameTitle, String _id, String updatedAt, String lastMessage, String[] otherUserIds) {
         this.userNameTitle = userNameTitle;
         this._id = _id;
+        this.otherUserIds = otherUserIds;
         this.updatedAt = updatedAt;
         this.lastMessage = lastMessage;
     }
+
+    public String[] getOtherUserIds() {
+        return otherUserIds;
+    }
+
+    public void setOtherUserIds(String[] otherUserIds) {
+        this.otherUserIds = otherUserIds;
+    }
+
+    public String[] otherUserIds;
 
     public void setUserNameTitle(String userNameTitle) {
         this.userNameTitle = userNameTitle;

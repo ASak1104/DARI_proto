@@ -2,6 +2,7 @@ package com.example.app_dari.Chat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
         public Chat_ListAdapter(ArrayList<Chat_List_Data> myDataSet, Activity context){
             mDataSet = myDataSet;
             this.context = context;
-
         }
 
         @Override
@@ -50,7 +50,7 @@ import java.util.ArrayList;
             ((ViewHolder) holder).msg_text.setText(mDataSet.get(position).getLastMessage());
             ((ViewHolder) holder).send_time.setText(mDataSet.get(position).getUpdatedAt().substring(11,16));
 
-            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
+            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getOtherUserIds()[0] , new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
             Glide.with(context)

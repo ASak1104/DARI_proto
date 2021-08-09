@@ -7,7 +7,7 @@ const Admin = require('../schemas/admin');
 
 AdminBro.registerAdapter(AdminBroMongoose)
 const adminBro = new AdminBro({
-    databases: [mongoose],
+    databases: [ mongoose ],
 });
 const adminRouter = AdminBroExpress.buildRouter(adminBro);
 adminBro.options.rootPath = process.env.ADMIN_PAGE;

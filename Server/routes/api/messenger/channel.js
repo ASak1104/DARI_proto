@@ -40,11 +40,12 @@ router.post('/', verifyToken, async (req, res, next) => {
 
         // when otherUser_id -> otherUser_ids, [_id, ...otherUser_ids]
         const users = [ _id, otherUser_id ].sort();
-        const existChannel = await Channel.findOne({ users: { $eq: users } }).lean()
+        const existChannel = await Channel.findOne({ users: { $eq: users } }, '_id').lean()
 
         if (existChannel) {
-            res.status(400).json({
-                status: 400,
+            res.status(202).json({
+                status: 202,
+                channel_id: existChannel._id,
             });
         } else {
             const title = req.body.title ? (req.body.title): `${[ userId, otherUserId ].sort().join(', ')}`;

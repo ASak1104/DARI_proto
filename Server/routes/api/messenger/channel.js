@@ -15,7 +15,10 @@ router.get('/', verifyToken, async (req, res, next) => {
             .then((objs) => objs.map((obj) => obj.channel));
         const channels = await Channel.find({ _id: { $in: channels_ids } }, 'lastMessage updatedAt').sort({ updatedAt: -1 }).lean();
         await Promise.all(channels.map(async (channel) => {
-            await Channel.addUserNameTitle(channel, user_id);
+            await Promise.all([
+                Channel.addUserNameTitle(channel, user_id),
+                Channel.addOtherUserIds(channel, user_id),
+            ]);
         }));
         res.json({
             channels

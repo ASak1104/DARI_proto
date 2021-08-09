@@ -29,6 +29,7 @@ const channelSchema = new Schema({
     },
 });
 
+/* Temporarily static function */
 channelSchema.statics.addUserNameTitle = async (channel, user_id) => {
     const otherUsers = await UserToChannel.find({ channel: channel._id, user: { $ne: user_id } }, 'user -_id').lean();
     const otherUserNames = await Promise.all(otherUsers.map(async (otherUser) => {
@@ -36,5 +37,14 @@ channelSchema.statics.addUserNameTitle = async (channel, user_id) => {
     }));
     channel.userNameTitle = otherUserNames.join(', ');
 };
+
+/* Temporarily static function */
+channelSchema.statics.addOtherUserIds = async (channel, user_id) => {
+    const otherUsers = await UserToChannel.find({ channel: channel._id, user: { $ne: user_id } }, 'user -_id').lean();
+    channel.otherUserIds = await Promise.all(otherUsers.map(async (otherUser) => {
+        return User.findById(otherUser.user, 'userId -_id').lean().then((obj) => obj.userId);
+    }));
+};
+
 
 module.exports = mongoose.model('Channel', channelSchema);

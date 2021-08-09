@@ -217,12 +217,14 @@ public class Chat_Activity extends AppCompatActivity {
             if(data.getImage() ==null) {
 
                 if (data.getUserName() == null) {
-
                 } else {
-                    mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Left"));
+                    if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
+                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Right"));
+                    } else {
+                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Left"));
+                    }
                 }
             }
-
             else {
                 if (data.getUserName() == null) {}
                 else{
@@ -231,8 +233,8 @@ public class Chat_Activity extends AppCompatActivity {
                     } else {
                         mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Left_Image"));
                     }
-
                 }
+
             }
 
             chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);

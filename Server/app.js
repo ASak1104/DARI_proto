@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const passport = require('passport');
 
-dotenv.config()
+dotenv.config();
 const connect = require('./schemas');
 const indexRouter = require('./routes');
 const userRouter = require('./routes/user');
@@ -22,7 +22,7 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-connect()
+connect();
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
@@ -30,7 +30,7 @@ app.use('/api', apiRouter);
 app.use(process.env.ADMIN_PAGE, adminRouter);
 
 app.use((req, res, next) => {
-    const error =  new Error(`Not exist ${req.method} ${req.url} router`);
+    const error =  new Error(`Not exist ${ req.method } ${ req.url } router`);
     error.status = 404;
     next(error);
 });
@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
 });
 
 const server = app.listen(app.get('port'), () => {
-    console.log(`Listening localhost:${app.get('port')}`);
+    console.log(`Listening localhost:${ app.get('port') }`);
 });
 
 webSocket(server, app);

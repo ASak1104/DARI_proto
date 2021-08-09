@@ -34,7 +34,7 @@ channelSchema.statics.addUserNameTitle = async (channel, user_id) => {
     const otherUserNames = await Promise.all(otherUsers.map(async (otherUser) => {
         return User.findById(otherUser.user, 'userName -_id').lean().then((obj) => obj.userName);
     }));
-    channel.userNameTitle = otherUserNames.join(',');
+    channel.userNameTitle = otherUserNames.join(', ');
 };
 
 module.exports = mongoose.model('Channel', channelSchema);

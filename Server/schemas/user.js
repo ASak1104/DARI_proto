@@ -20,10 +20,6 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    isOnline: {
-        type: Boolean,
-        default: false,
-    },
     introduce: String,
     location: {
         type: {

@@ -2,7 +2,6 @@ const express = require('express');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const passport = require('passport');
 
 dotenv.config()
@@ -23,7 +22,6 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
 connect()
 
 app.use('/', indexRouter);

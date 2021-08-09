@@ -16,6 +16,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.R;
+import com.example.app_dari.UserStatic;
 
 import java.util.ArrayList;
 public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -52,7 +53,7 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ViewHolder) holder).send_time.setText(mDataSet.get(position).getUpdatedAt().substring(11,16));
 
         GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
-                .addHeader("authorization", LoginActivity.token)
+                .addHeader("authorization", UserStatic.token)
                 .build());
         Glide.with(context)
                 .asBitmap()

@@ -21,6 +21,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.R;
+import com.example.app_dari.UserStatic;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((LeftViewHolder) holder).name_text.setText(mDataSet.get(position).getFrom());
             ((LeftViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());
             GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/" + mDataSet.get(position).getUserId(), new LazyHeaders.Builder()
-                    .addHeader("authorization", LoginActivity.token)
+                    .addHeader("authorization", UserStatic.token)
                     .build());
             Glide.with(context)
                     .asBitmap()
@@ -85,7 +86,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof RightImageViewHolder) {
             ((RightImageViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());
             GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/" + mDataSet.get(position).getContent(), new LazyHeaders.Builder()
-                    .addHeader("authorization", LoginActivity.token)
+                    .addHeader("authorization", UserStatic.token)
                     .build());
             Log.d("glide", glideUrl.toString());
             Glide.with(context)
@@ -98,7 +99,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         if (holder instanceof LeftImageViewHolder) {
             GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/" + mDataSet.get(position).getContent(), new LazyHeaders.Builder()
-                    .addHeader("authorization", LoginActivity.token)
+                    .addHeader("authorization", UserStatic.token)
                     .build());
             Log.d("glide", glideUrl.toString());
             Glide.with(context)
@@ -109,7 +110,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .apply(RequestOptions.bitmapTransform(option))
                     .into(((LeftImageViewHolder) holder).img_view);
             GlideUrl glideUrl2 = new GlideUrl("http://dari-app.kro.kr/user/image/" + mDataSet.get(position).getUserId(), new LazyHeaders.Builder()
-                    .addHeader("authorization", LoginActivity.token)
+                    .addHeader("authorization", UserStatic.token)
                     .build());
             Glide.with(context)
                     .asBitmap()

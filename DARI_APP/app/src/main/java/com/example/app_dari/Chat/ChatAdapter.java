@@ -30,7 +30,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public Activity context;
 
 
-    public ChatAdapter(ArrayList<ChatData> myDataSet, Activity context) {
+
+    public ChatAdapter(ArrayList<ChatData> myDataSet, Activity context){
         mDataSet = myDataSet;
         this.context = context;
 

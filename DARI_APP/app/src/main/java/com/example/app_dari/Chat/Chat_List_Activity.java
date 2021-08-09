@@ -47,6 +47,7 @@ public class Chat_List_Activity extends AppCompatActivity {
     private String myName= UserStatic.name;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +143,9 @@ public class Chat_List_Activity extends AppCompatActivity {
                         chat_list.add(0,new Chat_List_Data(chat_list.get(i).getUserNameTitle(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
                     }
                     else {
-                        chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+
+                    chat_list.add(0,new Chat_List_Data(data.getUserName(),data.getChannel_id(),data.getCreatedAt(),data.getContent()));
+
                     }
                     chat_list.remove(i+1);
                     chat_listAdapter = new Chat_ListAdapter(chat_list,Chat_List_Activity.this);

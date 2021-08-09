@@ -44,6 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.UserStatic;
 import com.google.gson.Gson;
 
 public class Chat_Activity extends AppCompatActivity {
@@ -51,8 +52,8 @@ public class Chat_Activity extends AppCompatActivity {
     private Socket mSocket;
     private Gson gson = new Gson();
     private ImageButton send;
-    private String myId = "chatapp";
-    private String myName = "chatapp";
+    private String myId = UserStatic.userId;
+    private String myName = UserStatic.name;
     private String channel_id;
     private EditText send_text;
     private Button chat_back;
@@ -199,18 +200,17 @@ public class Chat_Activity extends AppCompatActivity {
     }
 
     private void addChat(MessageData data){
+
         runOnUiThread(()-> {
             if(data.getImage() ==null) {
 
                 if (data.getUserName() == null) {
+
                 } else {
-                    if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
-                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Right"));
-                    } else {
-                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Left"));
-                    }
+                    mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Left"));
                 }
             }
+
             else {
                 if (data.getUserName() == null) {}
                 else{
@@ -219,13 +219,15 @@ public class Chat_Activity extends AppCompatActivity {
                     } else {
                         mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Left_Image"));
                     }
-                }
 
+                }
             }
+
             chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
             recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
             recyclerView.setAdapter(chatAdapter);
         });
+
     }
 
 

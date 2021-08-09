@@ -39,10 +39,11 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
-        v = inflater.inflate(R.layout.chat_list_item,parent,false);
-        return new ViewHolder(v);
+    v = inflater.inflate(R.layout.chat_list_item,parent,false);
+    return new ViewHolder(v);
 
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,int position){
@@ -50,7 +51,7 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ViewHolder) holder).msg_text.setText(mDataSet.get(position).getLastMessage());
         ((ViewHolder) holder).send_time.setText(mDataSet.get(position).getUpdatedAt().substring(11,16));
 
-        /*GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
                 .addHeader("authorization", LoginActivity.token)
                 .build());
         Glide.with(context)
@@ -58,7 +59,7 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(glideUrl)
                 .centerCrop()
-                .into(((ViewHolder) holder).chat_list_img);*/
+                .into(((ViewHolder) holder).chat_list_img);
 
     }
 

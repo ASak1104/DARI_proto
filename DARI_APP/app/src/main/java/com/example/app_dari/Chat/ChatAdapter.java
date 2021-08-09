@@ -2,6 +2,7 @@ package com.example.app_dari.Chat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,54 +27,50 @@ import java.util.ArrayList;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<ChatData> mDataSet;
     MultiTransformation option = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
-
     public Activity context;
 
-    public ChatAdapter(ArrayList<ChatData> myDataSet, Activity context){
+
+    public ChatAdapter(ArrayList<ChatData> myDataSet, Activity context) {
         mDataSet = myDataSet;
         this.context = context;
-
 
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType){
-         View v;
-         Context context = parent.getContext();
+                                                      int viewType) {
+        View v;
+        Context context = parent.getContext();
 
-         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-         if(viewType ==1){
-             v = inflater.inflate(R.layout.chat_right,parent,false);
-             return new RightViewHolder(v);
-         }
-         else if(viewType ==2) {
-             v = inflater.inflate(R.layout.chat_left,parent,false);
-             return new LeftViewHolder(v);
-         }
-         else if(viewType ==3){
-             v = inflater.inflate(R.layout.right_img,parent,false);
-             return new RightImageViewHolder(v);
-         }
-         else{
-             v = inflater.inflate(R.layout.left_img,parent,false);
-             return new LeftImageViewHolder(v);
-         }
+        if (viewType == 1) {
+            v = inflater.inflate(R.layout.chat_right, parent, false);
+            return new RightViewHolder(v);
+        } else if (viewType == 2) {
+            v = inflater.inflate(R.layout.chat_left, parent, false);
+            return new LeftViewHolder(v);
+        } else if (viewType == 3) {
+            v = inflater.inflate(R.layout.right_img, parent, false);
+            return new RightImageViewHolder(v);
+        } else {
+            v = inflater.inflate(R.layout.left_img, parent, false);
+            return new LeftImageViewHolder(v);
+        }
 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder,int position){
-        if(holder instanceof RightViewHolder) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof RightViewHolder) {
             ((RightViewHolder) holder).msg_text.setText(mDataSet.get(position).getContent());
             ((RightViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());
         }
-        if(holder instanceof  LeftViewHolder){
+        if (holder instanceof LeftViewHolder) {
             ((LeftViewHolder) holder).msg_text.setText(mDataSet.get(position).getContent());
             ((LeftViewHolder) holder).name_text.setText(mDataSet.get(position).getFrom());
             ((LeftViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());
-            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserId() , new LazyHeaders.Builder()
+            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/" + mDataSet.get(position).getUserId(), new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
             Glide.with(context)
@@ -84,11 +81,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .centerCrop()
                     .into(((LeftViewHolder) holder).profile_view);
         }
-        if(holder instanceof RightImageViewHolder) {
+        if (holder instanceof RightImageViewHolder) {
             ((RightImageViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());
-            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/"+mDataSet.get(position).getContent() , new LazyHeaders.Builder()
+            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/" + mDataSet.get(position).getContent(), new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
+            Log.d("glide", glideUrl.toString());
             Glide.with(context)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -97,10 +95,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .centerCrop()
                     .into(((RightImageViewHolder) holder).img_view);
         }
-        if(holder instanceof  LeftImageViewHolder){
-            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/"+mDataSet.get(position).getContent() , new LazyHeaders.Builder()
+        if (holder instanceof LeftImageViewHolder) {
+            GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/api/messenger/image/" + mDataSet.get(position).getContent(), new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
+            Log.d("glide", glideUrl.toString());
             Glide.with(context)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -108,7 +107,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .centerCrop()
                     .apply(RequestOptions.bitmapTransform(option))
                     .into(((LeftImageViewHolder) holder).img_view);
-            GlideUrl glideUrl2 = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserId() , new LazyHeaders.Builder()
+            GlideUrl glideUrl2 = new GlideUrl("http://dari-app.kro.kr/user/image/" + mDataSet.get(position).getUserId(), new LazyHeaders.Builder()
                     .addHeader("authorization", LoginActivity.token)
                     .build());
             Glide.with(context)
@@ -131,21 +130,25 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
 
-        if(mDataSet.get(position).getType().equals("Right")){
+        if (mDataSet.get(position).getType().equals("Right")) {
             return 1;
+        } else if (mDataSet.get(position).getType().equals("Left")) {
+            return 2;
+        } else if (mDataSet.get(position).getType().equals("Right_Image")) {
+            return 3;
+        } else {
+            return 4;
         }
-        else if(mDataSet.get(position).getType().equals("Left"))
-        {return 2;}
-        else if(mDataSet.get(position).getType().equals("Right_Image")){return 3;}
-        else{return 4;}
 
     }
-    public class LeftViewHolder extends RecyclerView.ViewHolder{
-         TextView msg_text;
-         TextView name_text;
-         TextView send_time;
-         ImageView profile_view;
-         LeftViewHolder(View v){
+
+    public class LeftViewHolder extends RecyclerView.ViewHolder {
+        TextView msg_text;
+        TextView name_text;
+        TextView send_time;
+        ImageView profile_view;
+
+        LeftViewHolder(View v) {
             super(v);
             profile_view = v.findViewById(R.id.profile_view);
             msg_text = v.findViewById(R.id.msg_text);
@@ -154,12 +157,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public class LeftImageViewHolder extends RecyclerView.ViewHolder{
+    public class LeftImageViewHolder extends RecyclerView.ViewHolder {
         ImageView img_view;
         TextView name_text;
         TextView send_time;
         ImageView profile_view;
-        LeftImageViewHolder(View v){
+
+        LeftImageViewHolder(View v) {
             super(v);
             img_view = v.findViewById(R.id.img_view);
             name_text = v.findViewById(R.id.name_text);
@@ -168,25 +172,26 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public class RightViewHolder extends RecyclerView.ViewHolder{
+    public class RightViewHolder extends RecyclerView.ViewHolder {
         TextView msg_text;
         TextView send_time;
-        RightViewHolder(View v){
+
+        RightViewHolder(View v) {
             super(v);
             msg_text = v.findViewById(R.id.msg_text);
             send_time = v.findViewById(R.id.send_time_text);
         }
     }
-    public class RightImageViewHolder extends RecyclerView.ViewHolder{
+
+    public class RightImageViewHolder extends RecyclerView.ViewHolder {
         ImageView img_view;
         TextView send_time;
-        RightImageViewHolder(View v){
+
+        RightImageViewHolder(View v) {
             super(v);
             img_view = v.findViewById(R.id.img_view);
             send_time = v.findViewById(R.id.send_time_text);
         }
     }
-
-
 
 }

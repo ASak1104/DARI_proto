@@ -11,8 +11,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -44,7 +44,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.example.app_dari.RetrofitClient;
-import com.example.app_dari.UserStatic;
 import com.google.gson.Gson;
 
 public class Chat_Activity extends AppCompatActivity {
@@ -52,11 +51,10 @@ public class Chat_Activity extends AppCompatActivity {
     private Socket mSocket;
     private Gson gson = new Gson();
     private ImageButton send;
-    private String myId = UserStatic.userId;
-    private String myName = UserStatic.name;
+    private String myId = "chatapp";
+    private String myName = "chatapp";
     private String channel_id;
     private EditText send_text;
-    private Button left;
     private Button chat_back;
     private RecyclerView recyclerView;
     private ChatAdapter chatAdapter;
@@ -70,17 +68,13 @@ public class Chat_Activity extends AppCompatActivity {
     private final int SELECT_IMAGE = 100;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         mDataset = new ArrayList<>();
         retrofitClient = RetrofitClient.getInstance();
         initMyApi = RetrofitClient.getRetrofitInterface();
-
         recyclerView = (RecyclerView)findViewById(R.id.view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
@@ -91,8 +85,6 @@ public class Chat_Activity extends AppCompatActivity {
         channel_id = intent.getExtras().getString("channel_id");
         otheruser = intent.getExtras().getString("otheruser");
         other_user.setText(otheruser);
-
-        image_btn=findViewById(R.id.image_btn);
 
 
         initMyApi.get_Chat(getPreferenceString("token"),channel_id).enqueue(new Callback<ChatResponse>() {
@@ -115,12 +107,12 @@ public class Chat_Activity extends AppCompatActivity {
                             }
                         }
                         else {
-                                Log.d("image content","image success");
-                                if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
-                                    mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Right_Image"));
-                                } else {
-                                    mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Left_Image"));
-                                }
+                            Log.d("image content","image success");
+                            if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
+                                mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Right_Image"));
+                            } else {
+                                mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Left_Image"));
+                            }
 
                         }
                     }
@@ -140,10 +132,9 @@ public class Chat_Activity extends AppCompatActivity {
 
         send = (ImageButton)findViewById(R.id.send_btn);
         send_text = (EditText)findViewById(R.id.content_edit);
-
-        left = findViewById(R.id.left);
-        Button meet = findViewById(R.id.meeting);
         chat_back = findViewById(R.id.back);
+        Button meet = findViewById(R.id.meeting);
+        image_btn = (ImageButton)findViewById(R.id.image_btn);
 
 
         meet.setOnClickListener(new View.OnClickListener() {
@@ -154,13 +145,13 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
-
         image_btn.setOnClickListener(v -> {
             Intent imageIntent = new Intent(Intent.ACTION_PICK);
             imageIntent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(imageIntent, SELECT_IMAGE);
-
         });
+
+
 
         init();
 
@@ -169,7 +160,7 @@ public class Chat_Activity extends AppCompatActivity {
         mSocket = SocketHandler.getSocket();
 
         mSocket.on("system" , args-> {
-           Log.d("join", "join success!");
+            Log.d("join", "join success!");
         });
 
 
@@ -177,10 +168,10 @@ public class Chat_Activity extends AppCompatActivity {
         chat_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(Chat_Activity.this, Chat_List_Activity.class);
                 startActivity(intent);
                 Chat_Activity.this.finish();
+
             }
         });
 
@@ -208,34 +199,33 @@ public class Chat_Activity extends AppCompatActivity {
     }
 
     private void addChat(MessageData data){
-            runOnUiThread(()-> {
-                if(data.getImage() ==null) {
-                    Log.d("image content","not image");
-                    if (data.getUserName() == null) {
-                    } else {
-                        if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
-                            mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Right"));
-                        } else {
-                            mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Left"));
-                        }
-                    }
-                }
-                else {
-                    if (data.getUserName() == null) {}
-                    else{
-                        Log.d("image content","image success");
-                        if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
-                            mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Right_Image"));
-                        } else {
-                            mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Left_Image"));
-                        }
-                    }
+        runOnUiThread(()-> {
+            if(data.getImage() ==null) {
 
+                if (data.getUserName() == null) {
+                } else {
+                    if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
+                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Right"));
+                    } else {
+                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getContent(), data.getCreatedAt().substring(11, 16), "Left"));
+                    }
                 }
-                chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
-                recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
-                recyclerView.setAdapter(chatAdapter);
-            });
+            }
+            else {
+                if (data.getUserName() == null) {}
+                else{
+                    if (data.getUserName().equals(myName) && data.getUserId().equals(myId)) {
+                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Right_Image"));
+                    } else {
+                        mDataset.add(new ChatData(data.getUserName(),data.getUserId(), data.getImage(), data.getCreatedAt().substring(11, 16), "Left_Image"));
+                    }
+                }
+
+            }
+            chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
+            recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+            recyclerView.setAdapter(chatAdapter);
+        });
     }
 
 
@@ -243,7 +233,7 @@ public class Chat_Activity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
-    /*@Override
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
         if (focusView != null) {
@@ -258,8 +248,7 @@ public class Chat_Activity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-    }*/
-
+    }
 
     private String getRealPathFromURI(Uri contentUri, Context context) {
         String[] proj = { MediaStore.Images.Media.DATA };

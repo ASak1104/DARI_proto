@@ -19,6 +19,7 @@ import com.example.app_dari.Notify_Activity;
 import com.example.app_dari.Profile_Activity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
+import com.example.app_dari.UserStatic;
 import com.google.gson.Gson;
 
 import java.net.URISyntaxException;
@@ -43,7 +44,7 @@ public class Chat_List_Activity extends AppCompatActivity {
     private Chat_ListAdapter chat_listAdapter;
     private ArrayList<Chat_List_Data> chat_list;
     private int flag;
-    private String myName;
+    private String myName= UserStatic.name;
 
 
     @Override

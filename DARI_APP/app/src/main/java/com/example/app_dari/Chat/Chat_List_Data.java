@@ -2,16 +2,27 @@ package com.example.app_dari.Chat;
 
 public class Chat_List_Data {
 
+    public String[] getOtherUserIds() {
+        return otherUserIds;
+    }
+
+    public void setOtherUserIds(String[] otherUserIds) {
+        this.otherUserIds = otherUserIds;
+    }
+
+    public String[] otherUserIds;
+
 
     public String getUserNameTitle() {
         return userNameTitle;
     }
 
-    public Chat_List_Data(String userNameTitle, String _id, String updatedAt, String lastMessage) {
+    public Chat_List_Data(String userNameTitle, String _id, String updatedAt, String lastMessage, String[] otherUserIds) {
         this.userNameTitle = userNameTitle;
         this._id = _id;
         this.updatedAt = updatedAt;
         this.lastMessage = lastMessage;
+        this.otherUserIds = otherUserIds;
     }
 
     public void setUserNameTitle(String userNameTitle) {

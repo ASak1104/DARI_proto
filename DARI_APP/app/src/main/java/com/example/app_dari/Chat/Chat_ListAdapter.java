@@ -52,7 +52,7 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ViewHolder) holder).msg_text.setText(mDataSet.get(position).getLastMessage());
         ((ViewHolder) holder).send_time.setText(mDataSet.get(position).getUpdatedAt().substring(11,16));
 
-        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getUserNameTitle() , new LazyHeaders.Builder()
+        GlideUrl glideUrl = new GlideUrl("http://dari-app.kro.kr/user/image/"+mDataSet.get(position).getOtherUserIds()[0], new LazyHeaders.Builder()
                 .addHeader("authorization", UserStatic.token)
                 .build());
         Glide.with(context)

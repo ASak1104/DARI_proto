@@ -171,7 +171,6 @@ public class Chat_List_Activity extends AppCompatActivity {
                 intent.putExtra("channel_id",chat_list.get(position).get_id());
                 intent.putExtra("otheruser",chat_list.get(position).getUserNameTitle());
                 startActivity(intent);
-                Chat_List_Activity.this.finish();
             }
         });
     }

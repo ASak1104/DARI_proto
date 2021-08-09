@@ -1,6 +1,7 @@
 package com.example.app_dari;
 
 
+import com.example.app_dari.Chat.ChatResponse;
 import com.example.app_dari.Login.LoginRequest;
 import com.google.gson.JsonObject;
 
@@ -19,6 +20,10 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RetrofitService {
+
+    @FormUrlEncoded
+    @POST("/api/messenger/channel")
+    Call<ChatResponse> post_ChatList(@Header("authorization") String token , @Field("otherUserId") String id);
 
     @Multipart
     @POST("user/image")

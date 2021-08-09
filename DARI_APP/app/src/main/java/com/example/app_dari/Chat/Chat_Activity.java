@@ -249,7 +249,7 @@ public class Chat_Activity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("Tfile", MODE_PRIVATE);
         return pref.getString(key, "");
     }
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
         if (focusView != null) {
@@ -264,7 +264,7 @@ public class Chat_Activity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
+    }*/
 
     private String getRealPathFromURI(Uri contentUri, Context context) {
         String[] proj = { MediaStore.Images.Media.DATA };

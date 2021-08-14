@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## 팀 로고 (Team Logo)
 ![Logo](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f96313f0-ffed-49b2-9831-d8af697ff941/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94.-001_%285%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210814%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210814T053517Z&X-Amz-Expires=86400&X-Amz-Signature=3480eca82077d73efe2894e24d5b41ac81b8421654b017198a0cbb211221ef48&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EC%25A0%259C%25EB%25AA%25A9%25EC%259D%2584-%25EC%259E%2585%25EB%25A0%25A5%25ED%2595%25B4%25EC%25A3%25BC%25EC%2584%25B8%25EC%259A%2594.-001%2520%285%29.png%22)
 

@@ -9,8 +9,10 @@
  지금까지의 발달장애인의 사회적 관계는 항상 복지기관을 통해서만 이루어져 왔습니다. 복지관에서 하는 프로그램들을 위주로 발달장애인들을 그것이 자신의 '취미'인 마냥, 생각하고 프로그램을 수강하며 시간을 보내야했습니다. 그곳에 자신이 싫어하는 사람이 있어도, 프로그램이 1회당 37,500이라는 고가의 가격임에도. 발달장애인과 발달장애인 가정에게 자신의 친구를 만나고, 사회적 고립을 해결하고, 돌봄에서의 해방을 위해서는 복지관 프로그램은 어쩔 수 없는 선택이었습니다.
  
  다리(DARI) 서비스는 이러한 문제를 타파하고, 자유롭게 발달장애인들이 자신의 취미를, 자신이 원하는 곳에서, 자신이 원하는 사람과 함께 경제적 비용에 대한 걱정없이 사회적 관계를 맺을 수 있는 발달장애인 전용 플랫폼을 개설하고자 합니다.
- 
- [- 강호산 대표의 ABOUT DARI 중 -](https://www.notion.so/About-DARI-05b4263384ca41d6beac4403e712d361)
+
+ <div style="text-align: right">
+  <a href="https://www.notion.so/About-DARI-05b4263384ca41d6beac4403e712d361">- 강호산 대표의 ABOUT DARI 중</a>
+ </div>
  
 
 ## 프로젝트 시연 영상 (Trial Performance)
@@ -29,7 +31,6 @@
 ## 데이터베이스 구조 (DB Structure)
 ![](https://user-images.githubusercontent.com/31983961/129435740-b5c1791e-6097-4117-af84-6c5929b5a8ce.png)
 [브라우저로 보기](https://dbdiagram.io/embed/60efdd1e4ed9be1c05cd99d2)
-<br>
 
 
 ## 개발팀 인적사항 (Dev Team Information)
@@ -39,7 +40,6 @@
 |**CTO**|박종찬|daisophila|daisophila@gmail.com|
 |**앱 개발 리더**|임종수|jonssoo|whdtn4177@nate.com|
 |**백엔드 리더**|김현우|ASak1104|khw56184@gmail.com|
-<br>
 
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)

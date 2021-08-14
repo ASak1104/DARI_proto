@@ -10,9 +10,7 @@
  
  다리(DARI) 서비스는 이러한 문제를 타파하고, 자유롭게 발달장애인들이 자신의 취미를, 자신이 원하는 곳에서, 자신이 원하는 사람과 함께 경제적 비용에 대한 걱정없이 사회적 관계를 맺을 수 있는 발달장애인 전용 플랫폼을 개설하고자 합니다.
 
- <div style="text-align: right">
-  <a href="https://www.notion.so/About-DARI-05b4263384ca41d6beac4403e712d361">- 강호산 대표의 ABOUT DARI 중</a>
- </div>
+ <a align="right" href="https://www.notion.so/About-DARI-05b4263384ca41d6beac4403e712d361">- 강호산 대표의 ABOUT DARI 중</a>
  
 
 ## 프로젝트 시연 영상 (Trial Performance)

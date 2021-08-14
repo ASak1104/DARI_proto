@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-
-const DB_URL = process.env.DB_URL;
+const { DB_URL, DB_NAME } = process.env;
 
 const connect = () => {
     if (process.env.NODE_ENV !== 'production') {
         mongoose.set('debug', true);
     }
     mongoose.connect(DB_URL, {
-        dbName: 'test',
+        dbName: DB_NAME,
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     }, (err) => {
         if (err) {
             console.log('Fail to connect MongoDB', err);
@@ -26,5 +26,6 @@ mongoose.connection.on('disconnected', () => {
     console.error('Disconnect from MongoDB. Try to connect.');
     connect();
 });
+
 
 module.exports = connect;

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const { Types: { ObjectId } } = Schema;
-const userChannelSchema = new Schema({
+const userToChannelSchema = new Schema({
     user:{
         type: ObjectId,
         required: true,
@@ -13,10 +13,8 @@ const userChannelSchema = new Schema({
         required: true,
         ref: 'Channel',
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
 });
+userToChannelSchema.index({ user: 1, channel: 1 }, { unique: true });
 
-module.exports = mongoose.model('UserChannel', userChannelSchema);
+
+module.exports = mongoose.model('UserToChannel', userToChannelSchema);

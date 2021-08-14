@@ -1,5 +1,5 @@
-# 팀 로고 (Team Logo)
-![Logo](./img/logo.png)
+## 팀 로고 (Team Logo)
+![Logo](https://user-images.githubusercontent.com/31983961/129435458-933e9867-3541-4171-89a5-8d7f98f8cdee.png)
 
 ## 다리 홈페이지 (Home Page)
  https://www.notion.so/DARI-d79d964d869f48d9829bce6f542f0a62
@@ -8,7 +8,7 @@
  dd
 
 ## 프로젝트 시연 영상
-[시연영상](https://youtu.be/Sqp1qpT6wCY)
+[애플리케이션 시연 영상](보류)
 
 ## 프로젝트 사용법 (Getting Started)
  dd

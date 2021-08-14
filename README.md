@@ -1,5 +1,5 @@
 # 팀 로고 (Team Logo)
-![Logo](./img/logo.png)
+![Logo](https://user-images.githubusercontent.com/31983961/129435458-933e9867-3541-4171-89a5-8d7f98f8cdee.png)
 
 ## 다리 홈페이지 (Home Page)
  https://www.notion.so/DARI-d79d964d869f48d9829bce6f542f0a62

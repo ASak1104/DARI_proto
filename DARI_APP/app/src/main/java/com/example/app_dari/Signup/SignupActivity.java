@@ -46,13 +46,13 @@ public class SignupActivity extends AppCompatActivity {
         edit_pw2 = findViewById(R.id.edit_pw2);
         edit_id.setFilters(new InputFilter[] {filterAlphaNum});
 
-        ImageButton sign_back = (ImageButton)findViewById(R.id.sign_back);
+        /*ImageButton sign_back = (ImageButton)findViewById(R.id.sign_back);
         sign_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
         Button ok = (Button)findViewById(R.id.ok_sign);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +80,9 @@ public class SignupActivity extends AppCompatActivity {
         String userID = edit_id.getText().toString().trim();
         String userPassword = edit_pw.getText().toString().trim();
         String name = edit_name.getText().toString().trim();
-        String userPassword2 = edit_pw2.getText().toString().trim();
 
         //loginRequest에 사용자가 입력한 id와 pw를 저장
-        SignupRequest signupRequest = new SignupRequest(userID, userPassword, name ,userPassword2);
+        SignupRequest signupRequest = new SignupRequest(userID, userPassword, name);
 
         //retrofit 생성
         retrofitClient = RetrofitClient.getInstance();

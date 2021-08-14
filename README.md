@@ -29,4 +29,4 @@
 |**백엔드팀 리더**|김현우|ASak1104|khw56184@gmail.com|
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
- * [MIT](https://github.com/osam2020-WEB/Sample-ProjectName-TeamName/blob/master/license.md)
+ * [GPL3.0](https://github.com/ASak1104/DARI_proto/blob/master/LICENSE)

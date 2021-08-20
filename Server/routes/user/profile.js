@@ -62,7 +62,7 @@ router.put('/', verifyToken, async (req, res, next) => {
         const user_id = req.decoded._id;
         const { name, introduce, interests } = req.body;
         const [ inputInterests, preInterests ] = await Promise.all([
-            Interest.find({ name: { $in: interests }}, '_id').lean()
+            Interest.find({ name: { $in: [...new Set(interests)] }}, '_id').lean()
                 .then((objs) => objs.map((obj) => obj._id)),
             User.findById(user_id, 'interests -_id').lean()
                 .then((obj) => obj.interests),
@@ -73,7 +73,7 @@ router.put('/', verifyToken, async (req, res, next) => {
         };
 
         const deleteOldUserInterest = async () => {
-            const oldInterests = await Interest.find({ name: { $nin: interests }, _id: { $in: preInterests } }, '_id').lean()
+            const oldInterests = await Interest.find({ _id: { $in: preInterests, $nin: inputInterests } }, '_id').lean()
                 .then((objs) => objs.map((obj) => obj._id));
             await Promise.all([
                 UserToInterest.deleteMany({ user: user_id, interest: { $in: oldInterests } }),
@@ -82,7 +82,7 @@ router.put('/', verifyToken, async (req, res, next) => {
         };
 
         const createNewUserInterest = async () => {
-            const newInterests = await Interest.find({ name: { $in: interests }, _id: { $nin: preInterests } }, '_id').lean()
+            const newInterests = await Interest.find({ _id: { $in: inputInterests, $nin: preInterests } }, '_id').lean()
                 .then((objs) => objs.map((obj) => obj._id));
             await Promise.all([
                 Promise.all(newInterests.map(async (interest) => {

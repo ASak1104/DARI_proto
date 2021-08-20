@@ -47,8 +47,6 @@ public class Chat_List_Activity extends AppCompatActivity {
     private String myName= UserStatic.name;
     private String[] otherUserId = {"0"};
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -20,10 +20,12 @@ public class Chat_List_Data {
     public Chat_List_Data(String userNameTitle, String _id, String updatedAt, String lastMessage, String[] otherUserIds) {
         this.userNameTitle = userNameTitle;
         this._id = _id;
+        this.otherUserIds = otherUserIds;
         this.updatedAt = updatedAt;
         this.lastMessage = lastMessage;
         this.otherUserIds = otherUserIds;
     }
+
 
     public void setUserNameTitle(String userNameTitle) {
         this.userNameTitle = userNameTitle;

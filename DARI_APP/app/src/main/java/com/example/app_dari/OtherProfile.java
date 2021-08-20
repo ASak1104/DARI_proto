@@ -52,6 +52,7 @@ public class OtherProfile extends AppCompatActivity {
                 .skipMemoryCache(true)
                 .load(glideUrl)
                 .centerCrop()
+                .circleCrop()
                 .into(otherimage);
 
         //채팅시작

@@ -104,6 +104,7 @@ public class Profile_Activity extends AppCompatActivity {
                 .asBitmap()
                 .load(glideUrl)
                 .centerCrop()
+                .circleCrop()
                 .into(myimage);
 
         Button logout = findViewById(R.id.logout);
@@ -263,6 +264,7 @@ public class Profile_Activity extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .centerCrop()
+                    .circleCrop()
                     .load(glideUrl)
                     .into(myimage);
         }

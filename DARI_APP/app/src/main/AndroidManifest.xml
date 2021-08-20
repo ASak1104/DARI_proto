@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,14 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".OtherProfile2"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="5bc517cace880af11fb5148e0f96c9df" />
 
-        <activity android:name=".Chat.SelectMeeting"
+        <activity
+            android:name=".Chat.SelectMeeting"
             android:label="다리 활동지원 서비스를 이용하시겠습니까?"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
             android:name=".Booking"
             android:label="예약 하시겠습니까?"
@@ -43,7 +44,6 @@
         <activity android:name=".Interest.Interests_Activity" />
         <activity android:name=".Interest.Interests_text_Activity_later" />
         <activity android:name=".Interest.Interests_Activity_later" />
-
         <activity android:name=".ProfileUpdate" />
         <activity
             android:name=".OtherProfile"
@@ -51,8 +51,8 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".Chat.Chat_List_Activity" />
         <activity android:name=".Chat.Chat_Activity" />
-        <activity android:name=".Login.LoginActivity"/>
-        <activity android:name=".Slpash" >
+        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Slpash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

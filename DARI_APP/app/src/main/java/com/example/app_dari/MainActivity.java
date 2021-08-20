@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 .skipMemoryCache(true)
                 .load(glideUrl)
                 .centerCrop()
+                .circleCrop()
                 .into(myimage);
 
         ImageButton btn_map = (ImageButton)findViewById(R.id.btn_map);
@@ -156,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void interestbtclr(int k){
         for (int i = 0; i < mapData.interests.size(); i++) {
-            buttons[i].setBackground(this.getResources().getDrawable(R.drawable.button2));
+            buttons[i].setBackground(this.getResources().getDrawable(R.drawable.whiteinterest_bt100));
             buttons[i].setTextColor(Color.BLACK);
         }
-        buttons[k].setBackground(this.getResources().getDrawable(R.drawable.button2_001194));
+        buttons[k].setBackground(this.getResources().getDrawable(R.drawable.blueinterest_bt100));
         buttons[k].setTextColor(Color.WHITE);
     }
 
@@ -246,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(glideUrl)
                     .centerCrop()
+                    .circleCrop()
                     .into(holder.imageView);
         }
         @Override public int getItemCount() {

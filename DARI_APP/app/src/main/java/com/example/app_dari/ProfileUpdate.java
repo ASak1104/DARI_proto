@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +32,12 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
+import com.example.app_dari.Interest.Interests;
 import com.example.app_dari.Interest.Interests_Activity_later;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -116,6 +120,45 @@ public class ProfileUpdate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //관심사 누르면 화면 전환..
+                Interests.interests = new ArrayList<>();
+                Interests_Activity_later.position = 0;
+                Interests_Activity_later.str_interests = new ArrayList<>();
+                for (String interest : UserStatic.interests) {
+                    if (interest.equals("러닝") && !Interests.interests.contains(Interests.a)) {
+                        Interests_Activity_later.position++;
+                        Interests.interests.add(Interests.a);
+                        Interests_Activity_later.str_interests.add("러닝");
+                    } else if (interest.equals("게임") && !Interests.interests.contains(Interests.b)) {
+                        Interests.interests.add(Interests.b);
+                        Interests_Activity_later.position++;
+                        Interests_Activity_later.str_interests.add("게임");
+                    } else if (interest.equals("자동차") && !Interests.interests.contains(Interests.c)) {
+                        Interests.interests.add(Interests.c);
+                        Interests_Activity_later.position++;
+                        Interests_Activity_later.str_interests.add("자동차");
+                    } else if (interest.equals("빵만들기") && !Interests.interests.contains(Interests.d)) {
+                        Interests.interests.add(Interests.d);
+                        Interests_Activity_later.str_interests.add("빵만들기");
+                        Interests_Activity_later.position++;
+                    } else if (interest.equals("기차") && !Interests.interests.contains(Interests.e)) {
+                        Interests.interests.add(Interests.e);
+                        Interests_Activity_later.str_interests.add("기차");
+                        Interests_Activity_later.position++;
+                    } else if (interest.equals("식당투어") && !Interests.interests.contains(Interests.f)) {
+                        Interests.interests.add(Interests.f);
+                        Interests_Activity_later.str_interests.add("식당투어");
+                        Interests_Activity_later.position++;
+                    } else if (interest.equals("영화") && !Interests.interests.contains(Interests.g)) {
+                        Interests.interests.add(Interests.g);
+                        Interests_Activity_later.str_interests.add("영화");
+                        Interests_Activity_later.position++;
+                    } else if (interest.equals("자전거") && !Interests.interests.contains(Interests.h)) {
+                        Interests.interests.add(Interests.h);
+                        Interests_Activity_later.str_interests.add("자전거");
+                        Interests_Activity_later.position++;
+                    }
+                }
+
                 Intent intent = new Intent(getApplicationContext(), Interests_Activity_later.class);
                 startActivity(intent);
             }
@@ -133,10 +176,6 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
 
-                if(Interests_Activity_later.str_interests!=null) {
-                    UserStatic.interests=Interests_Activity_later.str_interests.toArray(new String[0]);
-                }
-
                 //서버로 보내버리기 post
 
                 /*Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
@@ -150,10 +189,7 @@ public class ProfileUpdate extends AppCompatActivity {
                         if(response.isSuccessful()) {
                             ProfileUpRq profileUpRq = response.body();
                             Toast.makeText(getApplicationContext(),"프로필 업데이트 성공!",Toast.LENGTH_SHORT).show();
-                            if(Interests_Activity_later.str_interests!=null) {
-                                Interests_Activity_later.position = 0;
-                                Interests_Activity_later.str_interests.clear();
-                            }
+
                         }
                     }
 
@@ -162,6 +198,9 @@ public class ProfileUpdate extends AppCompatActivity {
 
                     }
                 });
+
+                Intent intent = new Intent(ProfileUpdate.this, Profile_Activity.class);
+                startActivity(intent);
 
                 ProfileUpdate.this.finish();
             }
@@ -239,7 +278,8 @@ public class ProfileUpdate extends AppCompatActivity {
         if(Interests_Activity_later.position!=0){
             myinterests = findViewById(R.id.myinterest2up);
             String interests="";
-            for(String interest: Interests_Activity_later.str_interests) {
+
+            for(String interest: UserStatic.interests) {
                 interests += "# " + interest + "  ";
             }
             myinterests.setText(interests);

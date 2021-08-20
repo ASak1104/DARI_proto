@@ -18,15 +18,15 @@ public class Interests implements Serializable {
 
     private String interests_name;
     private int imgResource;
-    static ArrayList<Interests> interests = new ArrayList<>();
-    static Interests a = new Interests("러닝", R.drawable.running);
-    static Interests b = new Interests("게임",R.drawable.game);
-    static Interests c = new Interests("자동차",R.drawable.car);
-    static Interests d = new Interests("빵만들기",R.drawable.baking);
-    static Interests e = new Interests("기차",R.drawable.train);
-    static Interests f = new Interests("식당투어",R.drawable.eat);
-    static Interests g = new Interests("영화",R.drawable.movie);
-    static Interests h = new Interests("자전거",R.drawable.cycle);
+    static public ArrayList<Interests> interests = new ArrayList<>();
+    static public Interests a = new Interests("러닝", R.drawable.running);
+    static public Interests b = new Interests("게임",R.drawable.game);
+    static public Interests c = new Interests("자동차",R.drawable.car);
+    static public Interests d = new Interests("빵만들기",R.drawable.baking);
+    static public Interests e = new Interests("기차",R.drawable.train);
+    static public Interests f = new Interests("식당투어",R.drawable.eat);
+    static public Interests g = new Interests("영화",R.drawable.movie);
+    static public Interests h = new Interests("자전거",R.drawable.cycle);
 
     public Interests(String interests_name, int imgResource) {
         this.interests_name = interests_name;

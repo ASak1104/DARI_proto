@@ -71,6 +71,7 @@ public class Chat_Activity extends AppCompatActivity {
     TextView other_user;
     private ImageButton image_btn;
     private final int SELECT_IMAGE = 100;
+    private int position;
 
 
     @Override
@@ -89,6 +90,7 @@ public class Chat_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         channel_id = intent.getExtras().getString("channel_id");
         otheruser = intent.getExtras().getString("otheruser");
+        position = intent.getExtras().getInt("position");
         other_user.setText(otheruser);
 
 
@@ -122,8 +124,15 @@ public class Chat_Activity extends AppCompatActivity {
                         }
                     }
                     chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
-                    recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    if(position == 0){
+                        recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    }
+                    else {
+
+                        recyclerView.scrollToPosition(position-1);
+                    }
                     recyclerView.setAdapter(chatAdapter);
+                    click();
                 }
             }
 
@@ -197,18 +206,20 @@ public class Chat_Activity extends AppCompatActivity {
 
     }
     private void sendMessage(){
-        initMyApi.post_Chat(getPreferenceString("token"),channel_id,send_text.getText().toString()).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+        if(!send_text.getText().toString().equals("")) {
+            initMyApi.post_Chat(getPreferenceString("token"), channel_id, send_text.getText().toString()).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
 
-            }
-        });
-        send_text.setText("");
+                }
+            });
+            send_text.setText("");
+        }
     }
 
     private void addChat(MessageData data){
@@ -240,6 +251,7 @@ public class Chat_Activity extends AppCompatActivity {
             chatAdapter = new ChatAdapter(mDataset,Chat_Activity.this);
             recyclerView.scrollToPosition(chatAdapter.getItemCount() - 1);
             recyclerView.setAdapter(chatAdapter);
+            click();
         });
 
     }
@@ -306,5 +318,19 @@ public class Chat_Activity extends AppCompatActivity {
             selectedImageUri = data.getData();
             uploadImage(selectedImageUri, getApplicationContext());
         }
+    }
+    private void click(){
+        chatAdapter.setOnItemClickListener(new ChatAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(Chat_Activity.this, Image.class);
+                intent.putExtra("channel_id",channel_id);
+                intent.putExtra("otheruser",otheruser);
+                intent.putExtra("image",mDataset.get(position).getContent());
+                intent.putExtra("position",position);
+                startActivity(intent);
+
+            }
+        });
     }
 }

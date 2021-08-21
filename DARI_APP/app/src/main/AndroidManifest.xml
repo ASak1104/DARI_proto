@@ -34,12 +34,12 @@
             android:label="예약 하시겠습니까?"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".SupporterList" />
+        <activity android:name=".Chat.Image"/>
         <activity android:name=".SetProfile" />
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Map_Activity" />
         <activity android:name=".Profile_Activity" />
-        <activity android:name=".Notify_Activity" />
         <activity android:name=".Interest.Interests_text_Activity" />
         <activity android:name=".Interest.Interests_Activity" />
         <activity android:name=".Interest.Interests_text_Activity_later" />

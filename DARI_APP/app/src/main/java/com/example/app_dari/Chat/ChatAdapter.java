@@ -171,6 +171,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             name_text = v.findViewById(R.id.name_text);
             send_time = v.findViewById(R.id.send_time_text);
             profile_view = v.findViewById(R.id.profile_view);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        if(mListener != null){
+                            mListener.onItemClick(v , position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -193,7 +204,25 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(v);
             img_view = v.findViewById(R.id.img_view);
             send_time = v.findViewById(R.id.send_time_text);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        if(mListener != null){
+                            mListener.onItemClick(v , position);
+                        }
+                    }
+                }
+            });
         }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(View v , int position);
+    }
+    private ChatAdapter.OnItemClickListener mListener = null;
+    public void setOnItemClickListener(ChatAdapter.OnItemClickListener listener){
+        this.mListener = listener;
     }
 
 }

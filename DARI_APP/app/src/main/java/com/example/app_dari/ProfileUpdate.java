@@ -176,6 +176,8 @@ public class ProfileUpdate extends AppCompatActivity {
                 UserStatic.introduce = myintroduce.getText().toString();
                 //관심사 추가..
 
+
+
                 //서버로 보내버리기 post
 
                 /*Retrofit retrofit = new Retrofit.Builder().baseUrl("http://dari-app.kro.kr/").
@@ -201,7 +203,6 @@ public class ProfileUpdate extends AppCompatActivity {
 
                 Intent intent = new Intent(ProfileUpdate.this, Profile_Activity.class);
                 startActivity(intent);
-
                 ProfileUpdate.this.finish();
             }
         });
@@ -278,7 +279,6 @@ public class ProfileUpdate extends AppCompatActivity {
         if(Interests_Activity_later.position!=0){
             myinterests = findViewById(R.id.myinterest2up);
             String interests="";
-
             for(String interest: UserStatic.interests) {
                 interests += "# " + interest + "  ";
             }

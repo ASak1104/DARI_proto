@@ -1,6 +1,5 @@
 package com.example.app_dari.Chat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,23 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_dari.Login.LoginActivity;
 import com.example.app_dari.MainActivity;
 import com.example.app_dari.Map_Activity;
-import com.example.app_dari.Notify_Activity;
 import com.example.app_dari.Profile_Activity;
 import com.example.app_dari.R;
 import com.example.app_dari.RetrofitClient;
 import com.example.app_dari.UserStatic;
 import com.google.gson.Gson;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.engineio.client.transports.Polling;
-import io.socket.engineio.client.transports.WebSocket;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +39,8 @@ public class Chat_List_Activity extends AppCompatActivity {
     private int flag;
     private String myName= UserStatic.name;
     private String[] otherUserId = {"0"};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +166,7 @@ public class Chat_List_Activity extends AppCompatActivity {
                 Intent intent = new Intent(Chat_List_Activity.this, Chat_Activity.class);
                 intent.putExtra("channel_id",chat_list.get(position).get_id());
                 intent.putExtra("otheruser",chat_list.get(position).getUserNameTitle());
+                intent.putExtra("position",0);
                 startActivity(intent);
             }
         });

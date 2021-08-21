@@ -118,6 +118,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .load(glideUrl2)
                     .centerCrop()
+                    .circleCrop()
                     .into(((LeftImageViewHolder) holder).profile_view);
             ((LeftImageViewHolder) holder).name_text.setText(mDataSet.get(position).getFrom());
             ((LeftImageViewHolder) holder).send_time.setText(mDataSet.get(position).getSendTime());

@@ -60,6 +60,7 @@ public class Chat_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .load(glideUrl)
                 .centerCrop()
+                .circleCrop()
                 .into(((ViewHolder) holder).chat_list_img);
 
     }

@@ -157,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void interestbtclr(int k){
         for (int i = 0; i < mapData.interests.size(); i++) {
-            buttons[i].setBackground(this.getResources().getDrawable(R.drawable.whiteinterest_bt100));
+            buttons[i].setBackground(this.getResources().getDrawable(R.drawable.button2));
             buttons[i].setTextColor(Color.BLACK);
         }
-        buttons[k].setBackground(this.getResources().getDrawable(R.drawable.blueinterest_bt100));
+        buttons[k].setBackground(this.getResources().getDrawable(R.drawable.interest_bt1080));
         buttons[k].setTextColor(Color.WHITE);
     }
 

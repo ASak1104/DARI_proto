@@ -29,8 +29,8 @@ router.post('/', verifyToken, async (req, res, next) => {
     try {
         const user_id = req.decoded._id;
         const { introduce, interests } = req.body;
-        const interests_ids = await Interest.find({ name: { $in: interests } }, '_id').lean()
-            .then((objs) => objs.map((obj) => obj._id))
+        const interests_ids = await Interest.find({ name: { $in: [...new Set(interests)] } }, '_id').lean()
+            .then((objs) => objs.map((obj) => obj._id));
 
         const updateUser = async () => {
             await User.findByIdAndUpdate(user_id, { introduce, interests: interests_ids });
@@ -46,7 +46,7 @@ router.post('/', verifyToken, async (req, res, next) => {
              await Interest.updateMany({ _id: { $in: interests_ids } }, { $inc: { userCount: +1 } });
         };
 
-        await Promise.all([updateUser(), createUserToInterest(), updateUserCount()]);
+        await Promise.all([ updateUser(), createUserToInterest(), updateUserCount() ]);
 
         res.status(201).json({ status: 201 });
     } catch (err) {
@@ -62,7 +62,7 @@ router.put('/', verifyToken, async (req, res, next) => {
         const user_id = req.decoded._id;
         const { name, introduce, interests } = req.body;
         const [ inputInterests, preInterests ] = await Promise.all([
-            Interest.find({ name: { $in: [...new Set(interests)] }}, '_id').lean()
+            Interest.find({ name: { $in: [...new Set(interests)] } }, '_id').lean()
                 .then((objs) => objs.map((obj) => obj._id)),
             User.findById(user_id, 'interests -_id').lean()
                 .then((obj) => obj.interests),
@@ -92,7 +92,7 @@ router.put('/', verifyToken, async (req, res, next) => {
             ]);
         };
 
-        await Promise.all([updateUser(), deleteOldUserInterest(), createNewUserInterest()]);
+        await Promise.all([ updateUser(), deleteOldUserInterest(), createNewUserInterest() ]);
 
         res.status(202).json({ status: 202 });
     } catch (err) {

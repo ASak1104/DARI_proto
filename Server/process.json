@@ -5,5 +5,8 @@
     "watch_options": {
         "followSymlinks": false
     },
-    "name": "process"
+    "name": "process",
+    "env": {
+        "NODE_ENV": "production"
+    }
 }

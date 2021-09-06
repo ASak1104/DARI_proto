@@ -27,31 +27,34 @@ router.get('/:channel_id', verifyToken, async (req, res, next) => {
 router.post('/', verifyToken, async (req, res, next) => {
     try {
         const { channel_id, content } = req.body;
-        const createdAt = getDate();
 
-        const [ , { users } ] = await Promise.all([
-            Message.create({
-                channel: channel_id,
-                user: req.decoded._id,
+        if (content.trim().length) {
+            const createdAt = getDate();
+            const [ , { users } ] = await Promise.all([
+                Message.create({
+                    channel: channel_id,
+                    user: req.decoded._id,
+                    content,
+                    createdAt,
+                }),
+                Channel.findByIdAndUpdate(channel_id, {
+                    lastMessage: content, updatedAt: createdAt,
+                }).lean(),
+            ]);
+
+            const io = req.app.get('io');
+            io.to(users.map(String)).emit('newMessage', {
+                channel_id,
+                userId: req.decoded.userId,
+                userName: req.decoded.userName,
                 content,
                 createdAt,
-            }),
-            Channel.findByIdAndUpdate(channel_id, {
-                lastMessage: content, updatedAt: createdAt,
-            }).lean(),
-        ]);
+            });
 
-        const io = req.app.get('io');
-
-        io.to(users.map(String)).emit('newMessage', {
-            channel_id,
-            userId: req.decoded.userId,
-            userName: req.decoded.userName,
-            content,
-            createdAt,
-        });
-
-        res.status(201).json({ status: 201 });
+            res.status(201).json({ status: 201 });
+        } else {
+            res.status(400).json({ status: 400 });
+        }
     } catch (err) {
         console.log(err);
         return next(err);

@@ -6,80 +6,102 @@
     android:layout_height="match_parent"
     tools:context=".SetProfile">
 
-    <ImageView
-        android:id="@+id/setimageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/profile_large"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/profile_bar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/setimageView"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:background="@drawable/profile50"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/setmyname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="김국민"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:text="이름"
+        android:textColor="#001194"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/setimageView"
-        app:layout_constraintTop_toBottomOf="@+id/setimageView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
     <TextView
         android:id="@+id/setlocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:text="서울특별시 성북구 정릉동"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
+        android:text="주소"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/setview"
-        app:layout_constraintTop_toBottomOf="@+id/setmyname" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/introduce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="20dp"
         android:text="소개"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/setimageView"
-        app:layout_constraintTop_toBottomOf="@+id/setlocation" />
+        android:textStyle="bold"
+        android:textColor="#001194"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setmyname" />
 
     <EditText
         android:id="@+id/setmyintroduce2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="자신에 대한 소개글을 작성해주세요."
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="자기소개"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/setimageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduce" />
 
     <TextView
         android:id="@+id/setmyinterest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="20dp"
         android:text="관심사"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/setimageView"
-        app:layout_constraintTop_toBottomOf="@+id/setmyintroduce2" />
+        android:textStyle="bold"
+        android:textColor="#001194"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setlocation" />
 
     <View
         android:id="@+id/setview"
-        android:layout_width="14dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="10dp"
-        android:background="?android:attr/textSelectHandle"
-        android:rotation="180"
-        app:layout_constraintStart_toStartOf="@+id/setimageView"
-        app:layout_constraintTop_toBottomOf="@+id/setmyname" />
+        android:layout_width="12dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/mappoint"
+        app:layout_constraintBottom_toBottomOf="@+id/setlocation"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/setprofilebt"
@@ -99,24 +121,26 @@
         android:id="@+id/setmyinterest2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="#축구  #자전거  #게임  #음악"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="관심사들"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/setimageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setmyinterest" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="프로필 설정"
-        android:textColor="@color/black"
-        android:textSize="21sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="20dp"
+        android:text="위치"
+        android:textColor="#001194"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/setmyintroduce2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

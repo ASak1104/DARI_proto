@@ -6,80 +6,102 @@
     android:layout_height="match_parent"
     tools:context=".ProfileUpdate">
 
-    <ImageView
-        android:id="@+id/imageViewup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/profile_large"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/profile_bar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewup"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:background="@drawable/profile50"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/mynameup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:text="이름"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textColor="#001194"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imageViewup"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewup" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <TextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
         android:text="주소"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/viewup"
-        app:layout_constraintTop_toBottomOf="@+id/mynameup" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/introduce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="20dp"
         android:text="소개"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/imageViewup"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        android:textStyle="bold"
+        android:textColor="#001194"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mynameup" />
 
     <EditText
         android:id="@+id/myintroduce2up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
         android:text="자기소개"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduce" />
 
     <TextView
         android:id="@+id/myinterest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="20dp"
         android:text="관심사"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/imageViewup"
-        app:layout_constraintTop_toBottomOf="@+id/myintroduce2up" />
+        android:textStyle="bold"
+        android:textColor="#001194"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location" />
 
     <View
         android:id="@+id/viewup"
         android:layout_width="12dp"
         android:layout_height="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:background="@drawable/mappoint"
         app:layout_constraintBottom_toBottomOf="@+id/location"
-        app:layout_constraintStart_toStartOf="@+id/imageViewup"
-        app:layout_constraintTop_toBottomOf="@+id/mynameup" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/modprofileup"
@@ -99,24 +121,26 @@
         android:id="@+id/myinterest2up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
         android:text="관심사들"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageViewup"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myinterest" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="프로필 변경"
-        android:textColor="@color/black"
-        android:textSize="21sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="20dp"
+        android:text="위치"
+        android:textColor="#001194"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/myintroduce2up" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

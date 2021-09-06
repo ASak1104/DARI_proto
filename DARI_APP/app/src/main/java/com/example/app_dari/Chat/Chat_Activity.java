@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -154,8 +155,8 @@ public class Chat_Activity extends AppCompatActivity {
         meet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alt = new AlertDialog(Chat_Activity.this);
-                alt.show();
+                /*Intent intent_m = new Intent(getApplicationContext(), SelectMeeting.class);
+                startActivity(intent_m);*/
             }
         });
 

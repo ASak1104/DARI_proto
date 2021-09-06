@@ -76,9 +76,7 @@
         android:layout_marginLeft="40dp"
         android:background="@drawable/mappoint"
         app:layout_constraintBottom_toBottomOf="@+id/location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myintroduce2"
-        app:layout_constraintVertical_bias="0.977" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/introduce"

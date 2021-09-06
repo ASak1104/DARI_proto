@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OtherProfile2"></activity>
+        <activity android:name=".OtherProfile_d"></activity>
+        <activity android:name=".OtherProfile2" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -34,7 +35,7 @@
             android:label="예약 하시겠습니까?"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".SupporterList" />
-        <activity android:name=".Chat.Image"/>
+        <activity android:name=".Chat.Image" />
         <activity android:name=".SetProfile" />
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".MainActivity" />
